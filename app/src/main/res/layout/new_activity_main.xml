@@ -1,0 +1,387 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+ <!--    <HorizontalScrollView 
+          android:layout_width="wrap_content"
+          android:layout_height="match_parent"
+          android:scrollbars="none"
+          android:id="@+id/ScrollView">
+ -->
+     <ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+ 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+    
+
+    <TextView 
+        android:layout_width="match_parent"
+        android:layout_height="9dp"
+        android:text=""/>
+    
+    <LinearLayout
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:gravity="center_vertical"
+         android:orientation="horizontal" >
+        
+        <TextView 
+	        android:layout_width="20dp"
+	        android:layout_height="wrap_content"
+	        android:text=""/>
+         
+	    <EditText   
+	        android:id="@+id/et_gpio_function001"
+	        android:layout_width="200dp"  
+	        android:layout_height="40dp"   
+	        android:text="7_a4_1_0"  
+	        android:textSize="23sp"
+	        android:background="@drawable/bg_edit"  
+        />  
+        
+	      <TextView 
+	        android:layout_width="30dp"
+	        android:layout_height="wrap_content"
+	        android:text=""/>
+        
+	    <Button
+            android:id="@+id/btn_write001"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+             android:textSize="23sp"
+            android:text="write" />
+	    
+	     <TextView 
+	        android:layout_width="20dp"
+	        android:layout_height="10dp"
+	        android:text=""/>   
+	        
+	   <Button
+        android:id="@+id/btn_show_gpio_level001"
+        android:layout_width="200dp"
+        android:layout_height="40dp"
+        android:textSize="23sp"
+        android:background="@drawable/blak007"
+        android:text="GPIO的电平: "/>
+	     
+        <TextView
+            android:id="@+id/tv_gpio_level_show001"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:text=" "
+            android:textAppearance="?android:attr/textAppearanceLarge" />    
+            
+       <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="    "
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+            
+	    <Button
+            android:id="@+id/btn_read001"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+             android:textSize="23sp"
+            android:text="read" />
+    </LinearLayout>
+    
+       <TextView 
+	        android:layout_width="50dp"
+	        android:layout_height="5dp"
+	        android:text=""/>   
+    
+ <LinearLayout
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:gravity="center_vertical"
+         android:orientation="horizontal" >
+        
+        <TextView 
+	        android:layout_width="20dp"
+	        android:layout_height="wrap_content"
+	        android:text=""/>
+        
+	    <EditText   
+	        android:id="@+id/et_gpio_function002"
+	        android:layout_width="200dp"  
+	        android:layout_height="40dp"   
+	        android:textSize="23sp"
+	        android:background="@drawable/bg_edit"  
+        />  
+        
+	      <TextView 
+	        android:layout_width="30dp"
+	        android:layout_height="wrap_content"
+	        android:text=""/>
+        
+	    <Button
+            android:id="@+id/btn_write002"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+             android:textSize="23sp"
+            android:text="write" />
+	   
+	    <TextView 
+	        android:layout_width="20dp"
+	        android:layout_height="10dp"
+	        android:text=""/>   
+	        
+		<Button
+	        android:id="@+id/btn_show_gpio_level002"
+	        android:layout_width="200dp"
+	        android:layout_height="40dp"
+	        android:textSize="23sp"
+	        android:background="@drawable/blak007"
+	        android:text="GPIO的电平: "/>   
+            
+       <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="     "
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+            
+	    <Button
+            android:id="@+id/btn_read002"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+             android:textSize="23sp"
+            android:text="read" />
+	    
+    </LinearLayout>
+     <TextView 
+	        android:layout_width="50dp"
+	        android:layout_height="5dp"
+	        android:text=""/>   
+
+ 	<LinearLayout
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:gravity="center_vertical"
+         android:orientation="horizontal" >
+        
+        <TextView 
+	        android:layout_width="20dp"
+	        android:layout_height="wrap_content"
+	        android:text=""/>
+        
+	    <EditText   
+	        android:id="@+id/et_gpio_function003"
+	        android:layout_width="200dp"  
+	        android:layout_height="40dp"  
+	          android:textSize="23sp"   
+	        android:background="@drawable/bg_edit"  
+        />  
+        
+	      <TextView 
+	        android:layout_width="30dp"
+	        android:layout_height="wrap_content"
+	        android:text=""/>
+        
+	    <Button
+            android:id="@+id/btn_write003"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+             android:textSize="23sp"
+            android:text="write" />
+	    
+	    <TextView 
+	        android:layout_width="20dp"
+	        android:layout_height="10dp"
+	        android:text=""/>   
+	        
+	    <Button
+	        android:id="@+id/btn_show_gpio_level003"
+	        android:layout_width="200dp"
+	        android:layout_height="40dp"
+	        android:textSize="23sp"
+	        android:background="@drawable/blak007"
+	        android:text="GPIO的电平: "/>  
+            
+       <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="     "
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+            
+	    <Button
+            android:id="@+id/btn_read003"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+             android:textSize="23sp"
+            android:text="read" />
+	    
+    </LinearLayout>
+    
+ 	 <TextView 
+	        android:layout_width="50dp"
+	        android:layout_height="5dp"
+	        android:text=""/>   
+ 	
+ 	<LinearLayout
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:gravity="center_vertical"
+         android:orientation="horizontal" >
+        
+        <TextView 
+	        android:layout_width="20dp"
+	        android:layout_height="wrap_content"
+	        android:text=""/>
+        
+	    <EditText   
+	        android:id="@+id/et_gpio_function004"
+	        android:layout_width="200dp"  
+	        android:layout_height="40dp"     
+	          android:textSize="23sp"
+	        android:background="@drawable/bg_edit"  
+        />  
+        
+	      <TextView 
+	        android:layout_width="30dp"
+	        android:layout_height="wrap_content"
+	        android:text=""/>
+        
+	    <Button
+            android:id="@+id/btn_write004"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="23sp"
+            android:text="write" />
+	    
+	    <TextView 
+	        android:layout_width="20dp"
+	        android:layout_height="10dp"
+	        android:text=""/>   
+	        
+	    <Button
+	        android:id="@+id/btn_show_gpio_level004"
+	        android:layout_width="200dp"
+	        android:layout_height="40dp"
+	        android:textSize="23sp"
+	        android:background="@drawable/blak007"
+	        android:text="GPIO的电平: "/>   
+            
+       <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="     "
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+            
+	    <Button
+            android:id="@+id/btn_read004"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+             android:textSize="23sp"
+            android:text="read" />
+	    
+    </LinearLayout>	
+    
+ 	 <TextView 
+        android:layout_width="20dp"
+        android:layout_height="10dp"
+        android:text=""/>
+ 	 
+ 	  <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.72"
+        android:orientation="vertical" >
+
+ 	  <Button
+ 	      android:id="@+id/btn_read_all_gpio"
+ 	      android:layout_width="200dp"
+ 	      android:layout_height="wrap_content"
+ 	      android:layout_alignParentLeft="true"
+ 	      android:layout_alignParentTop="true"
+ 	      android:layout_marginLeft="21dp"
+ 	      android:text="read_all_gpio"
+ 	      android:textSize="23sp" />
+
+ 	  <TextView
+ 	      android:id="@+id/tv_read_current_gpio_level"
+ 	      android:layout_width="wrap_content"
+ 	      android:layout_height="wrap_content"
+ 	      android:layout_alignBaseline="@+id/btn_read_all_gpio"
+ 	      android:layout_alignBottom="@+id/btn_read_all_gpio"
+ 	      android:layout_marginLeft="31dp"
+ 	      android:layout_toRightOf="@+id/btn_read_all_gpio"
+ 	      android:text="no read the current level of gpio"
+ 	      android:textAppearance="?android:attr/textAppearanceLarge"
+ 	      android:textSize="20sp" />
+ 	 
+ 	 </RelativeLayout> 
+   
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.72"
+        android:orientation="vertical" >
+
+          <TextView 
+	        android:layout_width="300dp"
+	        android:layout_height="10dp"
+	        android:text=""/>
+        
+           <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:text=" 这些管脚配置，请参考对应的原理图（7_a4_1_0在原理图对应的是GPIO7_A4）"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+        
+          <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:text=" 例如: 7_a4_1_0" 
+            android:textAppearance="?android:attr/textAppearanceLarge"/>	
+            
+       <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:text=" 7代表: GPIO_Group  （GPIO组分为: GPIO0 至GPIO8）" 
+            android:textAppearance="?android:attr/textAppearanceLarge"/>
+       
+       <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:text=" a4代表: GPIO_num （当前gpio组的第几个gpio）" 
+            android:textAppearance="?android:attr/textAppearanceLarge"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:text=" 1代表: GPIO_Function （不同的GPIO的功能都有可能不一样，参考  内核中对应的文件）" 
+            android:textAppearance="?android:attr/textAppearanceLarge"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:text=" 0代表: GPIO_Output_low （1代表: GPIO_Output_Height）  （f代表: GPIO_input）" 
+            android:textAppearance="?android:attr/textAppearanceLarge"/>
+        
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:text=" 查看GPIO的电平状态,例如可输入: 7_a4 点击右侧对应的read按钮显示电平" 
+            android:textAppearance="?android:attr/textAppearanceLarge"/>				
+    
+    </LinearLayout> 
+    
+       </LinearLayout>
+    </ScrollView> 
+    
+  <!--   </HorizontalScrollView> -->
+
+</LinearLayout> 

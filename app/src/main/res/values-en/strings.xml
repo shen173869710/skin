@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">MOETest</string>
+    <string name="bt_state">Not connected</string>
+    <string name="bt_state1">Connect</string>
+    <string name="moist">Moist-------></string>
+    <string name="oil">Oil-------></string>
+    <string name="elasticity">Elasticity---></string>
+    <string name="zero">zero</string>
+    <string name="bt_over">Bluetooth is disconnected</string>
+    <string name="testpro_1">Not cleared, please wipe the test probe after cleared</string>
+    <string name="testpro_2">Cleared, please test</string>
+    <string name="testpro_3">
+        The results of the test error, please test the head and skin tight re test</string>
+    <string name="testpro_4">
+        For testing, please attach the test head to the skin during the test</string>
+    <string name="testpro_5">Test complete</string>
+    <string name="testpro_6">Zero reset</string>
+</resources>
