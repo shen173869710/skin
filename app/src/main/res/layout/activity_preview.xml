@@ -1,9 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <com.kier.companytest.custom.TitleLayout
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:midText="预览"
+        app:midTextSize="8sp"
+        app:leftDrawable="@mipmap/icon_title_back"
+        app:leftClick="back"
+        />
+    <View
+        android:id="@+id/line"
+        android:layout_below="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/line"></View>
+
     <ImageView
+        android:layout_below="@+id/line"
         android:id="@+id/image"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

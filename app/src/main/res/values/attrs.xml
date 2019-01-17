@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--标题-->
+    <declare-styleable name="TitleLayout">
+        <attr name="leftDrawable" format="reference" />
+        <attr name="leftDrawablePadding" format="dimension" />
+        <attr name="leftPadding" format="dimension" />
+        <attr name="leftPaddingLeft" format="dimension" />
+        <attr name="leftPaddingRight" format="dimension" />
+        <attr name="leftPaddingTop" format="dimension" />
+        <attr name="leftPaddingBottom" format="dimension" />
+        <attr name="leftText" format="string" />
+        <attr name="leftTextColor" format="color" />
+        <attr name="leftTextSize" format="dimension" />
+        <attr name="leftClick" format="string" />
+
+        <attr name="midText" format="string" />
+        <attr name="midTextColor" format="color" />
+        <attr name="midTextSize" format="dimension" />
+        <attr name="midPadding" format="dimension" />
+        <attr name="midPaddingLeft" format="dimension" />
+        <attr name="midPaddingRight" format="dimension" />
+        <attr name="midPaddingTop" format="dimension" />
+        <attr name="midPaddingBottom" format="dimension" />
+
+        <attr name="rightDrawable" format="reference" />
+        <attr name="rightDrawablePadding" format="dimension" />
+        <attr name="rightPadding" format="dimension" />
+        <attr name="rightPaddingLeft" format="dimension" />
+        <attr name="rightPaddingRight" format="dimension" />
+        <attr name="rightPaddingTop" format="dimension" />
+        <attr name="rightPaddingBottom" format="dimension" />
+        <attr name="rightText" format="string" />
+        <attr name="rightTextColor" format="color" />
+        <attr name="rightTextSize" format="dimension" />
+        <attr name="rightClick" format="string" />
+        右边数，第二个view
+        <attr name="right2Drawable" format="reference" />
+        <attr name="right2DrawablePadding" format="dimension" />
+        <attr name="right2Padding" format="dimension" />
+        <attr name="right2PaddingLeft" format="dimension" />
+        <attr name="right2PaddingRight" format="dimension" />
+        <attr name="right2PaddingTop" format="dimension" />
+        <attr name="right2PaddingBottom" format="dimension" />
+        <attr name="right2Text" format="string" />
+        <attr name="right2TextColor" format="color" />
+        <attr name="right2TextSize" format="dimension" />
+        <attr name="right2Click" format="string" />
+    </declare-styleable>
+
+    <declare-styleable name="CircleTextImageView">
+        <attr name="citv_border_width" format="dimension" />
+        <attr name="citv_border_color" format="color" />
+        <attr name="citv_border_overlay" format="boolean" />
+        <attr name="citv_fill_color" format="color" />
+        <attr name="citv_text_text" format="string" />
+        <attr name="citv_text_color" format="color" />
+        <attr name="citv_text_size" format="dimension" />
+        <attr name="citv_text_padding" format="dimension" />
+    </declare-styleable>
+
+    <!--重叠ImageView-->
+    <declare-styleable name="Overlap">
+        <!--需要的背景形状-->
+        <attr name="dstBg" format="reference" />
+        <attr name="maxWidth" format="integer" />
+        <attr name="minWidth" format="integer" />
+        <attr name="expectedWidth" format="integer" />
+    </declare-styleable>
+    <!--聊天消息，附带时间和状态-->
+    <declare-styleable name="MessageStateView">
+        <!--内容-->
+        <attr name="content" format="string" />
+        <attr name="contentSize" format="dimension" />
+        <attr name="contentMaxWidth" format="dimension" />
+        <attr name="contentMinHeight" format="dimension" />
+        <attr name="contentColor" format="color" />
+        <attr name="contentLineSpacingMultiplier" format="float" />
+        <!--时间、状态-->
+        <attr name="time" format="string" />
+        <attr name="timeLeftPadding" format="dimension" />
+        <attr name="timeRightPadding" format="dimension" />
+        <attr name="timeTopPadding" format="dimension" />
+        <attr name="timeBottomPadding" format="dimension" />
+        <attr name="timeSize" format="dimension" />
+        <attr name="timeStatePadding" format="dimension" />
+        <attr name="timeColor" format="color" />
+        <attr name="state" format="reference" />
+    </declare-styleable>
+</resources>

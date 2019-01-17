@@ -5,10 +5,28 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.camerakit.CameraKitView
-        android:id="@+id/camera"
+
+    <com.kier.companytest.custom.TitleLayout
+        android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:midText="拍照"
+        app:midTextSize="8sp"
+        app:leftDrawable="@mipmap/icon_title_back"
+        app:leftClick="back"
+        />
+    <View
+        android:id="@+id/line"
+        android:layout_below="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/line"></View>
+
+    <com.camerakit.CameraKitView
+        android:layout_below="@+id/line"
+        android:id="@+id/camera"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:adjustViewBounds="true"
         android:keepScreenOn="true"
         app:camera_facing="back"
@@ -55,4 +73,5 @@
                 android:layout_gravity="center" />
         </RelativeLayout>
     </LinearLayout>
+
 </RelativeLayout>
