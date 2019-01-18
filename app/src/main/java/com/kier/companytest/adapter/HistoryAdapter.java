@@ -49,7 +49,7 @@ public class HistoryAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-
+        holder.history_name.setText(list.get(position).name);
         return  convertView;
     }
     class ViewHolder {

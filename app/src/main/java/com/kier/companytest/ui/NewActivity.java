@@ -225,7 +225,6 @@ public class NewActivity extends Activity {
 	
 	private String getProcValue(String procPath, byte[] buf_pag) {  
 	char[] buffer = new char[32];
-	
 	 try {
 			File file = new File(procPath);
 			FileOutputStream fos = new FileOutputStream(file);

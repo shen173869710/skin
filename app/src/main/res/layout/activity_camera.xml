@@ -38,10 +38,12 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="80dp"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
         android:layout_alignParentBottom="true"
-        android:background="@color/bg"
-        android:orientation="horizontal">
+        >
 
         <RelativeLayout
             android:layout_width="0dp"
@@ -49,29 +51,45 @@
             android:layout_gravity="center"
             android:layout_weight="1">
 
-            <Button
+            <ImageView
                 android:id="@+id/btn1"
-                android:text="拍第一张"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_centerInParent="true"
-                android:layout_gravity="center" />
+                android:background="@drawable/icon_left_sel_bg"
+                />
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_weight="1"
+            >
+            <ImageView
+                android:id="@+id/camera_ok"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center"
+                android:background="@mipmap/icon_camera"
+                />
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1">
-
-            <Button
+            <ImageView
                 android:id="@+id/btn2"
-                android:text="拍第二张"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_centerInParent="true"
-                android:layout_gravity="center" />
+                android:background="@drawable/icon_right_sel_bg"
+                />
         </RelativeLayout>
     </LinearLayout>
+
 
 </RelativeLayout>

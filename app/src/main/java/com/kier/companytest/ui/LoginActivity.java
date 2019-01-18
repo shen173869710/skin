@@ -1,13 +1,16 @@
 package com.kier.companytest.ui;
 
 import android.content.Intent;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.kier.companytest.R;
 import com.kier.companytest.model.respone.BaseRespone;
 import com.kier.companytest.presenter.LoginPresenter;
+import com.kier.companytest.util.ShareUtil;
 import com.kier.companytest.view.ILoginView;
 
 
@@ -20,6 +23,9 @@ public class LoginActivity extends LBaseActivity <LoginPresenter> implements ILo
     private Button login_passwd_eye;
     private Button login_del_passwd;
     private Button login_btn;
+
+    private TextView login_setting;
+    private TextView login_name;
     @Override
     protected int setLayout() {
         return R.layout.activity_login;
@@ -33,6 +39,20 @@ public class LoginActivity extends LBaseActivity <LoginPresenter> implements ILo
         login_passwd_eye = findViewById(R.id.login_passwd_eye);
         login_del_passwd = findViewById(R.id.login_del_passwd);
         login_btn = findViewById(R.id.login_btn);
+        login_name = findViewById(R.id.login_name);
+        login_setting = findViewById(R.id.login_setting);
+
+
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        String name = ShareUtil.getName(this);
+        if (!TextUtils.isEmpty(name)) {
+            login_name.setText(name);
+        }
     }
 
     @Override
@@ -41,6 +61,13 @@ public class LoginActivity extends LBaseActivity <LoginPresenter> implements ILo
             @Override
             public void onClick(View v) {
                 mPresenter.doLogin();
+            }
+        });
+
+        login_setting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LoginActivity.this, SettingActivity.class));
             }
         });
     }
