@@ -24,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.kier.companytest.R;
+import com.kier.companytest.custom.TitleLayout;
 
 import java.io.DataInputStream;
 import java.io.File;
@@ -33,7 +34,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class MainActivity extends Activity {
+public class MainActivityBg extends Activity {
 
     private boolean mScanning = false;
     private boolean mIsConnect = false;
@@ -44,19 +45,18 @@ public class MainActivity extends Activity {
     public final static UUID UUID_HEART_RATE_MEASUREMENT = UUID.fromString(SampleGattAttributes.HEART_RATE_MEASUREMENT);
     public final static String ACTION_DATA_AVAILABLE = "com.kier.bluetooth.le" + "" + ".ACTION_DATA_AVAILABLE";
     public final static String ACTION_GATT_SERVICES_DISCOVERED = "com.kier.bluetooth.le" + "" + ".ACTION_GATT_SERVICES_DISCOVERED";
-    private ImageView mBluetooth_change_show;
-    private TextView mBlue_name;
-    private TextView mBlue_state;
-    private TextView mWater_date;
-    private TextView mOil_date;
-    private TextView mElastic_date;
-    private TextView mRssi;
-    private TextView mMacAddress;
-    private TextView mCount;
-    private Button mSaveMac;
-    private Button mZero_btn;
-    private Button mFinish_btn;
-    private static final int REQUEST_FINE_LOCATION = 10;
+//    private ImageView mBluetooth_change_show;
+//    private TextView mBlue_name;
+//    private TextView mBlue_state;
+//    private TextView mWater_date;
+//    private TextView mOil_date;
+//    private TextView mElastic_date;
+//    private TextView mRssi;
+//    private TextView mMacAddress;
+//    private TextView mCount;
+//    private Button mSaveMac;
+//    private Button mZero_btn;
+//    private Button mFinish_btn;
     BluetoothDevice device;
     double water;
     double oil;
@@ -64,61 +64,73 @@ public class MainActivity extends Activity {
     String deviceTitle;
     int count ;
 
+    private MainViewManager mainViewManager;
+    private ImageView main_status;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main_bg);
 
-        mBluetooth_change_show = (ImageView) findViewById(R.id.bluetooth_change_show);
-        mBlue_name = (TextView) findViewById(R.id.blue_name1);
-        mBlue_state = (TextView) findViewById(R.id.blue_state1);
-        mWater_date = (TextView) findViewById(R.id.water_date);
-        mOil_date = (TextView) findViewById(R.id.oil_date);
-        mElastic_date = (TextView) findViewById(R.id.elastic_date);
-        mRssi = (TextView) findViewById(R.id.reei);
-        mMacAddress = (TextView) findViewById(R.id.macAddress);
-        mCount = (TextView) findViewById(R.id.count);
-        mZero_btn = (Button) findViewById(R.id.zero_btn);
-        mFinish_btn = (Button) findViewById(R.id.finish_btn);
-        mSaveMac = (Button) findViewById(R.id.saveMac);
-        bluetoothManager = (BluetoothManager) getSystemService(Context
-                .BLUETOOTH_SERVICE);
+//        mBluetooth_change_show = (ImageView) findViewById(R.id.bluetooth_change_show);
+//        mBlue_name = (TextView) findViewById(R.id.blue_name1);
+//        mBlue_state = (TextView) findViewById(R.id.blue_state1);
+//        mWater_date = (TextView) findViewById(R.id.water_date);
+//        mOil_date = (TextView) findViewById(R.id.oil_date);
+//        mElastic_date = (TextView) findViewById(R.id.elastic_date);
+//        mRssi = (TextView) findViewById(R.id.reei);
+//        mMacAddress = (TextView) findViewById(R.id.macAddress);
+//        mCount = (TextView) findViewById(R.id.count);
+//        mZero_btn = (Button) findViewById(R.id.zero_btn);
+//        mFinish_btn = (Button) findViewById(R.id.finish_btn);
+//        mSaveMac = (Button) findViewById(R.id.saveMac);
+        bluetoothManager = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
         mBluetoothAdapter = bluetoothManager.getAdapter();
+        main_status = findViewById(R.id.main_status);
 
-        mSaveMac.setOnClickListener(new View.OnClickListener() {
+        mainViewManager = new MainViewManager(this, new MainViewManager.OnItemClick() {
             @Override
-            public void onClick(View v) {
-                FileAddress();
-                Toast.makeText(getApplication(),"已保存",Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        mZero_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+            public void onItemClick(int pos) {
+                /**清零操作**/
                 noWorking();
-                mWater_date.setText("0%");
-                mOil_date.setText("0%");
-                mElastic_date.setText("0");
-            }
-        });
-        mFinish_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mMacAddress.setText("");
-                MyShareprefrence.getInstance(getApplication()).setCount(mCount.getText().toString());
-                startActivity(new Intent(getApplication(), MainActivity.class));
-                finish();
             }
         });
 
-        String count1 = MyShareprefrence.getInstance(this).getCount();
-
-        if(count1.equals("")){
-            mCount.setText("0");
-        }else{
-            mCount.setText(count1);
-        }
+//        mSaveMac.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                FileAddress();
+//                Toast.makeText(getApplication(),"已保存",Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//
+//        mZero_btn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                mWater_date.setText("0%");
+//                mOil_date.setText("0%");
+//                mElastic_date.setText("0");
+//            }
+//        });
+//        mFinish_btn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                mMacAddress.setText("");
+//                MyShareprefrence.getInstance(getApplication()).setCount(mCount.getText().toString());
+//                startActivity(new Intent(getApplication(), MainActivityBg.class));
+//                finish();
+//            }
+//        });
+//
+//        String count1 = MyShareprefrence.getInstance(this).getCount();
+//
+//        if(count1.equals("")){
+//            mCount.setText("0");
+//        }else{
+//            mCount.setText(count1);
+//        }
     }
 //    private void mayRequestLocation() {
 //        if (Build.VERSION.SDK_INT >= 23) {
@@ -203,7 +215,7 @@ public class MainActivity extends Activity {
     @Override
     public void onStop() {
         super.onStop();
-        MyShareprefrence.getInstance(this).setCount(mCount.getText().toString());
+//        MyShareprefrence.getInstance(this).setCount(mCount.getText().toString());
         scanLeDevice(false);
     }
 
@@ -282,9 +294,9 @@ public class MainActivity extends Activity {
     }
 
     private void countAdd(){
-        count = Integer.parseInt(mCount.getText().toString());
-        count++;
-        mCount.setText(String.valueOf(count));
+//        count = Integer.parseInt(mCount.getText().toString());
+//        count++;
+//        mCount.setText(String.valueOf(count));
     }
 
     // 生成文件
@@ -339,7 +351,7 @@ public class MainActivity extends Activity {
         @Override
         public void onLeScan(final BluetoothDevice device, int rssi, byte[] scanRecord) {
             mLeDevices.add(device);
-            mRssi.setText(String.valueOf(rssi));
+//            mRssi.setText(String.valueOf(rssi));
             mHandler.post(runnable);
         }
     };
@@ -351,12 +363,12 @@ public class MainActivity extends Activity {
             mBluetoothAdapter.stopLeScan(mLeScanCallback);
             if (mLeDevices.size() > 0) {
                 device = mBluetoothAdapter.getRemoteDevice(mLeDevices.get(0).getAddress());
-                Log.i("Apian", device.toString());
+                Log.e("Apian", device.toString());
                 deviceTitle = mBluetoothAdapter.getRemoteDevice(mLeDevices.get(0).getAddress()).getName() + "";
 
                 if (deviceTitle.equals("XYL-BT") || deviceTitle.equals("het-31-8")) {
                     if (device != null) {
-                        mBlue_name.setText(deviceTitle);
+//                        mBlue_name.setText(deviceTitle);
                         mBluetoothGatt = device.connectGatt(getApplication(), false, mGattCallback);
                     }
                 } else {
@@ -373,36 +385,39 @@ public class MainActivity extends Activity {
             if (msg.what == 1) {
                 if (mBluetoothGatt != null) {
                     displayGattServices(mBluetoothGatt.getServices());
-                    mBluetooth_change_show.setImageResource(R.mipmap.bluetooth_show);
-                    mBlue_state.setText(getApplication().getResources().getString(R.string.bt_state1));
-                    mMacAddress.setText(device.toString());
+                    main_status.setImageResource(R.mipmap.bluetooth_show);
+//                    mBlue_state.setText(getApplication().getResources().getString(R.string.bt_state1));
+//                    mMacAddress.setText(device.toString());
                 }
             } else if (msg.what == 2) {
-
-                mBluetooth_change_show.setImageResource(R.mipmap.bluetooth_blank);
-                mBlue_state.setText(getApplication().getResources().getString(R.string.bt_state));
+//                mBluetooth_change_show.setImageResource(R.mipmap.bluetooth_blank);
+                main_status.setImageResource(R.mipmap.bluetooth_blank);
+//                mBlue_state.setText(getApplication().getResources().getString(R.string.bt_state));
                 mLeDevices.clear();
-                mMacAddress.setText("");
+//                mMacAddress.setText("");
                 ToastUtil.showToast(getApplication(), getApplication().getResources().getString(R.string.bt_over), Toast.LENGTH_SHORT);
                 checkBluetooth();
             } else if (msg.what == 3) {
-                mBlue_state.setText(getApplication().getResources().getString(R.string.testpro_1));
+                ToastUtil.showToast(getApplication(), getApplication().getResources().getString(R.string.testpro_1), Toast.LENGTH_SHORT);
             } else if (msg.what == 4) {
-                mBlue_state.setText(getApplication().getResources().getString(R.string.testpro_2));
-                mWater_date.setText("0%");
-                mOil_date.setText("0%");
-                mElastic_date.setText("0");
+                ToastUtil.showToast(getApplication(), getApplication().getResources().getString(R.string.testpro_2), Toast.LENGTH_SHORT);
+//                mWater_date.setText("0%");
+//                mOil_date.setText("0%");
+//                mElastic_date.setText("0");
             } else if (msg.what == 5) {
-                mBlue_state.setText(getApplication().getResources().getString(R.string.testpro_3));
+                ToastUtil.showToast(getApplication(), getApplication().getResources().getString(R.string.testpro_3), Toast.LENGTH_SHORT);
             } else if (msg.what == 6) {
-                mBlue_state.setText(getApplication().getResources().getString(R.string.testpro_4));
+                ToastUtil.showToast(getApplication(), getApplication().getResources().getString(R.string.testpro_4), Toast.LENGTH_SHORT);
             } else if (msg.what == 7) {
-                mBlue_state.setText(getApplication().getResources().getString(R.string.testpro_5));
-                mWater_date.setText(BigDecimalUtil.doubleScale(water * 100, 1) + "%");
-                mOil_date.setText(BigDecimalUtil.doubleScale(oil * 100, 1) + "%");
-                mElastic_date.setText(BigDecimalUtil.doubleScale(flex, 1) + "");
+//                mBlue_state.setText(getApplication().getResources().getString(R.string.testpro_5));
+//                mWater_date.setText(BigDecimalUtil.doubleScale(water * 100, 1) + "%");
+//                mOil_date.setText(BigDecimalUtil.doubleScale(oil * 100, 1) + "%");
+//                mElastic_date.setText(BigDecimalUtil.doubleScale(flex, 1) + "");
+                mainViewManager.showEnd(BigDecimalUtil.doubleScale(water * 100, 1) + "%",
+                                        BigDecimalUtil.doubleScale(oil * 100, 1) + "%",
+                                        BigDecimalUtil.doubleScale(flex, 1) + "");
             } else if (msg.what == 8) {
-                mBlue_state.setText(getApplication().getResources().getString(R.string.testpro_6));
+                ToastUtil.showToast(getApplication(), getApplication().getResources().getString(R.string.testpro_6), Toast.LENGTH_SHORT);
             }
             return false;
         }
@@ -627,6 +642,11 @@ public class MainActivity extends Activity {
                 break;
             }
         }
+    }
+
+
+    public void back(View view) {
+        finish();
     }
 
     @Override

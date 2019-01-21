@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+    <LinearLayout
+        android:id="@+id/main_item_layout"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_centerInParent="true"
+        android:visibility="invisible"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="15dp">
+            <TextView
+                android:layout_width="@dimen/main_item_key_width"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/moist"
+                android:textSize="28sp" />
+            <TextView
+                android:id="@+id/main_item_water"
+                android:layout_width="@dimen/main_item_value_width"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="0%"
+                android:textSize="28sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="15dp">
+
+            <TextView
+                android:layout_width="@dimen/main_item_key_width"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/oil"
+                android:textSize="28sp" />
+
+            <TextView
+                android:id="@+id/main_item_oil"
+                android:layout_width="@dimen/main_item_value_width"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="0%"
+                android:textSize="28sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="15dp">
+
+            <TextView
+                android:layout_width="@dimen/main_item_key_width"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/elasticity"
+                android:textSize="28sp" />
+
+            <TextView
+                android:id="@+id/main_item_elastic"
+                android:layout_width="@dimen/main_item_value_width"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="0%"
+                android:textSize="28sp" />
+        </LinearLayout>
+    </LinearLayout>
+    <Button
+        android:id="@+id/main_item_zero"
+        android:layout_below="@+id/main_item_layout"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_weight="1"
+        android:text="@string/testpro_start"
+        android:textSize="18sp" />
+</RelativeLayout>

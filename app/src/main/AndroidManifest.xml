@@ -45,6 +45,7 @@
         <activity android:name=".ui.CameraActivity" android:screenOrientation="portrait"></activity>
         <activity android:name=".ui.PreviewActivity" android:screenOrientation="portrait"></activity>
         <activity android:name=".ui.SettingActivity" android:screenOrientation="portrait"></activity>
+        <activity android:name=".ui.MainActivityBg" android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

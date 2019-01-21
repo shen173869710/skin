@@ -2,9 +2,9 @@
     <string name="app_name">水油弹蓝牙测试</string>
     <string name="bt_state">未连接</string>
     <string name="bt_state1">已连接</string>
-    <string name="moist">水分-------></string>
-    <string name="oil">油分-------></string>
-    <string name="elasticity">弹性-------></string>
+    <string name="moist">水分--></string>
+    <string name="oil">油分--></string>
+    <string name="elasticity">弹性--></string>
     <string name="zero">清零</string>
     <string name="bt_over">蓝牙已经断开</string>
     <string name="testpro_1">未完成清零，请擦拭测试探头后清零</string>
@@ -13,4 +13,8 @@
     <string name="testpro_4">重新测试，请在测试过程中将测试头紧贴皮肤，不要抖动</string>
     <string name="testpro_5">测试完成</string>
     <string name="testpro_6">清零中</string>
+
+
+
+    <string name="testpro_start">开始检测</string>
 </resources>

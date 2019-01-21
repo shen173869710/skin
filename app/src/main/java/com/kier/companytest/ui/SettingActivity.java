@@ -26,7 +26,7 @@ public class SettingActivity extends Activity {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		setContentView(R.layout.activity_history);
+		setContentView(R.layout.activity_setting);
 
 		initUI();
 	}
@@ -63,6 +63,7 @@ public class SettingActivity extends Activity {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						ShareUtil.saveName(SettingActivity.this, text);
+						SettingActivity.this.finish();
 					}
 				})
 				.setNegativeButton("取消",null)
