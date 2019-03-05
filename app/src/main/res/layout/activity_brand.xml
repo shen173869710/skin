@@ -5,6 +5,6 @@
     android:id="@+id/activity_brand"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.kier.companytest.ui.BrandActivity">
+    tools:context="com.embed.skin.ui.BrandActivity">
 
 </RelativeLayout>

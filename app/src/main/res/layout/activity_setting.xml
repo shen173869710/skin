@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.kier.companytest.custom.TitleLayout
+    <com.embed.skin.custom.TitleLayout
         android:id="@+id/login_user_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -21,8 +21,10 @@
         android:layout_height="1dp"
         android:background="@color/line"></View>
 
-    <ListView
-        android:id="@+id/history_list"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+    <ExpandableListView
+        android:id="@+id/setting_expend"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:groupIndicator="@null"
+        />
 </LinearLayout>

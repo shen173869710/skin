@@ -10,4 +10,15 @@
 
     <color name="line">#e5e5e5</color>
     <color name="btn_main_p">#20a59a</color>
+
+
+
+    <!-- main——tab-->
+    <color name="main_item_1">#008EFF</color>
+    <color name="main_item_2">#2dd989</color>
+    <color name="main_item_3">#FF8314</color>
+    <color name="main_item_4">#FF4081</color>
+
+    <color name="main_title">#000000</color>
+    <color name="main_desc">#9D9D9D</color>
 </resources>

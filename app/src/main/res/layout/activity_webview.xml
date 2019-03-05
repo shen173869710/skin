@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+    <com.embed.skin.custom.TitleLayout
+        android:id="@+id/login_user_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:midText="皮肤问答"
+        app:midTextSize="8sp"
+        app:leftDrawable="@mipmap/icon_title_back"
+        app:leftClick="back"
+        />
+
+    <WebView
+        android:id="@+id/web_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</LinearLayout>

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.kier.companytest.custom.TitleLayout
+    <com.embed.skin.custom.TitleLayout
         android:id="@+id/login_user_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

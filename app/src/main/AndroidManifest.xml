@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.kier.companytest">
+    package="com.embed.skin">
 
     <uses-sdk
         android:minSdkVersion="11"
@@ -22,13 +22,14 @@
         android:required="true" />
 
     <application
+        android:name=".ui.BaseApp"
         android:allowBackup="true"
         android:icon="@mipmap/bluetooth_show"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".ui.LoginActivity"
+            android:name="com.embed.skin.ui.HomeActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -36,16 +37,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.HomeActivity" android:screenOrientation="portrait" ></activity>
-        <activity android:name=".ui.HistoryListActivity" android:screenOrientation="portrait" ></activity>
-        <activity android:name=".ui.HistoryInfoActivity" android:screenOrientation="portrait" ></activity>
-        <activity android:name=".ui.BrandActivity" android:screenOrientation="portrait" ></activity>
-        <activity android:name=".ui.NewActivity" android:screenOrientation="portrait"></activity>
-        <activity android:name=".ui.MainActivity" android:screenOrientation="portrait"></activity>
-        <activity android:name=".ui.CameraActivity" android:screenOrientation="portrait"></activity>
-        <activity android:name=".ui.PreviewActivity" android:screenOrientation="portrait"></activity>
-        <activity android:name=".ui.SettingActivity" android:screenOrientation="portrait"></activity>
-        <activity android:name=".ui.MainActivityBg" android:screenOrientation="portrait"></activity>
+        <activity android:name="com.embed.skin.ui.LoginActivity" android:screenOrientation="portrait" ></activity>
+        <activity android:name="com.embed.skin.ui.HistoryListActivity" android:screenOrientation="portrait" ></activity>
+        <activity android:name="com.embed.skin.ui.HistoryInfoActivity" android:screenOrientation="portrait" ></activity>
+        <activity android:name="com.embed.skin.ui.BrandActivity" android:screenOrientation="portrait" ></activity>
+        <activity android:name="com.embed.skin.ui.NewActivity" android:screenOrientation="portrait"></activity>
+        <activity android:name="com.embed.skin.ui.MainActivity" android:screenOrientation="portrait"></activity>
+        <activity android:name="com.embed.skin.ui.CameraActivity" android:screenOrientation="portrait"></activity>
+        <activity android:name="com.embed.skin.ui.PreviewActivity" android:screenOrientation="portrait"></activity>
+        <activity android:name="com.embed.skin.ui.SettingActivity" android:screenOrientation="portrait"></activity>
+        <activity android:name="com.embed.skin.ui.MainActivityBg" android:screenOrientation="portrait"></activity>
+        <activity android:name="com.embed.skin.ui.WebviewActivity" android:screenOrientation="portrait"></activity>
+        <activity android:name="com.embed.skin.ui.UpdateActivity" android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

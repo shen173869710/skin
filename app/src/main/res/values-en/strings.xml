@@ -15,4 +15,16 @@
         For testing, please attach the test head to the skin during the test</string>
     <string name="testpro_5">Test complete</string>
     <string name="testpro_6">Zero reset</string>
+
+
+
+
+    <string name="main_item_1">皮肤测试仪器</string>
+    <string name="main_item_2">皮肤检测</string>
+    <string name="main_item_3">皮肤问答</string>
+    <string name="main_item_4">设置</string>
+
+    <string name="detect_item_1">水分 --></string>
+    <string name="detect_item_2">油分 --></string>
+    <string name="detect_item_3">弹性 --></string>
 </resources>

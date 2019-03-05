@@ -1,58 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
-
-    <com.kier.companytest.custom.TitleLayout
-        android:id="@+id/login_user_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:midText="首页"
-        app:midTextSize="8sp"
-        app:rightText="历史记录"
-        app:rightClick="rightClick"
-        app:leftTextSize="6sp"
-        />
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/line"></View>
-
+    android:background="@color/white"
+    android:orientation="vertical"
+    >
     <RelativeLayout
+        android:id="@+id/main_item_1"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="@mipmap/home_bg"
+        android:background="@color/main_item_1"
         >
-        <Button
-            android:id="@+id/base_bom"
-            android:layout_width="200dp"
+        <TextView
+            android:id="@+id/login_name"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/white"
             android:layout_centerHorizontal="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="30dp"
-            android:text="皮肤水分检测"
-            android:textSize="18sp"
+            android:textSize="@dimen/main_text_size_16"
+            android:layout_marginTop="10dp"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/main_item_1"
+            android:textColor="@color/white"
+            android:layout_centerInParent="true"
+            android:textSize="@dimen/main_text_size_24"
+            />
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/main_item_2"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/main_item_2"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/main_item_2"
+            android:textColor="@color/white"
+            android:layout_centerInParent="true"
+            android:textSize="@dimen/main_text_size_24"
+            />
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/main_item_3"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/main_item_3"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/main_item_3"
+            android:textColor="@color/white"
+            android:layout_centerInParent="true"
+            android:textSize="@dimen/main_text_size_24"
+            />
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/main_item_4"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/main_item_4"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/main_item_4"
+            android:textColor="@color/white"
+            android:layout_centerInParent="true"
+            android:textSize="@dimen/main_text_size_24"
             />
     </RelativeLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:background="@mipmap/home_bg"
-        android:layout_weight="1">
-        <Button
-            android:id="@+id/base_top"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="30dp"
-            android:text="脸部拍照"
-            android:textSize="18sp"
-            />
-    </RelativeLayout>
+
 </LinearLayout>
