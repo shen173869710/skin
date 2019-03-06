@@ -15,6 +15,7 @@ import com.embed.skin.custom.QcordDialog;
 import com.embed.skin.event.ImageEvent;
 import com.embed.skin.model.respone.BaseRespone;
 import com.embed.skin.presenter.UpdatePresenter;
+import com.embed.skin.ui.viewManager.DetectViewManager;
 import com.embed.skin.view.IUpdateView;
 
 import org.greenrobot.eventbus.EventBus;
@@ -24,14 +25,10 @@ import org.greenrobot.eventbus.ThreadMode;
 
 public class UpdateActivity extends LBaseActivity <UpdatePresenter>implements IUpdateView, View.OnClickListener{
 
-
-    private RecyclerView mRecyclerView;
-    private DetectAdapter mAdapter;
-
     private ImageView update_image_1;
     private ImageView update_image_2;
-    private Button update_detect;
     private Button update_comit;
+    private DetectViewManager detectViewManager;
 
     @Override
     protected int setLayout() {
@@ -42,25 +39,13 @@ public class UpdateActivity extends LBaseActivity <UpdatePresenter>implements IU
         EventBus.getDefault().register(this);
         update_image_1 = findViewById(R.id.update_image_1);
         update_image_2 = findViewById(R.id.update_image_2);
-        mRecyclerView = findViewById(R.id.update_list);
-        update_detect = findViewById(R.id.update_detect);
         update_comit = findViewById(R.id.update_comit);
-        if (BaseApp.canShow()) {
-            mRecyclerView.setVisibility(View.VISIBLE);
-            update_detect.setVisibility(View.GONE);
-        }else {
-            mRecyclerView.setVisibility(View.GONE);
-            update_detect.setVisibility(View.VISIBLE);
-        }
-        mRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));
-        mAdapter = new DetectAdapter(R.layout.detect_item, BaseApp.infos);
-        mRecyclerView.setAdapter(mAdapter);
+        detectViewManager = new DetectViewManager(this);
     }
 
     @Override
     protected void setListener() {
         update_comit.setOnClickListener(this);
-        update_detect.setOnClickListener(this);
         update_image_1.setOnClickListener(this);
         update_image_2.setOnClickListener(this);
     }
@@ -78,11 +63,8 @@ public class UpdateActivity extends LBaseActivity <UpdatePresenter>implements IU
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.update_detect:
-                break;
             case R.id.update_comit:
                 showUpdateDialog();
-
                 break;
             case R.id.update_image_1:
                 Intent intent = new Intent(UpdateActivity.this, CameraActivity.class);
@@ -122,4 +104,11 @@ public class UpdateActivity extends LBaseActivity <UpdatePresenter>implements IU
             update_image_2.setImageBitmap(bitmap);
         }
     };
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        detectViewManager.onResume();
+    }
 }

@@ -1,119 +1,182 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
+
     <com.embed.skin.custom.TitleLayout
         android:id="@+id/login_user_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:midText="上传资料"
-        app:midTextSize="8sp"
-        app:leftDrawable="@mipmap/icon_title_back"
         app:leftClick="back"
-        />
+        app:leftDrawable="@mipmap/icon_title_back"
+        app:midText="上传资料"
+        app:midTextSize="8sp" />
+
     <View
         android:layout_width="match_parent"
-        android:layout_height="1sp"
-        android:background="@color/bg"
-        ></View>
+        android:layout_height="1px"
+        android:background="@color/line"></View>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:orientation="horizontal"
-        android:padding="5dp"
-        >
+        android:padding="5dp">
+
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:orientation="vertical"
-            android:padding="5dp"
-            >
+            android:padding="5dp">
+
             <ImageView
                 android:id="@+id/update_image_1"
                 android:layout_width="match_parent"
                 android:layout_height="160dp"
-                android:background="@mipmap/img_add"
-                />
+                android:background="@mipmap/img_add" />
+
             <TextView
-                android:text="灯光1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/main_text_size_16"
-                android:textColor="@color/main_title"
                 android:layout_gravity="center"
-                />
+                android:text="灯光1"
+                android:textColor="@color/main_title"
+                android:textSize="@dimen/main_text_size_16" />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:orientation="vertical"
-            android:padding="5dp"
-            >
+            android:padding="5dp">
+
             <ImageView
                 android:id="@+id/update_image_2"
                 android:layout_width="match_parent"
                 android:layout_height="160dp"
-                android:background="@mipmap/img_add"
-                />
+                android:background="@mipmap/img_add" />
+
             <TextView
-                android:text="灯光2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/main_text_size_16"
-                android:textColor="@color/main_title"
                 android:layout_gravity="center"
-                />
+                android:text="灯光2"
+                android:textColor="@color/main_title"
+                android:textSize="@dimen/main_text_size_16" />
         </LinearLayout>
     </LinearLayout>
+
     <View
         android:layout_width="match_parent"
-        android:layout_height="1sp"
-        android:background="@color/bg"
-        ></View>
+        android:layout_height="1px"
+        android:background="@color/line"></View>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         >
+
         <Button
-            android:text="提交资料"
             android:id="@+id/update_comit"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="@drawable/main_button"
             android:layout_alignParentBottom="true"
+            android:layout_marginBottom="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:layout_marginBottom="10dp"
-            android:textColor="@color/white"
-            />
+            android:background="@drawable/main_button"
+            android:text="提交资料"
+            android:textColor="@color/white" />
+
         <RelativeLayout
+            android:id="@+id/update_detect_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@+id/update_comit"
-            android:layout_marginBottom="10dp"
-            >
+            android:layout_marginBottom="10dp">
+
             <Button
-                android:text="皮肤水分测试"
                 android:id="@+id/update_detect"
                 android:layout_width="200dp"
                 android:layout_height="50dp"
-                android:background="@drawable/main_button"
                 android:layout_centerInParent="true"
+                android:background="@drawable/main_button"
+                android:text="皮肤水分测试"
                 android:textColor="@color/white"
-                android:visibility="gone"
-                />
+                android:visibility="gone" />
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/update_list"
+            <LinearLayout
+                android:id="@+id/update_detect_item_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:visibility="gone"
-                />
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <include
+                        android:id="@+id/update_detect_item_0"
+                        layout="@layout/detect_item"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
+
+                    <View
+                        android:layout_width="1px"
+                        android:layout_height="match_parent"
+                        android:background="@color/line"></View>
+
+                    <include
+                        android:id="@+id/update_detect_item_1"
+                        layout="@layout/detect_item"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/line"></View>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <include
+                        android:id="@+id/update_detect_item_2"
+                        layout="@layout/detect_item"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
+
+                    <View
+                        android:layout_width="1px"
+                        android:layout_height="match_parent"
+                        android:background="@color/line"></View>
+
+                    <include
+                        android:id="@+id/update_detect_item_3"
+                        layout="@layout/detect_item"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/line"></View>
+            </LinearLayout>
         </RelativeLayout>
     </RelativeLayout>
 </LinearLayout>
