@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.embed.skin.R;
 import com.embed.skin.entity.DetectInfo;
 import com.embed.skin.ui.BaseApp;
+import com.embed.skin.ui.MainActivity;
 import com.embed.skin.ui.MainActivityBg;
 
 import java.util.ArrayList;

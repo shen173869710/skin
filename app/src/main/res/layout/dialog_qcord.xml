@@ -29,6 +29,7 @@
         android:background="@mipmap/icon_qcord" />
 
     <Button
+        android:id="@+id/qr_sub"
         android:text="提交"
         android:layout_width="180dp"
         android:layout_height="40dp"

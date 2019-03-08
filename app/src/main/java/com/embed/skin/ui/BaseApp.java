@@ -22,7 +22,7 @@ public class BaseApp extends Application{
         super.onCreate();
         infos = new ArrayList<>();
         for (int i = 0; i < 4; i++) {
-            infos.add(new DetectInfo(i,"","","",false));
+            infos.add(new DetectInfo(i,"未检测","未检测","未检测",false));
         }
     }
 
@@ -42,7 +42,7 @@ public class BaseApp extends Application{
 
     public static void clearDate() {
         for (int i = 0; i < 4; i++) {
-            infos.add(new DetectInfo(i,"","","",false));
+            infos.add(new DetectInfo(i,"未检测","未检测","未检测",false));
         }
     }
 

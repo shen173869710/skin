@@ -2,6 +2,7 @@ package com.embed.skin.custom;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.embed.skin.R;
+import com.embed.skin.ui.ResultActivity;
 
 
 public class QcordDialog extends Dialog {
@@ -32,6 +34,12 @@ public class QcordDialog extends Dialog {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         View view = LayoutInflater.from(getContext()).inflate(R.layout.dialog_qcord, null);
+        view.findViewById(R.id.qr_sub).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                context.startActivity(new Intent(context, ResultActivity.class));
+            }
+        });
         setContentView(view);
 
 //        Window win = getWindow();

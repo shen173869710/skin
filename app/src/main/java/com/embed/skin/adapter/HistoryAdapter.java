@@ -43,17 +43,17 @@ public class HistoryAdapter extends BaseAdapter {
         if (convertView == null) {
             holder = new ViewHolder();
             convertView = LayoutInflater.from(mContext).inflate(R.layout.history_list_item, null);
-            holder.history_name = (TextView) convertView.findViewById(R.id.history_name);
+            holder.history_item_date = (TextView) convertView.findViewById(R.id.history_item_date);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        holder.history_name.setText(list.get(position).name);
+        holder.history_item_date.setText(list.get(position).name);
         return  convertView;
     }
     class ViewHolder {
-        public TextView history_name;
+        public TextView history_item_date;
     }
 
 

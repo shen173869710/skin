@@ -33,12 +33,12 @@ public class HistoryListActivity extends Activity {
 		history_list = findViewById(R.id.history_list);
 
 		ArrayList<HistoryRespone>respones = new ArrayList<>();
-		respones.add(new HistoryRespone("1"));
-		respones.add(new HistoryRespone("2"));
-		respones.add(new HistoryRespone("3"));
-		respones.add(new HistoryRespone("4"));
-		respones.add(new HistoryRespone("5"));
-		respones.add(new HistoryRespone("6"));
+		respones.add(new HistoryRespone("2019/1/9"));
+		respones.add(new HistoryRespone("2019/2/9"));
+		respones.add(new HistoryRespone("2019/3/9"));
+		respones.add(new HistoryRespone("2019/4/9"));
+		respones.add(new HistoryRespone("2019/5/9"));
+		respones.add(new HistoryRespone("2019/6/9"));
 		history_list.setAdapter(new HistoryAdapter(this, respones));
 		history_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override

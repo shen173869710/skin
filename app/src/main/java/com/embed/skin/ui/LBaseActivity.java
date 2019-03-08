@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.view.Window;
 import android.widget.Toast;
 
@@ -93,5 +94,10 @@ public abstract class LBaseActivity<T extends BasePresenter> extends Activity im
 
     public void showToast(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
+
+    public void back(View view) {
+        finish();
     }
 }

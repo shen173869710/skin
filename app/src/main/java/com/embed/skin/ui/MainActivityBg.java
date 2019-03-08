@@ -25,6 +25,8 @@ import android.widget.Toast;
 
 import com.embed.skin.R;
 import com.embed.skin.ui.viewManager.MainViewManager;
+import com.embed.skin.util.BleAdvertisedData;
+import com.embed.skin.util.BleUtil;
 import com.embed.skin.util.ToastUtil;
 
 import java.util.ArrayList;
@@ -59,6 +61,8 @@ public class MainActivityBg extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_bg);
 
+
+        BaseApp.clearDate();
         bluetoothManager = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
         mBluetoothAdapter = bluetoothManager.getAdapter();
         main_status = findViewById(R.id.main_status);
@@ -175,9 +179,7 @@ public class MainActivityBg extends Activity {
             mBluetoothAdapter.stopLeScan(mLeScanCallback);
             if (mLeDevices.size() > 0) {
                 device = mBluetoothAdapter.getRemoteDevice(mLeDevices.get(0).getAddress());
-                Log.e("Apian", device.toString());
                 deviceTitle = mBluetoothAdapter.getRemoteDevice(mLeDevices.get(0).getAddress()).getName() + "";
-
                 if (deviceTitle.equals("XYL-BT") || deviceTitle.equals("het-31-8")) {
                     if (device != null) {
                         mBluetoothGatt = device.connectGatt(getApplication(), false, mGattCallback);

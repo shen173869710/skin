@@ -51,10 +51,10 @@ public class MainViewManager  implements View.OnClickListener{
 
     public void showEnd(String water, String oil, String elastic) {
         endAnim();
-        if (onItemSelect > 0) {
+        if (onItemSelect >= 0) {
             View view = views.get(onItemSelect);
             if (view != null) {
-                view.setVisibility(View.VISIBLE);
+                view.findViewById(R.id.main_item_layout).setVisibility(View.VISIBLE);
                 ((TextView)view.findViewById(R.id.main_item_water)).setText(water);
                 ((TextView)view.findViewById(R.id.main_item_oil)).setText(oil);
                 ((TextView)view.findViewById(R.id.main_item_elastic)).setText(elastic);

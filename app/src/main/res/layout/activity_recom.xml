@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.embed.skin.custom.TitleLayout
+        android:id="@+id/login_user_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:midText="商城"
+        app:midTextSize="8sp"
+        app:leftDrawable="@mipmap/icon_title_back"
+        app:leftClick="back"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/line"></View>
+
+</LinearLayout>

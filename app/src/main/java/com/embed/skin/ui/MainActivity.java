@@ -24,6 +24,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.embed.skin.R;
+import com.embed.skin.util.BleAdvertisedData;
+import com.embed.skin.util.BleUtil;
 import com.embed.skin.util.ToastUtil;
 
 import java.io.DataInputStream;
@@ -339,6 +341,14 @@ public class MainActivity extends Activity {
 
         @Override
         public void onLeScan(final BluetoothDevice device, int rssi, byte[] scanRecord) {
+
+            final BleAdvertisedData badata = BleUtil.parseAdertisedData(scanRecord);
+            String deviceName = device.getName();
+            if( deviceName == null ){
+                deviceName = badata.getName();
+                Log.e("++++++++++++", deviceName+"");
+            }
+
             mLeDevices.add(device);
             mRssi.setText(String.valueOf(rssi));
             mHandler.post(runnable);
@@ -352,9 +362,9 @@ public class MainActivity extends Activity {
             mBluetoothAdapter.stopLeScan(mLeScanCallback);
             if (mLeDevices.size() > 0) {
                 device = mBluetoothAdapter.getRemoteDevice(mLeDevices.get(0).getAddress());
-                Log.i("Apian", device.toString());
+                Log.e("-------------", device.toString()+device.getName());
                 deviceTitle = mBluetoothAdapter.getRemoteDevice(mLeDevices.get(0).getAddress()).getName() + "";
-
+                Log.e("-------------", "deviceTitle"+deviceTitle);
                 if (deviceTitle.equals("XYL-BT") || deviceTitle.equals("het-31-8")) {
                     if (device != null) {
                         mBlue_name.setText(deviceTitle);
