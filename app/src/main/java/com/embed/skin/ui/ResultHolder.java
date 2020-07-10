@@ -1,9 +1,10 @@
 package com.embed.skin.ui;
 
 
+import android.support.annotation.Nullable;
+
 import com.camerakit.CameraKitView;
 
-import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
 
