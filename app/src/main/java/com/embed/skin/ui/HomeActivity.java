@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.text.InputType;
 import android.view.View;
 import android.view.Window;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
@@ -16,10 +15,14 @@ import android.widget.Toast;
 import com.embed.skin.R;
 
 public class HomeActivity extends Activity implements View.OnClickListener{
+
+	private String TAG = "HomeActivity";
 	private RelativeLayout main_item_1;
 	private RelativeLayout main_item_2;
 	private RelativeLayout main_item_3;
 	private RelativeLayout main_item_4;
+
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -30,6 +33,7 @@ public class HomeActivity extends Activity implements View.OnClickListener{
 	}
 	
 	private void initUI() {
+
 		main_item_1 = findViewById(R.id.main_item_1);
 		main_item_2 = findViewById(R.id.main_item_2);
 		main_item_3 = findViewById(R.id.main_item_3);
@@ -82,5 +86,11 @@ public class HomeActivity extends Activity implements View.OnClickListener{
 				})
 				.setNegativeButton("取消", null)
 				.show();
+	}
+
+
+	@Override protected void onStop() {
+		super.onStop();
+		// 移除消息监听
 	}
 }
