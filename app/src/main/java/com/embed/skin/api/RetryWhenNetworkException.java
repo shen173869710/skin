@@ -1,6 +1,5 @@
 package com.embed.skin.api;
 
-import android.support.annotation.NonNull;
 
 
 import com.embed.skin.util.LogUtils;
@@ -11,6 +10,7 @@ import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
+import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Function;
 
 

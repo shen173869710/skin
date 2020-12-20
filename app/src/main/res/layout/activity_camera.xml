@@ -22,18 +22,7 @@
         android:layout_height="1dp"
         android:background="@color/line"></View>
 
-    <com.camerakit.CameraKitView
-        android:layout_below="@+id/line"
-        android:id="@+id/camera"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:adjustViewBounds="true"
-        android:keepScreenOn="true"
-        app:camera_facing="back"
-        app:camera_flash="auto"
-        app:camera_focus="continuous"
-        app:camera_permissions="camera"
-        camerakit:ckFacing="front" />
+
 
 
     <LinearLayout

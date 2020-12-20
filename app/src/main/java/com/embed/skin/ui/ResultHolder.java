@@ -1,7 +1,8 @@
 package com.embed.skin.ui;
 
 
-import android.support.annotation.Nullable;
+
+import androidx.annotation.Nullable;
 
 import com.camerakit.CameraKitView;
 

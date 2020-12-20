@@ -4,14 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.camerakit.CameraKitView;
-import com.camerakit.api.CameraEvents;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.embed.skin.R;
 import com.embed.skin.event.ImageEvent;
 import com.embed.skin.util.LogUtils;
@@ -35,7 +33,6 @@ public class CameraActivity extends AppCompatActivity {
     private final String OPEN_2 = "5_C1_1_1";
     private final String CLOSE_2 = "5_C1_1_0";
 
-    private CameraKitView cameraKitView;
     private ImageView btn1;
     private ImageView btn2;
     private ImageView camera_ok;
@@ -65,7 +62,6 @@ public class CameraActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
-        cameraKitView = findViewById(R.id.camera);
 
         EventBus.getDefault().register(this);
 
@@ -113,22 +109,22 @@ public class CameraActivity extends AppCompatActivity {
         camera_ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                cameraKitView.captureImage(new CameraKitView.ImageCallback() {
-                    @Override
-                    public void onImage(CameraKitView cameraKitView, final byte[] bytes) {
-                        Log.e("--------", "--" + bytes.length);
-                        Message message = new Message();
-                        if (image_type == 0) {
-                            message.what = 0;
-                        } else if (image_type == 1) {
-                            message.what = 1;
-                        } else if (image_type == 2) {
-                            message.what = 2;
-                        }
-                        message.obj = bytes;
-                        mHandler.sendMessage(message);
-                    }
-                });
+//                cameraKitView.captureImage(new CameraKitView.ImageCallback() {
+//                    @Override
+//                    public void onImage(CameraKitView cameraKitView, final byte[] bytes) {
+//                        Log.e("--------", "--" + bytes.length);
+//                        Message message = new Message();
+//                        if (image_type == 0) {
+//                            message.what = 0;
+//                        } else if (image_type == 1) {
+//                            message.what = 1;
+//                        } else if (image_type == 2) {
+//                            message.what = 2;
+//                        }
+//                        message.obj = bytes;
+//                        mHandler.sendMessage(message);
+//                    }
+//                });
             }
         });
     }
@@ -158,31 +154,27 @@ public class CameraActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        cameraKitView.onStart();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        cameraKitView.onResume();
     }
 
     @Override
     protected void onPause() {
-        cameraKitView.onPause();
         super.onPause();
     }
 
     @Override
     protected void onStop() {
-        cameraKitView.onStop();
         super.onStop();
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        cameraKitView.onRequestPermissionsResult(requestCode, permissions, grantResults);
+//        cameraKitView.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
     public void back(View view) {

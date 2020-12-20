@@ -1,7 +1,6 @@
 package com.embed.skin.api;
 
 
-import android.support.annotation.NonNull;
 
 import io.reactivex.Flowable;
 import io.reactivex.processors.FlowableProcessor;

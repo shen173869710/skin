@@ -5,8 +5,6 @@ import android.content.Context;
 
 import com.embed.skin.entity.DetectInfo;
 import com.embed.skin.entity.UserInfo;
-import com.hyphenate.chat.EMClient;
-import com.hyphenate.chat.EMOptions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +15,7 @@ import java.util.List;
 
 public class BaseApp extends Application{
 
-    public static List<DetectInfo> infos;
+    public static List<DetectInfo> infos = new ArrayList<>();
     public static UserInfo userInfo;
     private static BaseApp mBaseApp;
     private static Context mContext=null;//上下文
@@ -28,7 +26,7 @@ public class BaseApp extends Application{
     @Override
     public void onCreate() {
         super.onCreate();
-
+        BaseApp.clearDate();
 
     }
 

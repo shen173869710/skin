@@ -3,22 +3,16 @@ package com.embed.skin.ui;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-
 import com.embed.skin.R;
-import com.embed.skin.adapter.DetectAdapter;
 import com.embed.skin.custom.QcordDialog;
 import com.embed.skin.event.ImageEvent;
 import com.embed.skin.model.respone.BaseRespone;
 import com.embed.skin.presenter.UpdatePresenter;
 import com.embed.skin.ui.viewManager.DetectViewManager;
 import com.embed.skin.view.IUpdateView;
-
-import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -36,10 +30,9 @@ public class UpdateActivity extends LBaseActivity <UpdatePresenter>implements IU
     }
 
     protected void init() {
-        EventBus.getDefault().register(this);
-        update_image_1 = findViewById(R.id.update_image_1);
-        update_image_2 = findViewById(R.id.update_image_2);
-        update_comit = findViewById(R.id.update_comit);
+        update_image_1 = (ImageView) findViewById(R.id.update_image_1);
+        update_image_2 = (ImageView) findViewById(R.id.update_image_2);
+        update_comit = (Button) findViewById(R.id.update_comit);
         detectViewManager = new DetectViewManager(this);
     }
 
@@ -111,4 +104,5 @@ public class UpdateActivity extends LBaseActivity <UpdatePresenter>implements IU
         super.onResume();
         detectViewManager.onResume();
     }
+
 }

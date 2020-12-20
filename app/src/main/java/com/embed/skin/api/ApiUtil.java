@@ -39,7 +39,7 @@ public class ApiUtil {
                 .setLenient()
                 .create();
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://www.baidu.com")
+                .baseUrl("http://129.28.180.77:11111")
                 .client(client)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())

@@ -13,14 +13,11 @@
     <string name="testpro_4">重新测试，请在测试过程中将测试头紧贴皮肤，不要抖动</string>
     <string name="testpro_5">测试完成</string>
     <string name="testpro_6">清零中</string>
-
     <string name="testpro_start">开始检测</string>
-
-    <string name="main_item_1">皮肤测试仪器</string>
+    <string name="main_item_1">皮肤拍照</string>
     <string name="main_item_2">皮肤检测</string>
     <string name="main_item_3">皮肤问答</string>
     <string name="main_item_4">设置</string>
-
     <string name="detect_item_1">水分 --></string>
     <string name="detect_item_2">油分 --></string>
     <string name="detect_item_3">弹性 --></string>

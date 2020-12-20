@@ -62,7 +62,6 @@ public class MainActivityBg extends Activity {
         setContentView(R.layout.activity_main_bg);
 
 
-        BaseApp.clearDate();
         bluetoothManager = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
         mBluetoothAdapter = bluetoothManager.getAdapter();
         main_status = findViewById(R.id.main_status);

@@ -15,7 +15,7 @@ import com.embed.skin.view.IUpdateView;
 
 public class UpdatePresenter extends BasePresenter<IUpdateView>{
 
-    /**登录请求**/
+    /**上传图片**/
     public void doUpdate() {
        final LoginRequest request = new LoginRequest();
 

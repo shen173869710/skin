@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!--标题-->
     <declare-styleable name="TitleLayout">
         <attr name="leftDrawable" format="reference" />
         <attr name="leftDrawablePadding" format="dimension" />
@@ -34,7 +33,7 @@
         <attr name="rightTextColor" format="color" />
         <attr name="rightTextSize" format="dimension" />
         <attr name="rightClick" format="string" />
-        右边数，第二个view
+
         <attr name="right2Drawable" format="reference" />
         <attr name="right2DrawablePadding" format="dimension" />
         <attr name="right2Padding" format="dimension" />
@@ -68,23 +67,23 @@
         <attr name="expectedWidth" format="integer" />
     </declare-styleable>
     <!--聊天消息，附带时间和状态-->
-    <declare-styleable name="MessageStateView">
-        <!--内容-->
-        <attr name="content" format="string" />
-        <attr name="contentSize" format="dimension" />
-        <attr name="contentMaxWidth" format="dimension" />
-        <attr name="contentMinHeight" format="dimension" />
-        <attr name="contentColor" format="color" />
-        <attr name="contentLineSpacingMultiplier" format="float" />
-        <!--时间、状态-->
-        <attr name="time" format="string" />
-        <attr name="timeLeftPadding" format="dimension" />
-        <attr name="timeRightPadding" format="dimension" />
-        <attr name="timeTopPadding" format="dimension" />
-        <attr name="timeBottomPadding" format="dimension" />
-        <attr name="timeSize" format="dimension" />
-        <attr name="timeStatePadding" format="dimension" />
-        <attr name="timeColor" format="color" />
-        <attr name="state" format="reference" />
-    </declare-styleable>
+<!--    <declare-styleable name="MessageStateView">-->
+<!--        &lt;!&ndash;内容&ndash;&gt;-->
+<!--        <attr name="content" format="string" />-->
+<!--        <attr name="contentSize" format="dimension" />-->
+<!--        <attr name="contentMaxWidth" format="dimension" />-->
+<!--        <attr name="contentMinHeight" format="dimension" />-->
+<!--        <attr name="contentColor" format="color" />-->
+<!--        <attr name="contentLineSpacingMultiplier" format="float" />-->
+<!--        &lt;!&ndash;时间、状态&ndash;&gt;-->
+<!--        <attr name="time" format="string" />-->
+<!--        <attr name="timeLeftPadding" format="dimension" />-->
+<!--        <attr name="timeRightPadding" format="dimension" />-->
+<!--        <attr name="timeTopPadding" format="dimension" />-->
+<!--        <attr name="timeBottomPadding" format="dimension" />-->
+<!--        <attr name="timeSize" format="dimension" />-->
+<!--        <attr name="timeStatePadding" format="dimension" />-->
+<!--        <attr name="timeColor" format="color" />-->
+<!--        <attr name="state" format="reference" />-->
+<!--    </declare-styleable>-->
 </resources>
