@@ -59,13 +59,13 @@
     </declare-styleable>
 
     <!--重叠ImageView-->
-    <declare-styleable name="Overlap">
-        <!--需要的背景形状-->
-        <attr name="dstBg" format="reference" />
-        <attr name="maxWidth" format="integer" />
-        <attr name="minWidth" format="integer" />
-        <attr name="expectedWidth" format="integer" />
-    </declare-styleable>
+<!--    <declare-styleable name="Overlap">-->
+<!--        &lt;!&ndash;需要的背景形状&ndash;&gt;-->
+<!--        <attr name="dstBg" format="reference" />-->
+<!--        <attr name="maxWidth" format="integer" />-->
+<!--        <attr name="minWidth" format="integer" />-->
+<!--        <attr name="expectedWidth" format="integer" />-->
+<!--    </declare-styleable>-->
     <!--聊天消息，附带时间和状态-->
 <!--    <declare-styleable name="MessageStateView">-->
 <!--        &lt;!&ndash;内容&ndash;&gt;-->

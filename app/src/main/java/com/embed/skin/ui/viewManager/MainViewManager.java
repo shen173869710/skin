@@ -1,7 +1,6 @@
 package com.embed.skin.ui.viewManager;
 
 import android.app.Activity;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -19,7 +18,7 @@ import java.util.ArrayList;
 public class MainViewManager  implements View.OnClickListener{
 
     private Activity activity;
-    private View main_item_0;
+//    private View main_item_0;
     private View main_item_1;
     private View main_item_2;
     private View main_item_3;
@@ -30,11 +29,11 @@ public class MainViewManager  implements View.OnClickListener{
 
     public MainViewManager(Activity ac) {
         activity = ac;
-        main_item_0 = ac.findViewById(R.id.main_item_0);
+//        main_item_0 = ac.findViewById(R.id.main_item_0);
         main_item_1 = ac.findViewById(R.id.main_item_1);
         main_item_2 = ac.findViewById(R.id.main_item_2);
         main_item_3 = ac.findViewById(R.id.main_item_3);
-        views.add(main_item_0);
+//        views.add(main_item_0);
         views.add(main_item_1);
         views.add(main_item_2);
         views.add(main_item_3);
@@ -42,7 +41,7 @@ public class MainViewManager  implements View.OnClickListener{
     }
 
     private void setOnclicklisten() {
-        main_item_0.setOnClickListener(this);
+//        main_item_0.setOnClickListener(this);
         main_item_1.setOnClickListener(this);
         main_item_2.setOnClickListener(this);
         main_item_3.setOnClickListener(this);
@@ -55,6 +54,15 @@ public class MainViewManager  implements View.OnClickListener{
             View view = views.get(onItemSelect);
             if (view != null) {
                 view.findViewById(R.id.main_item_layout).setVisibility(View.VISIBLE);
+                String name = "";
+                if (onItemSelect == 0) {
+                    name = "额头";
+                }else if (onItemSelect == 1) {
+                    name = "左脸";
+                }else if (onItemSelect == 2) {
+                    name = "右脸";
+                }
+                ((TextView)view.findViewById(R.id.main_item_name)).setText(name);
                 ((TextView)view.findViewById(R.id.main_item_water)).setText(water);
                 ((TextView)view.findViewById(R.id.main_item_oil)).setText(oil);
                 ((TextView)view.findViewById(R.id.main_item_elastic)).setText(elastic);
@@ -70,21 +78,21 @@ public class MainViewManager  implements View.OnClickListener{
     public void onClick(View v) {
         View view = null;
         switch (v.getId()) {
-            case R.id.main_item_0:
-                view = main_item_0;
-                onItemSelect = 0;
-                break;
+//            case R.id.main_item_0:
+//                view = main_item_0;
+//                onItemSelect = 0;
+//                break;
             case R.id.main_item_1:
                 view = main_item_1;
-                onItemSelect = 1;
+                onItemSelect = 0;
                 break;
             case R.id.main_item_2:
                 view = main_item_2;
-                onItemSelect = 2;
+                onItemSelect = 1;
                 break;
             case R.id.main_item_3:
                 view = main_item_3;
-                onItemSelect = 3;
+                onItemSelect = 2;
                 break;
         }
         cleanSel();

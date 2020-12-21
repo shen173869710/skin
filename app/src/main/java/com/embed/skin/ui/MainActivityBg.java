@@ -161,9 +161,7 @@ public class MainActivityBg extends Activity {
     }
 
 
-    private BluetoothAdapter.LeScanCallback mLeScanCallback = new BluetoothAdapter.LeScanCallback
-            () {
-
+    private BluetoothAdapter.LeScanCallback mLeScanCallback = new BluetoothAdapter.LeScanCallback() {
         @Override
         public void onLeScan(final BluetoothDevice device, int rssi, byte[] scanRecord) {
             mLeDevices.add(device);
@@ -376,13 +374,9 @@ public class MainActivityBg extends Activity {
 
     private void displayGattServices(List<BluetoothGattService> gattServices) {
         if (gattServices == null) return;
-
         // Loops through available GATT Services.
         for (BluetoothGattService gattService : gattServices) {
-
-            List<BluetoothGattCharacteristic> gattCharacteristics = gattService
-                    .getCharacteristics();
-
+            List<BluetoothGattCharacteristic> gattCharacteristics = gattService.getCharacteristics();
             // Loops through available Characteristics.
             for (BluetoothGattCharacteristic gattCharacteristic : gattCharacteristics) {
                 final int charaProp = gattCharacteristic.getProperties();
@@ -417,10 +411,8 @@ public class MainActivityBg extends Activity {
     }
 
     private void WriteBleData(String sUuid, String cUuid, byte[] aa, int len) {
-
         byte[] value = new byte[20];
         value[0] = (byte) 0x00;
-
         if (mIsConnect == false) {
             return;
         }

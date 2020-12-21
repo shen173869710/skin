@@ -42,17 +42,17 @@
             android:layout_weight="1"
             android:orientation="horizontal">
 
-            <include
-                android:id="@+id/main_item_0"
-                layout="@layout/activity_main_item"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:descendantFocusability="blocksDescendants" />
-            <View
-                android:layout_width="1px"
-                android:layout_height="match_parent"
-                android:background="@color/line"></View>
+<!--            <include-->
+<!--                android:id="@+id/main_item_0"-->
+<!--                layout="@layout/activity_main_item"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:layout_weight="1"-->
+<!--                android:descendantFocusability="blocksDescendants" />-->
+<!--            <View-->
+<!--                android:layout_width="1px"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:background="@color/line"></View>-->
             <include
                 android:id="@+id/main_item_1"
                 layout="@layout/activity_main_item"

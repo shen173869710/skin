@@ -53,7 +53,7 @@ public class HomeActivity extends Activity implements View.OnClickListener{
 				startActivity(new Intent(HomeActivity.this, PreviewActivity.class));
 				break;
 			case R.id.main_item_2:
-				startActivity(new Intent(HomeActivity.this, UpdateActivity.class));
+				startActivity(new Intent(HomeActivity.this, MainActivity.class));
 				break;
 			case R.id.main_item_3:
 				startActivity(new Intent(HomeActivity.this, WebviewActivity.class));

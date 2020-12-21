@@ -33,7 +33,7 @@ public class BaseApp extends Application{
 
     public static boolean canShow() {
         boolean canShow = false;
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 3; i++) {
             if (infos.get(i).isSel) {
                 canShow = true;
                 break;
@@ -45,7 +45,7 @@ public class BaseApp extends Application{
     }
 
     public static void clearDate() {
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 3; i++) {
             infos.add(new DetectInfo(i,"未检测","未检测","未检测",false));
         }
     }
