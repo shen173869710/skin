@@ -23,7 +23,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-public class ResultActivity extends LBaseActivity<LoginPresenter> implements ILoginView {
+public class ResultActivity extends BaseActivity<LoginPresenter> implements ILoginView {
 
 
     @BindView(R.id.result_score)
@@ -83,8 +83,8 @@ public class ResultActivity extends LBaseActivity<LoginPresenter> implements ILo
     }
 
     @Override
-    public void createPresenter() {
-        mPresenter = new LoginPresenter();
+    public LoginPresenter createPresenter() {
+        return new LoginPresenter();
     }
 
 

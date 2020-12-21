@@ -26,7 +26,9 @@ import org.greenrobot.eventbus.ThreadMode;
 import butterknife.ButterKnife;
 import io.reactivex.functions.Consumer;
 
-public abstract class IBaseActivity<T extends BasePresenter> extends RxAppCompatActivity implements BaseView {
+public abstract class BaseActivity<T extends BasePresenter> extends RxAppCompatActivity implements BaseView {
+
+	public String TAG = "";
 	protected T mPresenter;
 	private LoadingDialog mLoadingDailog;
 	@Override
@@ -40,6 +42,7 @@ public abstract class IBaseActivity<T extends BasePresenter> extends RxAppCompat
 		if (mPresenter != null) {
 			mPresenter.attachView(this);
 		}
+		TAG = this.getClass().getSimpleName();
 		requestPermissions();
 //		ActivityStackUtil.add(this);
 		init();

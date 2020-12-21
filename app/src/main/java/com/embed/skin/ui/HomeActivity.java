@@ -50,7 +50,7 @@ public class HomeActivity extends Activity implements View.OnClickListener{
 	public void onClick(View v) {
 		switch (v.getId()) {
 			case R.id.main_item_1:
-				startActivity(new Intent(HomeActivity.this, PreviewActivity.class));
+				startActivity(new Intent(HomeActivity.this, USBCameraActivity.class));
 				break;
 			case R.id.main_item_2:
 				startActivity(new Intent(HomeActivity.this, MainActivity.class));

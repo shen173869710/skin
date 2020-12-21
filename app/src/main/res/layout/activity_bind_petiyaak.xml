@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <com.embed.skin.custom.TitleLayout
+        android:id="@+id/bind_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:midText="蓝牙连接"
+        app:midTextSize="8sp"
+        app:leftDrawable="@mipmap/icon_title_back"
+        app:right2Drawable="@mipmap/btn_ser_n"
+        app:leftClick="back"
+        app:right2Click="right2Click"
+        />
+    <View
+        android:id="@+id/line"
+        android:layout_below="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/line"></View>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/bluelist"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="@null"
+            android:layout_marginBottom="80dp"
+            android:scrollbars="none"/>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="20dp"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal"
+            >
+            <TextView
+                android:id="@+id/bind_bluetooth"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="50dp"
+                android:background="@drawable/login_button_sel"
+                android:text="开关1"
+                android:textSize="@dimen/sp_16"
+                android:gravity="center"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/bind_bluetooth_1"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="50dp"
+                android:layout_marginLeft="20dp"
+                android:background="@drawable/login_button_sel"
+                android:text="开关2"
+                android:textSize="@dimen/sp_16"
+                android:gravity="center"
+                android:textColor="@color/white" />
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+</LinearLayout>

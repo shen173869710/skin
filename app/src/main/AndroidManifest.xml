@@ -41,7 +41,7 @@
             </intent-filter>
         </activity>
         <activity android:name="com.embed.skin.ui.LoginActivity" android:screenOrientation="landscape" ></activity>
-<!--        <activity android:name="com.embed.skin.ui.USBCameraActivity" android:screenOrientation="portrait" ></activity>-->
+        <activity android:name="com.embed.skin.ui.USBCameraActivity" android:screenOrientation="landscape" ></activity>
         <activity android:name="com.embed.skin.ui.HistoryListActivity" android:screenOrientation="landscape" ></activity>
         <activity android:name="com.embed.skin.ui.HistoryInfoActivity" android:screenOrientation="landscape" ></activity>
         <activity android:name="com.embed.skin.ui.BrandActivity" android:screenOrientation="landscape" ></activity>
@@ -55,6 +55,7 @@
         <activity android:name="com.embed.skin.ui.UpdateActivity" android:screenOrientation="landscape"></activity>
         <activity android:name="com.embed.skin.ui.ResultActivity" android:screenOrientation="landscape"></activity>
         <activity android:name="com.embed.skin.ui.RecomActivity" android:screenOrientation="landscape"></activity>
+        <activity android:name="com.embed.skin.ui.BindPetiyaakActivity" android:screenOrientation="landscape"></activity>
     </application>
 
 </manifest>

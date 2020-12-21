@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+
 import com.embed.skin.R;
 import com.embed.skin.custom.QcordDialog;
 import com.embed.skin.event.ImageEvent;
@@ -13,11 +14,12 @@ import com.embed.skin.model.respone.BaseRespone;
 import com.embed.skin.presenter.UpdatePresenter;
 import com.embed.skin.ui.viewManager.DetectViewManager;
 import com.embed.skin.view.IUpdateView;
+
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 
-public class UpdateActivity extends LBaseActivity <UpdatePresenter>implements IUpdateView, View.OnClickListener{
+public class UpdateActivity extends BaseActivity <UpdatePresenter>implements IUpdateView, View.OnClickListener{
 
     private ImageView update_image_1;
     private ImageView update_image_2;
@@ -44,8 +46,8 @@ public class UpdateActivity extends LBaseActivity <UpdatePresenter>implements IU
     }
 
     @Override
-    public void createPresenter() {
-        mPresenter = new UpdatePresenter();
+    public UpdatePresenter createPresenter() {
+       return new UpdatePresenter();
     }
 
 

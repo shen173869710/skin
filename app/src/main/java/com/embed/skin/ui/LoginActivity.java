@@ -14,7 +14,7 @@ import com.embed.skin.util.ShareUtil;
 import com.embed.skin.view.ILoginView;
 
 
-public class LoginActivity extends LBaseActivity <LoginPresenter> implements ILoginView {
+public class LoginActivity extends BaseActivity <LoginPresenter> implements ILoginView {
 
     private EditText login_input_username;
     private Button login_del_username;
@@ -73,8 +73,8 @@ public class LoginActivity extends LBaseActivity <LoginPresenter> implements ILo
     }
 
     @Override
-    public void createPresenter() {
-        mPresenter = new LoginPresenter();
+    public LoginPresenter createPresenter() {
+        return new LoginPresenter();
     }
 
 

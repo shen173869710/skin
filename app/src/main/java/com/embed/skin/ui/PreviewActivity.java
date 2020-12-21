@@ -17,7 +17,7 @@ import butterknife.BindView;
 /**
  * 预览图片
  */
-public class PreviewActivity extends IBaseActivity<PreviewPresenter> implements IPreviewView {
+public class PreviewActivity extends BaseActivity<PreviewPresenter> implements IPreviewView {
 
     @BindView(R.id.image)
     ImageView image;

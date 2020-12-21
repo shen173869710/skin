@@ -4,23 +4,31 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ff000000"
+    android:background="@color/white"
     tools:ignore="MergeRootFrame">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
+    <com.embed.skin.custom.TitleLayout
+        android:id="@+id/camera_title"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/colorPrimary"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:navigationIcon="@null"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+        android:layout_height="wrap_content"
+        app:midText="拍照"
+        app:midTextSize="8sp"
+        app:leftDrawable="@mipmap/icon_title_back"
+        app:right2Drawable="@mipmap/bluetooth_blank"
+        app:leftClick="back"
+        app:right2Click="right2Click"
+        />
 
+    <View
+        android:id="@+id/line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/camera_title"
+        android:background="@color/line"></View>
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/toolbar">
-
+        android:layout_below="@id/line">
         <com.serenegiant.usb.widget.UVCCameraTextureView
             android:id="@+id/camera_view"
             android:layout_width="match_parent"

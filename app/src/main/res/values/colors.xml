@@ -13,7 +13,7 @@
     <color name="btn_main_p">#20a59a</color>
 
     <color name="transparent">#00000000</color>
-
+    <color name="button_yellow">#1890FF</color>
     <!-- main——tab-->
     <color name="main_item_1">#008EFF</color>
     <color name="main_item_2">#2dd989</color>

@@ -16,9 +16,7 @@ import java.util.List;
 public class BaseApp extends Application{
 
     public static List<DetectInfo> infos = new ArrayList<>();
-    public static UserInfo userInfo;
     private static BaseApp mBaseApp;
-    private static Context mContext=null;//上下文
 
     public static BaseApp getInstance() {
         return mBaseApp;
@@ -26,10 +24,10 @@ public class BaseApp extends Application{
     @Override
     public void onCreate() {
         super.onCreate();
+        mBaseApp = this;
         BaseApp.clearDate();
 
     }
-
 
     public static boolean canShow() {
         boolean canShow = false;
