@@ -36,7 +36,7 @@ public class HttpUpLoadFile {
             public void onNext(Object o) {
                 BaseRespone respone =  (BaseRespone) o;
                 if (respone != null && respone.isOk()) {
-                    UploadFileRespone uploadFileRespones = (UploadFileRespone) respone.data;
+                    UploadFileRespone uploadFileRespones = (UploadFileRespone) respone.getResult();
                     if(mListener != null){
                         mListener.upLoadFileSuccess(uploadFileRespones.images);
                     }

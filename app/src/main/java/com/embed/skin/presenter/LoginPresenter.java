@@ -24,8 +24,8 @@ public class LoginPresenter extends BasePresenter<ILoginView>{
         doHttpTaskWihtDialog(getApiService().login(request.toJson()), new HttpManager.OnResultListener() {
             @Override
             public void onSuccess(BaseRespone respone) {
-                if(respone != null && respone.data != null){
-                    LoginRespone loginRespone = (LoginRespone) respone.data;
+                if(respone != null && respone.getResult() != null){
+                    LoginRespone loginRespone = (LoginRespone) respone.getResult();
 
                 }
             }

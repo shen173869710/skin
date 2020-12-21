@@ -45,7 +45,7 @@ public class HttpManager {
                         if (respone == null) {
                             msg = "respone  == null";
                         }else {
-                            msg = "r  = "+respone.ret;
+                            msg = "r  = "+respone.getMsg();
                         }
                         onResultListener.onError(new Exception() , msg);
                     }
@@ -101,7 +101,7 @@ public class HttpManager {
                         if (respone == null) {
                             msg = null;
                         }else {
-                            msg = respone.ret;
+                            msg = respone.getMsg();
                         }
                         onResultListener.onError(null, msg);
                     }
@@ -149,7 +149,7 @@ public class HttpManager {
                         if (respone == null) {
                             msg = "respone  == null";
                         }else {
-                            msg = "r  = "+respone.ret;
+                            msg = "r  = "+respone.getMsg();
                         }
                         onResultListener.onError(new Exception() , msg);
                     }
@@ -190,7 +190,7 @@ public class HttpManager {
                     if (respone == null) {
                         msg = "respone  == null";
                     }else {
-                        msg = "r  = "+respone.ret;
+                        msg = "r  = "+respone.getMsg();
                     }
                     onResultListener.onError(new Exception() , msg);
                 }

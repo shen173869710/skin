@@ -1,8 +1,9 @@
 package com.embed.skin.entity;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class PreviewResult {
+public class PreviewResult implements Serializable {
     private float score;
     private ResultMetrics metrics;
     private List<ResultFeature>features;

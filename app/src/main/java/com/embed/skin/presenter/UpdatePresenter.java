@@ -25,7 +25,7 @@ public class UpdatePresenter extends BasePresenter<IUpdateView>{
         doHttpTaskWihtDialog(getApiService().login(request.toJson()), new HttpManager.OnResultListener() {
             @Override
             public void onSuccess(BaseRespone respone) {
-                if(respone != null && respone.data != null){
+                if(respone != null && respone.getResult() != null){
                     getBaseView().updateSuccess(respone);
 
                 }

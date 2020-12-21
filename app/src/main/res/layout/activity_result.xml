@@ -4,33 +4,93 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-
     <com.embed.skin.custom.TitleLayout
         android:id="@+id/login_user_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:midText="上报结果"
-        app:midTextSize="8sp"
-        app:leftDrawable="@mipmap/icon_title_back"
         app:leftClick="back"
-        app:rightText="历史记录"
-        app:rightClick="rightClick"
-        />
+        app:leftDrawable="@mipmap/icon_title_back"
+        app:midText="上报结果"
+        app:midTextSize="@dimen/main_title_size"
+        app:rightClick="rightClick" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/line" />
+    <TextView
+        android:id="@+id/result_score"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:textColor="@color/colorAccent"
+        android:maxLength="7"
+        android:layout_gravity="center"
+        android:padding="5dp"
+        ></TextView>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        >
+        <ImageView
+            android:id="@+id/result_head"
+            android:layout_width="54dp"
+            android:layout_height="96dp"
+            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_toRightOf="@+id/result_head"
+            android:layout_marginLeft="10dp"
+            android:layout_centerVertical="true"
+            >
+
+            <TextView
+                android:id="@+id/result_rank"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:gravity="center"
+
+                ></TextView>
+            <TextView
+                android:id="@+id/result_faceStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:gravity="center"
+                ></TextView>
+            <TextView
+                android:id="@+id/result_age"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:gravity="center"
+                ></TextView>
+        </LinearLayout>
+    </RelativeLayout>
+
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/line"></View>
-    <RelativeLayout
+        android:background="@color/line" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/result_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        >
-        <ImageView
-            android:id="@+id/result_image"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@mipmap/bottom"
-            android:layout_alignParentBottom="true"
-            />
-    </RelativeLayout>
+        android:divider="@null"
+        android:scrollbars="none" />
+    <!--    <RelativeLayout-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="match_parent"-->
+    <!--        >-->
+    <!--        <ImageView-->
+    <!--            android:id="@+id/result_image"-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="50dp"-->
+    <!--            android:background="@mipmap/bottom"-->
+    <!--            android:layout_alignParentBottom="true"-->
+    <!--            />-->
+    <!--    </RelativeLayout>-->
 </LinearLayout>

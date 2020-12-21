@@ -1,6 +1,8 @@
 package com.embed.skin.entity;
 
-public class ResultFeature {
+import java.io.Serializable;
+
+public class ResultFeature implements Serializable {
     private String name;
     private String description;
     private int evaluate;

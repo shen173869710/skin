@@ -4,6 +4,7 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
 
+    <color name="black">#000000</color>
     <color name="bg">#60000000</color>
 
     <color name="white">#FFFFFF</color>
@@ -11,7 +12,7 @@
     <color name="line">#e5e5e5</color>
     <color name="btn_main_p">#20a59a</color>
 
-
+    <color name="transparent">#00000000</color>
 
     <!-- main——tab-->
     <color name="main_item_1">#008EFF</color>

@@ -3,18 +3,18 @@ package com.embed.skin.presenter;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.text.TextUtils;
 import android.util.Base64;
 
 import com.embed.skin.R;
 import com.embed.skin.entity.PreviewRespone;
 import com.embed.skin.entity.PreviewResult;
+import com.embed.skin.model.respone.BaseRespone;
+import com.embed.skin.ui.PreviewActivity;
 import com.embed.skin.util.LogUtils;
-import com.embed.skin.view.IUpdateView;
+import com.embed.skin.view.IPreviewView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
@@ -35,7 +35,7 @@ import okhttp3.logging.HttpLoggingInterceptor;
 /**
  *
  */
-public class PreviewPresenter extends BasePresenter<IUpdateView> {
+public class PreviewPresenter extends BasePresenter<IPreviewView> {
 
     /**
      * 上传图片
@@ -81,7 +81,7 @@ public class PreviewPresenter extends BasePresenter<IUpdateView> {
         }).start();
     }
 
-    public void uploadImgByOkHttp(Context context) {
+    public void uploadImgByOkHttp(PreviewActivity context) {
         HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
             @Override
             public void log(String message) {
@@ -108,10 +108,13 @@ public class PreviewPresenter extends BasePresenter<IUpdateView> {
                 .addHeader("content-type", "application/x-www-form-urlencoded")
                 .addHeader("cache-control", "no-cache")
                 .build();
+
+        context.showDialog();
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
                 LogUtils.e("PreviewPresenter","onFailure"+e.getMessage());
+                getBaseView().updateFail(null, ""+e.getMessage());
             }
 
             @Override
@@ -120,10 +123,11 @@ public class PreviewPresenter extends BasePresenter<IUpdateView> {
                 if (response != null) {
                     String str = response.body().string();
 //                    String str = "{\"code\":true,\"msg\":\"分析成功\",\"result\":{\"score\":74.4,\"metrics\":{\"rank\":19,\"faceStatus\":\"状态良好\",\"age\":32,\"skinType\":3,\"skinColor\":3},\"features\":[{\"name\":\"黑头\",\"description\":\"黑头数量6\",\"evaluate\":2},{\"name\":\"毛孔\",\"description\":\"无毛孔粗大\",\"evaluate\":1},{\"name\":\"痤疮\",\"description\":\"无痤疮\",\"evaluate\":1},{\"name\":\"痘印\",\"description\":\"痘印数量4\",\"evaluate\":3},{\"name\":\"皱纹\",\"description\":\"有抬头纹\\n有鱼尾纹\\n\",\"evaluate\":4},{\"name\":\"法令纹\",\"description\":\"有法令纹\",\"evaluate\":4},{\"name\":\"肤色\",\"description\":\"肤色自然\",\"evaluate\":2},{\"name\":\"痘痘\",\"description\":\"痘痘数量0\",\"evaluate\":1},{\"name\":\"色斑\",\"description\":\"色斑数量5\",\"evaluate\":3},{\"name\":\"黑眼圈\",\"description\":\"有黑眼圈\",\"evaluate\":4}]}}";
-                    Type type = new TypeToken<PreviewRespone>() {}.getType();
-                    PreviewRespone previewRespone = new Gson().fromJson(str,PreviewRespone.class );
-                    if (previewRespone != null) {
-                        LogUtils.e("PreviewPresenter", ""+previewRespone);
+                    PreviewRespone baseRespone = new Gson().fromJson(str,PreviewRespone.class );
+                    if (baseRespone != null) {
+                        getBaseView().updateSuccess(baseRespone);
+                    }else {
+                        getBaseView().updateFail(null, "解析异常");
                     }
                 }
             }
@@ -135,7 +139,7 @@ public class PreviewPresenter extends BasePresenter<IUpdateView> {
      * @return
      */
     public String encode(Context context) {
-        Bitmap image = BitmapFactory.decodeResource(context.getResources(), R.mipmap.test2);
+        Bitmap image = BitmapFactory.decodeResource(context.getResources(), R.mipmap.test3);
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         image.compress(Bitmap.CompressFormat.JPEG, 100, baos);
         byte[] b = baos.toByteArray();

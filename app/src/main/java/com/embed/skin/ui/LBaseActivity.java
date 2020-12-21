@@ -15,10 +15,15 @@ import com.trello.rxlifecycle2.LifecycleTransformer;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
+import butterknife.ButterKnife;
 
 
 public abstract class LBaseActivity<T extends BasePresenter> extends RxAppCompatActivity implements BaseView {
 
+    public String TAG = "TAG";
     public Activity mContext;
     protected T mPresenter;
 
@@ -29,8 +34,9 @@ public abstract class LBaseActivity<T extends BasePresenter> extends RxAppCompat
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(setLayout());
-        EventBus.getDefault().register(this);
+        ButterKnife.bind(this);
         mContext = this;
+        TAG = this.getClass().getSimpleName();
         createPresenter();
         if (mPresenter != null) {
             mPresenter.attachView(this);
@@ -114,5 +120,10 @@ public abstract class LBaseActivity<T extends BasePresenter> extends RxAppCompat
     public LifecycleTransformer bindLifecycle() {
         LifecycleTransformer objectLifecycleTransformer = bindToLifecycle();
         return objectLifecycleTransformer;
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onLoingEvent(int i) {
+
     }
 }

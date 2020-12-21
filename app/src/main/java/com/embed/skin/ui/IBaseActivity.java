@@ -8,9 +8,11 @@ import android.os.Bundle;
 import android.view.Window;
 import android.widget.Toast;
 
+import com.embed.skin.R;
+import com.embed.skin.custom.LoadingDialog;
 import com.embed.skin.presenter.BasePresenter;
-import com.embed.skin.util.ActivityHelper;
 import com.embed.skin.util.LogUtils;
+import com.embed.skin.util.ToastUtil;
 import com.embed.skin.view.BaseView;
 import com.tbruyelle.rxpermissions2.Permission;
 import com.tbruyelle.rxpermissions2.RxPermissions;
@@ -26,7 +28,7 @@ import io.reactivex.functions.Consumer;
 
 public abstract class IBaseActivity<T extends BasePresenter> extends RxAppCompatActivity implements BaseView {
 	protected T mPresenter;
-
+	private LoadingDialog mLoadingDailog;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -44,48 +46,47 @@ public abstract class IBaseActivity<T extends BasePresenter> extends RxAppCompat
 		setListener();
 	}
 
-	@Override
-	protected void onResume() {
-		super.onResume();
-
+	/**
+	 * 显示等待提示框
+	 */
+	private Dialog showWaitingDialog() {
+		mLoadingDailog = new LoadingDialog(this, R.style.CustomDialog);
+		return mLoadingDailog;
 	}
 
-	@Override
-	protected void onPause() {
-		super.onPause();
-
-	}
-
-	@Override
-	protected Dialog onCreateDialog(int id) {
-		return ActivityHelper.createLoadingDialog(this);
-	}
 
 	/**
-	 * 显示整形数据
-	 * 
-	 * @param msg
+	 * 显示等待提示框
 	 */
-	protected void showToastMsg(int msg) {
-		showToastMsg(getString(msg));
+	public Dialog showWaitingDialog( String title) {
+		mLoadingDailog = new LoadingDialog(this, R.style.CustomDialog,title);
+		return mLoadingDailog;
 	}
 
-	/**
-	 * 显示整形数据
-	 * 
-	 * @param msg
-	 */
-	protected void showToastLongMsg(String msg) {
-		Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
+	@Override
+	public void showDialog() {
+		if (null == mLoadingDailog) {
+			showWaitingDialog();
+		}
+		if (!mLoadingDailog.isShowing()) {
+			mLoadingDailog.show();
+		}
 	}
 
+	@Override
+	public void dismissDialog() {
+		if (mLoadingDailog != null && mLoadingDailog.isShowing()) {
+			mLoadingDailog.dismiss();
+			mLoadingDailog = null;
+		}
+	}
 	/**
 	 * 显示字符串类型数据
 	 * 
 	 * @param msg
 	 */
 	protected void showToastMsg(String msg) {
-		Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+		ToastUtil.showToast(this, msg, Toast.LENGTH_SHORT);
 	}
 
 	/**
@@ -152,7 +153,6 @@ public abstract class IBaseActivity<T extends BasePresenter> extends RxAppCompat
 		if (mPresenter != null) {
 			mPresenter.detachView();
 		}
-
 		EventBus.getDefault().unregister(this);
 	}
 

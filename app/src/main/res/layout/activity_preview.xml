@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:midText="预览"
-        app:midTextSize="8sp"
+        app:midTextSize="@dimen/main_title_size"
         app:leftDrawable="@mipmap/icon_title_back"
         app:leftClick="back"
         />
@@ -24,18 +24,21 @@
     <ImageView
         android:layout_below="@+id/line"
         android:id="@+id/image"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
+        android:layout_centerInParent="true"
         android:scaleType="fitXY"
+        android:layout_marginBottom="60dp"
         />
     <Button
-        android:id="@+id/btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/comit"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
         android:layout_alignParentBottom="true"
-        android:padding="10dp"
-
-        android:layout_marginBottom="20dp"
-        android:layout_centerHorizontal="true"
-        />
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/main_button"
+        android:text="提交资料"
+        android:textColor="@color/white" />
 </RelativeLayout>

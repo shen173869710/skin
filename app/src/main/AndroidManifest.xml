@@ -33,29 +33,28 @@
         android:theme="@style/AppTheme">
         <activity
             android:name="com.embed.skin.ui.HomeActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.embed.skin.ui.LoginActivity" android:screenOrientation="portrait" ></activity>
+        <activity android:name="com.embed.skin.ui.LoginActivity" android:screenOrientation="landscape" ></activity>
 <!--        <activity android:name="com.embed.skin.ui.USBCameraActivity" android:screenOrientation="portrait" ></activity>-->
-        <activity android:name="com.embed.skin.ui.HistoryListActivity" android:screenOrientation="portrait" ></activity>
-        <activity android:name="com.embed.skin.ui.HistoryInfoActivity" android:screenOrientation="portrait" ></activity>
-        <activity android:name="com.embed.skin.ui.BrandActivity" android:screenOrientation="portrait" ></activity>
-        <activity android:name="com.embed.skin.ui.NewActivity" android:screenOrientation="portrait"></activity>
-        <activity android:name="com.embed.skin.ui.MainActivity" android:screenOrientation="portrait"></activity>
-        <activity android:name="com.embed.skin.ui.CameraActivity" android:screenOrientation="portrait"></activity>
-        <activity android:name="com.embed.skin.ui.PreviewActivity" android:screenOrientation="portrait"></activity>
-        <activity android:name="com.embed.skin.ui.SettingActivity" android:screenOrientation="portrait"></activity>
-        <activity android:name="com.embed.skin.ui.MainActivityBg" android:screenOrientation="portrait"></activity>
-        <activity android:name="com.embed.skin.ui.WebviewActivity" android:screenOrientation="portrait"></activity>
-        <activity android:name="com.embed.skin.ui.UpdateActivity" android:screenOrientation="portrait"></activity>
-        <activity android:name="com.embed.skin.ui.ResultActivity" android:screenOrientation="portrait"></activity>
-        <activity android:name="com.embed.skin.ui.RecomActivity" android:screenOrientation="portrait"></activity>
-
+        <activity android:name="com.embed.skin.ui.HistoryListActivity" android:screenOrientation="landscape" ></activity>
+        <activity android:name="com.embed.skin.ui.HistoryInfoActivity" android:screenOrientation="landscape" ></activity>
+        <activity android:name="com.embed.skin.ui.BrandActivity" android:screenOrientation="landscape" ></activity>
+        <activity android:name="com.embed.skin.ui.NewActivity" android:screenOrientation="landscape"></activity>
+        <activity android:name="com.embed.skin.ui.MainActivity" android:screenOrientation="landscape"></activity>
+        <activity android:name="com.embed.skin.ui.CameraActivity" android:screenOrientation="landscape"></activity>
+        <activity android:name="com.embed.skin.ui.PreviewActivity" android:screenOrientation="landscape"></activity>
+        <activity android:name="com.embed.skin.ui.SettingActivity" android:screenOrientation="landscape"></activity>
+        <activity android:name="com.embed.skin.ui.MainActivityBg" android:screenOrientation="landscape"></activity>
+        <activity android:name="com.embed.skin.ui.WebviewActivity" android:screenOrientation="landscape"></activity>
+        <activity android:name="com.embed.skin.ui.UpdateActivity" android:screenOrientation="landscape"></activity>
+        <activity android:name="com.embed.skin.ui.ResultActivity" android:screenOrientation="landscape"></activity>
+        <activity android:name="com.embed.skin.ui.RecomActivity" android:screenOrientation="landscape"></activity>
     </application>
 
 </manifest>

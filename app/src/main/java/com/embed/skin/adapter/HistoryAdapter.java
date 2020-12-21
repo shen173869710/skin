@@ -6,15 +6,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
-
 import com.embed.skin.R;
 import com.embed.skin.model.respone.HistoryRespone;
-
 import java.util.ArrayList;
 
 /**
+ *        上报结果
  */
-
 public class HistoryAdapter extends BaseAdapter {
     private Context mContext;
     private ArrayList<HistoryRespone> list;

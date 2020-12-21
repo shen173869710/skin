@@ -13,4 +13,6 @@
     <dimen name="main_text_size_18">18sp</dimen>
     <dimen name="main_text_size_20">20sp</dimen>
     <dimen name="main_text_size_24">24sp</dimen>
+
+    <dimen name="main_title_size">8sp</dimen>
 </resources>
