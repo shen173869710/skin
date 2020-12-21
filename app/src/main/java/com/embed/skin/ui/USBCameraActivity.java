@@ -36,7 +36,7 @@ import butterknife.ButterKnife;
  */
 
 public class USBCameraActivity extends AppCompatActivity implements CameraDialog.CameraDialogParent, CameraViewInterface.Callback {
-    private static final String TAG = "Debug";
+    private static final String TAG = "USBCameraActivity";
     @BindView(R.id.camera_view)
     public View mTextureView;
     @BindView(R.id.seekbar_brightness)
@@ -124,6 +124,7 @@ public class USBCameraActivity extends AppCompatActivity implements CameraDialog
         mCameraHelper = UVCCameraHelper.getInstance();
         mCameraHelper.setDefaultFrameFormat(UVCCameraHelper.FRAME_FORMAT_MJPEG);
         mCameraHelper.initUSBMonitor(this, mUVCCameraView, listener);
+        mCameraHelper.setDefaultPreviewSize(1920, 1080);
 
         mCameraHelper.setOnPreviewFrameListener(new AbstractUVCCameraHandler.OnPreViewResultListener() {
             @Override

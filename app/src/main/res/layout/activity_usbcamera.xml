@@ -11,30 +11,57 @@
         android:id="@+id/camera_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:midText="拍照"
-        app:midTextSize="8sp"
+        app:leftClick="back"
         app:leftDrawable="@mipmap/icon_title_back"
         app:right2Drawable="@mipmap/bluetooth_blank"
-        app:leftClick="back"
         app:right2Click="right2Click"
-        />
+        app:midText="拍照"
+        app:midTextSize="8sp" />
 
-    <View
-        android:id="@+id/line"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_below="@id/camera_title"
-        android:background="@color/line"></View>
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/line">
+        android:layout_below="@id/camera_title">
+
         <com.serenegiant.usb.widget.UVCCameraTextureView
             android:id="@+id/camera_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"/>
     </FrameLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="100dp"
+        >
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="灯光1"
+            android:layout_marginLeft="50dp"
+            android:layout_centerVertical="true"
+            ></Button>
+
+        <ImageButton
+            android:id="@+id/take_photo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:background="@mipmap/icon_camera"
+            />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="灯光2"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="50dp"
+            ></Button>
+    </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/llayout_contrast"
@@ -53,7 +80,7 @@
             android:paddingBottom="7dp"
             android:paddingTop="7dp"
             android:text="对比度(contrast)"
-            android:textColor="@color/colorAccent" />
+            android:textColor="@color/white" />
 
         <SeekBar
             android:id="@+id/seekbar_contrast"
@@ -79,13 +106,12 @@
             android:paddingBottom="7dp"
             android:paddingTop="7dp"
             android:text="亮度(brightness)"
-            android:textColor="@color/colorAccent" />
+            android:textColor="@color/white" />
+
         <SeekBar
             android:id="@+id/seekbar_brightness"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="2" />
     </LinearLayout>
-
-
 </RelativeLayout>
