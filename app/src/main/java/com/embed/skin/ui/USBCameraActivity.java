@@ -1,5 +1,7 @@
 package com.embed.skin.ui;
 
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
 import android.hardware.usb.UsbDevice;
 import android.os.Bundle;
@@ -15,6 +17,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.embed.skin.R;
 import com.embed.skin.custom.TitleLayout;
+import com.embed.skin.util.ClientManager;
+import com.embed.skin.util.ConnectResponse;
+import com.embed.skin.util.LogUtils;
+import com.embed.skin.util.ToastUtils;
+import com.inuker.bluetooth.library.connect.response.BleNotifyResponse;
+import com.inuker.bluetooth.library.search.SearchRequest;
+import com.inuker.bluetooth.library.search.SearchResult;
+import com.inuker.bluetooth.library.search.response.SearchResponse;
 import com.jiangdg.usbcamera.UVCCameraHelper;
 import com.jiangdg.usbcamera.utils.FileUtils;
 import com.serenegiant.usb.CameraDialog;
@@ -25,6 +35,7 @@ import com.serenegiant.usb.widget.CameraViewInterface;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -131,6 +142,8 @@ public class USBCameraActivity extends AppCompatActivity implements CameraDialog
                 Log.d(TAG, "onPreviewResult: " + nv21Yuv.length);
             }
         });
+
+
     }
 
     private void initView() {
@@ -173,7 +186,7 @@ public class USBCameraActivity extends AppCompatActivity implements CameraDialog
             }
         });
 
-
+        checkPermissions();
     }
 
     @Override
@@ -217,6 +230,9 @@ public class USBCameraActivity extends AppCompatActivity implements CameraDialog
         if (mCameraHelper != null) {
             mCameraHelper.release();
         }
+//        if (ClientManager.getInstance().getClient() != null) {
+//            ClientManager.getInstance().getClient().disconnect();
+//        }
     }
 
     private void showShortMsg(String msg) {
@@ -255,6 +271,72 @@ public class USBCameraActivity extends AppCompatActivity implements CameraDialog
             mCameraHelper.stopPreview();
             isPreview = false;
         }
+    }
+
+    private void checkPermissions() {
+        BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        if (!bluetoothAdapter.isEnabled()) {
+            ToastUtils.showToast("Please turn on Bluetooth ");
+            return;
+        }
+        startScan();
+    }
+
+    private void startScan() {
+        SearchRequest request = new SearchRequest.Builder()
+                .searchBluetoothLeDevice(3000, 3)   // 先扫BLE设备3次，每次3s
+                .searchBluetoothClassicDevice(5000) // 再扫经典蓝牙5s
+                .searchBluetoothLeDevice(2000)      // 再扫BLE设备2s
+                .build();
+        ClientManager.getInstance().getClient().search(request, new SearchResponse() {
+            @Override
+            public void onSearchStarted() {
+
+            }
+
+            @Override
+            public void onDeviceFounded(SearchResult result) {
+                if (result.device != null) {
+                    ClientManager.getInstance().getClient().stopSearch();
+                }
+
+            }
+
+            @Override
+            public void onSearchStopped() {
+            }
+
+            @Override
+            public void onSearchCanceled() {
+
+            }
+        });
+    }
+
+    private void connect(final BluetoothDevice bleDevice) {
+        ClientManager.getInstance().connectDevice(bleDevice.getAddress(), new ConnectResponse() {
+            @Override
+            public void onResponse(boolean isConnect) {
+                LogUtils.e("bind", "isConnect = " + isConnect);
+                if (isConnect) {
+                    Toast.makeText(USBCameraActivity.this, "链接成功", Toast.LENGTH_LONG).show();
+                    ClientManager.getInstance().notifyData(bleDevice.getAddress(), new BleNotifyResponse() {
+                        @Override
+                        public void onNotify(UUID service, UUID character, byte[] value) {
+                            LogUtils.e(TAG, ""+new String(value));
+                        }
+
+                        @Override
+                        public void onResponse(int code) {
+                            LogUtils.e(TAG, "notifyData = "+code);
+                        }
+                    });
+
+                } else {
+                    Toast.makeText(USBCameraActivity.this, "链接失败", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
     }
 
     public void back(View view) {

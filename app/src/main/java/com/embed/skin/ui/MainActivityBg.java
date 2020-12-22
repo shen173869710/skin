@@ -16,8 +16,6 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -25,8 +23,6 @@ import android.widget.Toast;
 
 import com.embed.skin.R;
 import com.embed.skin.ui.viewManager.MainViewManager;
-import com.embed.skin.util.BleAdvertisedData;
-import com.embed.skin.util.BleUtil;
 import com.embed.skin.util.LogUtils;
 import com.embed.skin.util.ToastUtil;
 
