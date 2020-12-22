@@ -53,7 +53,7 @@ public class HomeActivity extends Activity implements View.OnClickListener{
 				startActivity(new Intent(HomeActivity.this, USBCameraActivity.class));
 				break;
 			case R.id.main_item_2:
-				startActivity(new Intent(HomeActivity.this, MainActivity.class));
+				startActivity(new Intent(HomeActivity.this, MainActivityBg.class));
 				break;
 			case R.id.main_item_3:
 				startActivity(new Intent(HomeActivity.this, WebviewActivity.class));

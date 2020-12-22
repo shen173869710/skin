@@ -100,7 +100,7 @@ public class MainViewManager  implements View.OnClickListener{
     }
 
     public void cleanSel() {
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 3; i++) {
             if (i != onItemSelect) {
                 views.get(i).findViewById(R.id.main_item_sel).setSelected(false);
                 views.get(i).findViewById(R.id.main_item_sel).setBackgroundResource(R.mipmap.img_normal);

@@ -27,6 +27,7 @@ import com.embed.skin.R;
 import com.embed.skin.ui.viewManager.MainViewManager;
 import com.embed.skin.util.BleAdvertisedData;
 import com.embed.skin.util.BleUtil;
+import com.embed.skin.util.LogUtils;
 import com.embed.skin.util.ToastUtil;
 
 import java.util.ArrayList;
@@ -164,6 +165,7 @@ public class MainActivityBg extends Activity {
     private BluetoothAdapter.LeScanCallback mLeScanCallback = new BluetoothAdapter.LeScanCallback() {
         @Override
         public void onLeScan(final BluetoothDevice device, int rssi, byte[] scanRecord) {
+            LogUtils.e("TAG", "name = "+device.getName());
             mLeDevices.add(device);
             mHandler.post(runnable);
         }
@@ -435,7 +437,6 @@ public class MainActivityBg extends Activity {
             }
         }
     }
-
 
     public void back(View view) {
         finish();

@@ -236,12 +236,12 @@ public class BindPetiyaakActivity extends BaseActivity {
                     ClientManager.getInstance().notifyData(bluetoothMac, new BleNotifyResponse() {
                         @Override
                         public void onNotify(UUID service, UUID character, byte[] value) {
-
+                                LogUtils.e(TAG, ""+new String(value));
                         }
 
                         @Override
                         public void onResponse(int code) {
-
+                            LogUtils.e(TAG, "notifyData = "+code);
                         }
                     });
 
