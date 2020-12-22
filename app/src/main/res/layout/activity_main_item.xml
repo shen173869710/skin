@@ -15,7 +15,7 @@
          />
     <LinearLayout
         android:id="@+id/main_item_layout"
-        android:layout_width="200dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_centerInParent="true"
@@ -37,14 +37,14 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="@string/moist"
-                android:textSize="28sp" />
+                android:textSize="20sp" />
             <TextView
                 android:id="@+id/main_item_water"
                 android:layout_width="@dimen/main_item_value_width"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="0%"
-                android:textSize="28sp" />
+                android:textSize="20sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -58,7 +58,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="@string/oil"
-                android:textSize="28sp" />
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/main_item_oil"
@@ -66,7 +66,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="0%"
-                android:textSize="28sp" />
+                android:textSize="20sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -80,7 +80,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="@string/elasticity"
-                android:textSize="28sp" />
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/main_item_elastic"
@@ -88,7 +88,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="0%"
-                android:textSize="28sp" />
+                android:textSize="20sp" />
         </LinearLayout>
     </LinearLayout>
 

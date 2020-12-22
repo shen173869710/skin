@@ -4,24 +4,25 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
 import android.hardware.usb.UsbDevice;
-import android.os.Bundle;
+import android.os.Handler;
 import android.os.Looper;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Surface;
 import android.view.View;
-import android.widget.SeekBar;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.embed.skin.R;
-import com.embed.skin.custom.TitleLayout;
+import com.embed.skin.presenter.BasePresenter;
 import com.embed.skin.util.ClientManager;
 import com.embed.skin.util.ConnectResponse;
 import com.embed.skin.util.LogUtils;
 import com.embed.skin.util.ToastUtils;
 import com.inuker.bluetooth.library.connect.response.BleNotifyResponse;
+import com.inuker.bluetooth.library.connect.response.BleWriteResponse;
 import com.inuker.bluetooth.library.search.SearchRequest;
 import com.inuker.bluetooth.library.search.SearchResult;
 import com.inuker.bluetooth.library.search.response.SearchResponse;
@@ -38,7 +39,7 @@ import java.util.List;
 import java.util.UUID;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * UVCCamera use demo
@@ -46,16 +47,24 @@ import butterknife.ButterKnife;
  * Created by jiangdongguo on 2017/9/30.
  */
 
-public class USBCameraActivity extends AppCompatActivity implements CameraDialog.CameraDialogParent, CameraViewInterface.Callback {
+public class USBCameraActivity extends BaseActivity implements CameraDialog.CameraDialogParent, CameraViewInterface.Callback {
     private static final String TAG = "USBCameraActivity";
     @BindView(R.id.camera_view)
     public View mTextureView;
-    @BindView(R.id.seekbar_brightness)
-    public SeekBar mSeekBrightness;
-    @BindView(R.id.seekbar_contrast)
-    public SeekBar mSeekContrast;
-    @BindView(R.id.camera_title)
-    TitleLayout cameraTitle;
+//    @BindView(R.id.seekbar_brightness)
+//    public SeekBar mSeekBrightness;
+//    @BindView(R.id.seekbar_contrast)
+//    public SeekBar mSeekContrast;
+    @BindView(R.id.take_photo)
+    ImageButton takePhoto;
+    @BindView(R.id.camera_left)
+    ImageView cameraLeft;
+    @BindView(R.id.camera_right)
+    ImageView cameraRight;
+    @BindView(R.id.camera_light_1)
+    Button cameraLight1;
+    @BindView(R.id.camera_light_2)
+    Button cameraLight2;
 
 
     private UVCCameraHelper mCameraHelper;
@@ -63,6 +72,14 @@ public class USBCameraActivity extends AppCompatActivity implements CameraDialog
 
     private boolean isRequest;
     private boolean isPreview;
+
+    private boolean lightClick1 = false;
+    private boolean lightClick2 = false;
+
+    /**
+     * 蓝牙的mac
+     */
+    private String bluetoothMac;
 
     private UVCCameraHelper.OnMyDevConnectListener listener = new UVCCameraHelper.OnMyDevConnectListener() {
 
@@ -106,10 +123,10 @@ public class USBCameraActivity extends AppCompatActivity implements CameraDialog
                             e.printStackTrace();
                         }
                         Looper.prepare();
-                        if (mCameraHelper != null && mCameraHelper.isCameraOpened()) {
-                            mSeekBrightness.setProgress(mCameraHelper.getModelValue(UVCCameraHelper.MODE_BRIGHTNESS));
-                            mSeekContrast.setProgress(mCameraHelper.getModelValue(UVCCameraHelper.MODE_CONTRAST));
-                        }
+//                        if (mCameraHelper != null && mCameraHelper.isCameraOpened()) {
+//                            mSeekBrightness.setProgress(mCameraHelper.getModelValue(UVCCameraHelper.MODE_BRIGHTNESS));
+//                            mSeekContrast.setProgress(mCameraHelper.getModelValue(UVCCameraHelper.MODE_CONTRAST));
+//                        }
                         Looper.loop();
                     }
                 }).start();
@@ -123,12 +140,13 @@ public class USBCameraActivity extends AppCompatActivity implements CameraDialog
     };
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_usbcamera);
-        ButterKnife.bind(this);
-        initView();
+    protected int setLayout() {
+        return R.layout.activity_usbcamera;
+    }
 
+    @Override
+    protected void init() {
+        initView();
         // step.1 initialize UVCCameraHelper
         mUVCCameraView = (CameraViewInterface) mTextureView;
         mUVCCameraView.setCallback(this);
@@ -142,50 +160,57 @@ public class USBCameraActivity extends AppCompatActivity implements CameraDialog
                 Log.d(TAG, "onPreviewResult: " + nv21Yuv.length);
             }
         });
+    }
 
+    @Override
+    protected void setListener() {
 
     }
 
+    @Override
+    protected BasePresenter createPresenter() {
+        return null;
+    }
+
     private void initView() {
-        mSeekBrightness.setMax(100);
-        mSeekBrightness.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                if (mCameraHelper != null && mCameraHelper.isCameraOpened()) {
-                    mCameraHelper.setModelValue(UVCCameraHelper.MODE_BRIGHTNESS, progress);
-                }
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-
-            }
-        });
-        mSeekContrast.setMax(100);
-        mSeekContrast.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                if (mCameraHelper != null && mCameraHelper.isCameraOpened()) {
-                    mCameraHelper.setModelValue(UVCCameraHelper.MODE_CONTRAST, progress);
-                }
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-
-            }
-        });
-
+//        mSeekBrightness.setMax(100);
+//        mSeekBrightness.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+//            @Override
+//            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+//                if (mCameraHelper != null && mCameraHelper.isCameraOpened()) {
+//                    mCameraHelper.setModelValue(UVCCameraHelper.MODE_BRIGHTNESS, progress);
+//                }
+//            }
+//
+//            @Override
+//            public void onStartTrackingTouch(SeekBar seekBar) {
+//
+//            }
+//
+//            @Override
+//            public void onStopTrackingTouch(SeekBar seekBar) {
+//
+//            }
+//        });
+//        mSeekContrast.setMax(100);
+//        mSeekContrast.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+//            @Override
+//            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+//                if (mCameraHelper != null && mCameraHelper.isCameraOpened()) {
+//                    mCameraHelper.setModelValue(UVCCameraHelper.MODE_CONTRAST, progress);
+//                }
+//            }
+//
+//            @Override
+//            public void onStartTrackingTouch(SeekBar seekBar) {
+//
+//            }
+//
+//            @Override
+//            public void onStopTrackingTouch(SeekBar seekBar) {
+//
+//            }
+//        });
         checkPermissions();
     }
 
@@ -230,9 +255,9 @@ public class USBCameraActivity extends AppCompatActivity implements CameraDialog
         if (mCameraHelper != null) {
             mCameraHelper.release();
         }
-//        if (ClientManager.getInstance().getClient() != null) {
-//            ClientManager.getInstance().getClient().disconnect();
-//        }
+        if (!TextUtils.isEmpty(bluetoothMac)) {
+            ClientManager.getInstance().getClient().disconnect(bluetoothMac);
+        }
     }
 
     private void showShortMsg(String msg) {
@@ -283,6 +308,9 @@ public class USBCameraActivity extends AppCompatActivity implements CameraDialog
     }
 
     private void startScan() {
+
+        showDialog();
+        LogUtils.e(TAG, "startScan");
         SearchRequest request = new SearchRequest.Builder()
                 .searchBluetoothLeDevice(3000, 3)   // 先扫BLE设备3次，每次3s
                 .searchBluetoothClassicDevice(5000) // 再扫经典蓝牙5s
@@ -297,18 +325,24 @@ public class USBCameraActivity extends AppCompatActivity implements CameraDialog
             @Override
             public void onDeviceFounded(SearchResult result) {
                 if (result.device != null) {
-                    ClientManager.getInstance().getClient().stopSearch();
+                    String name = result.device.getName();
+                    bluetoothMac = result.device.getAddress();
+                    LogUtils.e(TAG, "name = " + name);
+                    if (!TextUtils.isEmpty(name) && name.contains("SerialApp")) {
+                        ClientManager.getInstance().getClient().stopSearch();
+                        connect(result.device);
+                    }
                 }
-
             }
 
             @Override
             public void onSearchStopped() {
+              dismissDialog();
             }
 
             @Override
             public void onSearchCanceled() {
-
+                dismissDialog();
             }
         });
     }
@@ -318,33 +352,124 @@ public class USBCameraActivity extends AppCompatActivity implements CameraDialog
             @Override
             public void onResponse(boolean isConnect) {
                 LogUtils.e("bind", "isConnect = " + isConnect);
+                dismissDialog();
                 if (isConnect) {
+                    cameraRight.setBackground(getResources().getDrawable(R.mipmap.bluetooth_show));
+
                     Toast.makeText(USBCameraActivity.this, "链接成功", Toast.LENGTH_LONG).show();
                     ClientManager.getInstance().notifyData(bleDevice.getAddress(), new BleNotifyResponse() {
                         @Override
                         public void onNotify(UUID service, UUID character, byte[] value) {
-                            LogUtils.e(TAG, ""+new String(value));
+                            LogUtils.e(TAG, "" + new String(value));
                         }
 
                         @Override
                         public void onResponse(int code) {
-                            LogUtils.e(TAG, "notifyData = "+code);
+                            LogUtils.e(TAG, "notifyData = " + code);
                         }
                     });
 
                 } else {
                     Toast.makeText(USBCameraActivity.this, "链接失败", Toast.LENGTH_LONG).show();
+                    cameraRight.setBackground(getResources().getDrawable(R.mipmap.bluetooth_blank));
                 }
             }
         });
     }
 
-    public void back(View view) {
-        finish();
+    @OnClick({R.id.camera_left, R.id.camera_right, R.id.camera_light_1, R.id.take_photo, R.id.camera_light_2})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.camera_light_1:
+                lightClick2 = false;
+                lightClick1 = !lightClick1;
+                String cmd1 = "";
+                if (lightClick1) {
+                    cmd1 = "C110";
+                } else {
+                    cmd1 = "C100";
+                }
+                onLightClick(cmd1);
+                break;
+            case R.id.camera_light_2:
+                lightClick1 = false;
+                lightClick2 = !lightClick2;
+                String cmd2 = "";
+                if (lightClick2) {
+                    cmd2 = "C101";
+                } else {
+                    cmd2 = "C100";
+                }
+                onLightClick(cmd2);
+                break;
+            case R.id.take_photo:
+                takePhoto();
+                break;
+            case R.id.camera_left:
+                finish();
+                break;
+            case R.id.camera_right:
+                Intent intent = new Intent(USBCameraActivity.this, BindPetiyaakActivity.class);
+                startActivity(intent);
+                break;
+        }
     }
 
-    public void right2Click(View view) {
-        Intent intent = new Intent(USBCameraActivity.this, BindPetiyaakActivity.class);
-        startActivity(intent);
+    public void onLightClick(String cmd) {
+        if (TextUtils.isEmpty(bluetoothMac) || !ClientManager.getInstance().getConnectStatus(bluetoothMac)) {
+            ToastUtils.showToast("蓝牙未连接");
+            startScan();
+            return;
+        }
+        byte[] writeBytes = new byte[20];
+        writeBytes = hex2byte(cmd.getBytes());
+        ClientManager.getInstance().writeData(bluetoothMac, writeBytes, new BleWriteResponse() {
+            @Override
+            public void onResponse(int code) {
+                LogUtils.e("bind", "code = " + code);
+            }
+        });
     }
+
+
+    public byte[] hex2byte(byte[] b) {
+        if ((b.length % 2) != 0) {
+            throw new IllegalArgumentException("长度不是偶数");
+        }
+        byte[] b2 = new byte[b.length / 2];
+        for (int n = 0; n < b.length; n += 2) {
+            String item = new String(b, n, 2);
+            // 两位一组，表示一个字节,把这样表示的16进制字符串，还原成一个进制字节
+            b2[n / 2] = (byte) Integer.parseInt(item, 16);
+        }
+        b = null;
+        return b2;
+    }
+
+    public void takePhoto() {
+        if (mCameraHelper == null || !mCameraHelper.isCameraOpened()) {
+            showShortMsg("sorry,camera open failed");
+            return;
+        }
+        String picPath = UVCCameraHelper.ROOT_PATH + "USBCamera" + "/" + System.currentTimeMillis() + UVCCameraHelper.SUFFIX_JPEG;
+
+        mCameraHelper.capturePicture(picPath, new AbstractUVCCameraHandler.OnCaptureListener() {
+            @Override
+            public void onCaptureResult(String path) {
+                if (TextUtils.isEmpty(path)) {
+                    return;
+                }
+                new Handler(getMainLooper()).post(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(USBCameraActivity.this, "save path:" + path, Toast.LENGTH_SHORT).show();
+                    }
+                });
+                Intent intent = new Intent(USBCameraActivity.this, PreviewActivity.class);
+                intent.putExtra("path", path);
+                startActivity(intent);
+            }
+        });
+    }
+
 }

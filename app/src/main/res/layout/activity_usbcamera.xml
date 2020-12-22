@@ -7,16 +7,41 @@
     android:background="@color/white"
     tools:ignore="MergeRootFrame">
 
-    <com.embed.skin.custom.TitleLayout
+    <RelativeLayout
         android:id="@+id/camera_title"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:leftClick="back"
-        app:leftDrawable="@mipmap/icon_title_back"
-        app:right2Drawable="@mipmap/bluetooth_blank"
-        app:right2Click="right2Click"
-        app:midText="拍照"
-        app:midTextSize="8sp" />
+        android:layout_height="50dp"
+        android:background="@color/white"
+        >
+
+        <ImageView
+            android:id="@+id/camera_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@mipmap/icon_title_back"
+            android:layout_marginLeft="10dp"
+            android:layout_centerVertical="true"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:text="拍照"
+            android:layout_centerInParent="true"
+            android:textSize="@dimen/sp_12"
+            />
+
+        <ImageView
+            android:id="@+id/camera_right"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:background="@mipmap/bluetooth_blank"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:layout_centerVertical="true"
+            />
+    </RelativeLayout>
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -34,10 +59,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="100dp"
+        android:layout_marginBottom="10dp"
         >
 
         <Button
+            android:id="@+id/camera_light_1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="灯光1"
@@ -46,6 +72,7 @@
             ></Button>
 
         <ImageButton
+
             android:id="@+id/take_photo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -54,6 +81,7 @@
             />
 
         <Button
+            android:id="@+id/camera_light_2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="灯光2"
@@ -62,56 +90,4 @@
             android:layout_marginRight="50dp"
             ></Button>
     </RelativeLayout>
-
-    <LinearLayout
-        android:id="@+id/llayout_contrast"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:paddingBottom="7dp"
-            android:paddingTop="7dp"
-            android:text="对比度(contrast)"
-            android:textColor="@color/white" />
-
-        <SeekBar
-            android:id="@+id/seekbar_contrast"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="2" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/llayout_brightness"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/llayout_contrast"
-        android:layout_marginBottom="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:paddingBottom="7dp"
-            android:paddingTop="7dp"
-            android:text="亮度(brightness)"
-            android:textColor="@color/white" />
-
-        <SeekBar
-            android:id="@+id/seekbar_brightness"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="2" />
-    </LinearLayout>
 </RelativeLayout>

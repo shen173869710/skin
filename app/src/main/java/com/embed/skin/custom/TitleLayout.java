@@ -51,7 +51,7 @@ public class TitleLayout extends RelativeLayout {
     private TextView left;
     private TextView mid;
     private TextView right;
-    private TextView right2;
+    public TextView right2;
 
     public TitleLayout(Context context) {
         this(context, null);
