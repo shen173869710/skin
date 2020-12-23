@@ -10,6 +10,7 @@ import android.widget.ExpandableListView;
 
 import com.embed.skin.R;
 import com.embed.skin.adapter.MyExpandableListAdapter;
+import com.embed.skin.custom.ChooseTimeDialog;
 import com.embed.skin.entity.SettingInfo;
 import com.embed.skin.util.ShareUtil;
 
@@ -56,20 +57,11 @@ public class SettingActivity extends Activity {
 	}
 
 	private void showChoose(final String text) {
-		AlertDialog dialog = new AlertDialog.Builder(this)
-				.setTitle("设置")
-				.setMessage("您将设置为"+text)
-				.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						ShareUtil.saveName(SettingActivity.this, text);
-						SettingActivity.this.finish();
-					}
-				})
-				.setNegativeButton("取消",null)
-				.create();
-		dialog.show();
-		dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(getResources().getColor(R.color.btn_main_p));
-		dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(getResources().getColor(R.color.btn_main_p));
+		ChooseTimeDialog.ShowDialog(SettingActivity.this, new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+
+			}
+		});
 	}
 }

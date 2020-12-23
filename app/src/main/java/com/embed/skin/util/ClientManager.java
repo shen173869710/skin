@@ -72,14 +72,25 @@ public class ClientManager {
     public void connectDevice(String mac, ConnectResponse response) {
         if (TextUtils.isEmpty(mac)) {
             LogUtils.e(TAG, "蓝牙地址为空   74");
+            response.onResponse(false);
             return;
         }
+
         if (!mClient.isBluetoothOpened()) {
-            ToastUtils.showToast("The bluetooth of the mobile phone is not turned on, please turn on the bluetooth of the mobile phone");
+            ToastUtils.showToast("手机蓝牙未打开");
+            response.onResponse(false);
+            return;
         }
         getClient().clearRequest(mac, 0);
         getClient().refreshCache(mac);
-        if (getConnectStatus(mac) && mServerId != null && mWriteUuid != null && mReadUuid != null) {
+
+        int code = getConnectStatusCode(mac);
+        if (code == -1) {
+            ToastUtils.showToast("蓝牙地址错误");
+            response.onResponse(false);
+            return;
+        }
+        if ((code == Constants.STATUS_DEVICE_CONNECTED) && mServerId != null && mWriteUuid != null && mReadUuid != null) {
             response.onResponse(true);
             LogUtils.e(TAG, "设备已经链接");
         }else {
@@ -114,13 +125,29 @@ public class ClientManager {
             LogUtils.e(TAG, "蓝牙地址为空   113");
             return false;
         }
-
-
         int status = mClient.getConnectStatus(mac);
         if (status == Constants.STATUS_DEVICE_CONNECTED) {
             return true;
         }
         return false;
+    }
+
+
+    /**
+     *        获取设备的链接状态
+     * @param mac
+     * @return
+     */
+    public int getConnectStatusCode(String mac) {
+        if (TextUtils.isEmpty(mac)) {
+            LogUtils.e(TAG, "蓝牙地址为空   113");
+            return -1;
+        }
+        return mClient.getConnectStatus(mac);
+//        if (status == Constants.STATUS_DEVICE_CONNECTED) {
+//            return true;
+//        }
+//        return false;
     }
 
 
