@@ -7,6 +7,8 @@ import com.bumptech.glide.Glide;
 
 import java.io.File;
 
+import static com.hyphenate.chat.EMClient.TAG;
+
 public class GlideUtils {
     /**
      *          加载本地图片
@@ -14,6 +16,7 @@ public class GlideUtils {
      * @param imageView
      */
     public static void loadFile(Context context, String path, ImageView imageView) {
+        LogUtils.e(TAG, "loadFile= "+path);
         Glide.with(context).load(new File(path)).into(imageView);
     }
     /**

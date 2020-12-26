@@ -81,7 +81,7 @@ public class PreviewPresenter extends BasePresenter<IPreviewView> {
         }).start();
     }
 
-    public void uploadImgByOkHttp(PreviewActivity context) {
+    public void uploadImgByOkHttp(PreviewActivity context, String path) {
         HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
             @Override
             public void log(String message) {
@@ -97,7 +97,7 @@ public class PreviewPresenter extends BasePresenter<IPreviewView> {
         OkHttpClient client = okHttpClientBuilder.addInterceptor(httpLoggingInterceptor).build();
         RequestBody body = null;
         try {
-            body = RequestBody.create(mediaType, "image="+URLEncoder.encode(encode(context), "UTF-8"));
+            body = RequestBody.create(mediaType, "image="+URLEncoder.encode(encode(context,path), "UTF-8"));
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
@@ -138,8 +138,8 @@ public class PreviewPresenter extends BasePresenter<IPreviewView> {
      *  获取图片
      * @return
      */
-    public String encode(Context context) {
-        Bitmap image = BitmapFactory.decodeResource(context.getResources(), R.mipmap.test3);
+    public String encode(Context context, String path) {
+        Bitmap image = BitmapFactory.decodeFile(path);
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         image.compress(Bitmap.CompressFormat.JPEG, 100, baos);
         byte[] b = baos.toByteArray();

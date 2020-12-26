@@ -88,6 +88,13 @@ public class MainActivityBg extends Activity {
                 finish();
             }
         });
+
+        main_status.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                scanLeDevice(true);
+            }
+        });
     }
 
     //蓝牙打开回调

@@ -1,10 +1,8 @@
 package com.embed.skin.ui;
 
 import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
 import android.hardware.usb.UsbDevice;
-import android.os.Handler;
 import android.os.Looper;
 import android.text.TextUtils;
 import android.util.Log;
@@ -21,7 +19,6 @@ import com.embed.skin.util.ClientManager;
 import com.embed.skin.util.ConnectResponse;
 import com.embed.skin.util.LogUtils;
 import com.embed.skin.util.ShareUtil;
-import com.embed.skin.util.ToastUtil;
 import com.embed.skin.util.ToastUtils;
 import com.inuker.bluetooth.library.connect.response.BleNotifyResponse;
 import com.inuker.bluetooth.library.connect.response.BleWriteResponse;
@@ -303,11 +300,11 @@ public class USBCameraActivity extends BaseActivity implements CameraDialog.Came
     private void checkPermissions() {
         BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         if (!bluetoothAdapter.isEnabled()) {
-            ToastUtils.showToast("Please turn on Bluetooth ");
+            ToastUtils.showToast("请打开蓝牙 ");
             return;
         }
 
-        bluetoothMac = ShareUtil.getSkinMac(USBCameraActivity.this);
+        bluetoothMac = ShareUtil.getLightMac(USBCameraActivity.this);
         if (!TextUtils.isEmpty(bluetoothMac)) {
             showDialog();
             connect(bluetoothMac);
@@ -366,7 +363,7 @@ public class USBCameraActivity extends BaseActivity implements CameraDialog.Came
                 if (isConnect) {
                     cameraRight.setBackground(getResources().getDrawable(R.mipmap.bluetooth_show));
 
-                    Toast.makeText(USBCameraActivity.this, "链接成功", Toast.LENGTH_LONG).show();
+                    Toast.makeText(USBCameraActivity.this, "连接灯光成功", Toast.LENGTH_LONG).show();
                     ClientManager.getInstance().notifyData(mac, new BleNotifyResponse() {
                         @Override
                         public void onNotify(UUID service, UUID character, byte[] value) {
@@ -380,7 +377,7 @@ public class USBCameraActivity extends BaseActivity implements CameraDialog.Came
                     });
 
                 } else {
-                    Toast.makeText(USBCameraActivity.this, "链接失败", Toast.LENGTH_LONG).show();
+                    Toast.makeText(USBCameraActivity.this, "连接灯光失败", Toast.LENGTH_LONG).show();
                     cameraRight.setBackground(getResources().getDrawable(R.mipmap.bluetooth_blank));
                 }
             }
@@ -419,8 +416,15 @@ public class USBCameraActivity extends BaseActivity implements CameraDialog.Came
                 finish();
                 break;
             case R.id.camera_right:
-                Intent intent = new Intent(USBCameraActivity.this, BindPetiyaakActivity.class);
-                startActivity(intent);
+//                Intent intent = new Intent(USBCameraActivity.this, BindPetiyaakActivity.class);
+//                startActivity(intent);
+                bluetoothMac = ShareUtil.getLightMac(USBCameraActivity.this);
+                if (!TextUtils.isEmpty(bluetoothMac)) {
+                    showDialog();
+                    connect(bluetoothMac);
+                }else {
+                    ToastUtils.showToast("请设置灯光的蓝牙名称和mac地址");
+                }
                 break;
         }
     }
@@ -469,12 +473,12 @@ public class USBCameraActivity extends BaseActivity implements CameraDialog.Came
                 if (TextUtils.isEmpty(path)) {
                     return;
                 }
-                new Handler(getMainLooper()).post(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(USBCameraActivity.this, "save path:" + path, Toast.LENGTH_SHORT).show();
-                    }
-                });
+//                new Handler(getMainLooper()).post(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        Toast.makeText(USBCameraActivity.this, "save path:" + path, Toast.LENGTH_SHORT).show();
+//                    }
+//                });
                 Intent intent = new Intent(USBCameraActivity.this, PreviewActivity.class);
                 intent.putExtra("path", path);
                 startActivity(intent);

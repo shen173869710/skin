@@ -41,6 +41,7 @@ public class ResultActivity extends BaseActivity<LoginPresenter> implements ILog
 
     private PreviewResult result;
     private ResultAdapter resultAdapter;
+    private String path;
 
     @Override
     protected int setLayout() {
@@ -50,6 +51,7 @@ public class ResultActivity extends BaseActivity<LoginPresenter> implements ILog
     @Override
     protected void init() {
         result = (PreviewResult) getIntent().getSerializableExtra("result");
+        path = getIntent().getStringExtra("path");
 
         if (result == null) {
             LogUtils.e(TAG, "reulet = "+result);
@@ -57,7 +59,7 @@ public class ResultActivity extends BaseActivity<LoginPresenter> implements ILog
         }
         resultScore.setText("得分 "+result.getScore());
 
-        GlideUtils.loadResource(this, R.mipmap.test, resultHead);
+        GlideUtils.loadFile(this,path, resultHead);
 
         ResultMetrics resultMetrics = result.getMetrics();
         if (resultMetrics != null) {

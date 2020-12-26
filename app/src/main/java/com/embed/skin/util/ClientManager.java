@@ -207,7 +207,7 @@ public class ClientManager {
                 if (bchar != null && bchar.getCharacters() != null && bchar.getUUID() != null) {
                     for (BleGattCharacter character : bchar.getCharacters()) {
                         if (character != null && character.getUuid() != null) {
-                            LogUtils.e(TAG, "uuid = " + character.getUuid());
+//                            LogUtils.e(TAG, "uuid = " + character.getUuid());
                             String uuid = character.getUuid().toString();
                             if (!TextUtils.isEmpty(uuid) && uuid.contains("b003")) {
                                 mReadUuid = character.getUuid();
