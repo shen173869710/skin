@@ -20,6 +20,8 @@ import com.embed.skin.presenter.BasePresenter;
 import com.embed.skin.util.ClientManager;
 import com.embed.skin.util.ConnectResponse;
 import com.embed.skin.util.LogUtils;
+import com.embed.skin.util.ShareUtil;
+import com.embed.skin.util.ToastUtil;
 import com.embed.skin.util.ToastUtils;
 import com.inuker.bluetooth.library.connect.response.BleNotifyResponse;
 import com.inuker.bluetooth.library.connect.response.BleWriteResponse;
@@ -304,7 +306,15 @@ public class USBCameraActivity extends BaseActivity implements CameraDialog.Came
             ToastUtils.showToast("Please turn on Bluetooth ");
             return;
         }
-        startScan();
+
+        bluetoothMac = ShareUtil.getSkinMac(USBCameraActivity.this);
+        if (!TextUtils.isEmpty(bluetoothMac)) {
+            showDialog();
+            connect(bluetoothMac);
+        }else {
+            ToastUtils.showToast("请设置灯光的蓝牙名称和mac地址");
+        }
+//        startScan();
     }
 
     private void startScan() {
@@ -330,7 +340,7 @@ public class USBCameraActivity extends BaseActivity implements CameraDialog.Came
                     LogUtils.e(TAG, "name = " + name);
                     if (!TextUtils.isEmpty(name) && name.contains("SerialApp")) {
                         ClientManager.getInstance().getClient().stopSearch();
-                        connect(result.device);
+                        connect(bluetoothMac);
                     }
                 }
             }
@@ -347,8 +357,8 @@ public class USBCameraActivity extends BaseActivity implements CameraDialog.Came
         });
     }
 
-    private void connect(final BluetoothDevice bleDevice) {
-        ClientManager.getInstance().connectDevice(bleDevice.getAddress(), new ConnectResponse() {
+    private void connect(final String mac) {
+        ClientManager.getInstance().connectDevice(mac, new ConnectResponse() {
             @Override
             public void onResponse(boolean isConnect) {
                 LogUtils.e("bind", "isConnect = " + isConnect);
@@ -357,7 +367,7 @@ public class USBCameraActivity extends BaseActivity implements CameraDialog.Came
                     cameraRight.setBackground(getResources().getDrawable(R.mipmap.bluetooth_show));
 
                     Toast.makeText(USBCameraActivity.this, "链接成功", Toast.LENGTH_LONG).show();
-                    ClientManager.getInstance().notifyData(bleDevice.getAddress(), new BleNotifyResponse() {
+                    ClientManager.getInstance().notifyData(mac, new BleNotifyResponse() {
                         @Override
                         public void onNotify(UUID service, UUID character, byte[] value) {
                             LogUtils.e(TAG, "" + new String(value));

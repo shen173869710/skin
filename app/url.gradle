@@ -1,0 +1,19 @@
+ext {
+    androidUrl = [
+            //以下为各个环境的网络地址  pro 线上正式版本 uat 测试环境,uattest测试外网  sit  开发环境
+            pro  : [
+                    http_post_url   : '\"http://192.168.0.103:80\"',        //http请求地址
+                    skin_name       : '\"skin_name\"',                //手柄蓝牙名称
+                    skin_mac        : '\"skin_mac\"',                           //手柄蓝牙mac
+                    light_name      : '\"light_name\"',                     //灯光蓝牙名称
+                    light_mac       : '\"light_mac\"',                   //灯光蓝牙mac
+            ],
+            uat  : [
+                    http_post_url   : '\"http://192.168.0.103:80\"',        //http请求地址
+                    skin_name       : '\"skin_name\"',                //手柄蓝牙名称
+                    skin_mac        : '\"skin_mac\"',                           //手柄蓝牙mac
+                    light_name      : '\"light_name\"',                     //灯光蓝牙名称
+                    light_mac       : '\"light_mac\"',                   //灯光蓝牙mac
+            ],
+    ]
+}

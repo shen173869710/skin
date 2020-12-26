@@ -22,4 +22,5 @@
 
     <color name="main_title">#000000</color>
     <color name="main_desc">#9D9D9D</color>
+    <color name="all_list_item_bg">#f1f1f1</color>
 </resources>
