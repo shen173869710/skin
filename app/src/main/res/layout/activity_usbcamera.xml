@@ -56,38 +56,35 @@
     </FrameLayout>
 
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="10dp"
+        android:layout_width="60dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="20dp"
         >
-
-        <Button
-            android:id="@+id/camera_light_1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="灯光1"
-            android:layout_marginLeft="50dp"
-            android:layout_centerVertical="true"
-            ></Button>
-
         <ImageButton
-
             android:id="@+id/take_photo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:background="@mipmap/icon_camera"
             />
+        <Button
+            android:id="@+id/camera_light_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="灯光1"
+            android:layout_marginBottom="60dp"
+            android:layout_above="@+id/take_photo"
+            ></Button>
 
         <Button
             android:id="@+id/camera_light_2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="灯光2"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="50dp"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/take_photo"
+            android:layout_marginTop="60dp"
             ></Button>
     </RelativeLayout>
 </RelativeLayout>

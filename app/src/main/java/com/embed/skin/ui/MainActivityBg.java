@@ -23,8 +23,11 @@ import android.widget.Toast;
 
 import com.embed.skin.R;
 import com.embed.skin.ui.viewManager.MainViewManager;
+import com.embed.skin.util.ClientManager;
+import com.embed.skin.util.ConnectResponse;
 import com.embed.skin.util.LogUtils;
 import com.embed.skin.util.ToastUtil;
+import com.inuker.bluetooth.library.connect.response.BleNotifyResponse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +35,7 @@ import java.util.UUID;
 
 public class MainActivityBg extends Activity {
 
+    private String TAG = "MainActivityBg";
     private boolean mScanning = false;
     private boolean mIsConnect = false;
     private ArrayList<BluetoothDevice> mLeDevices = new ArrayList<BluetoothDevice>();
@@ -161,6 +165,8 @@ public class MainActivityBg extends Activity {
             } else {
                 scanLeDevice(true);
             }
+
+
         }
     }
 
@@ -182,6 +188,8 @@ public class MainActivityBg extends Activity {
             if (mLeDevices.size() > 0) {
                 device = mBluetoothAdapter.getRemoteDevice(mLeDevices.get(0).getAddress());
                 deviceTitle = mBluetoothAdapter.getRemoteDevice(mLeDevices.get(0).getAddress()).getName() + "";
+
+                LogUtils.e(TAG, "deviceTitle ="+deviceTitle);
                 if (deviceTitle.equals("XYL-BT") || deviceTitle.equals("het-31-8")) {
                     if (device != null) {
                         mBluetoothGatt = device.connectGatt(getApplication(), false, mGattCallback);
