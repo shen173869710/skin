@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:ignore="MergeRootFrame">
+
+    <RelativeLayout
+        android:id="@+id/camera_title"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@color/white"
+        >
+
+        <ImageView
+            android:id="@+id/camera_left"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:background="@mipmap/down"
+           android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="20dp"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:layout_centerInParent="true"
+            android:textSize="@dimen/sp_12"
+            />
+
+        <ImageView
+            android:id="@+id/camera_right"
+            android:layout_marginTop="20dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:background="@mipmap/bluetooth_blank"
+            android:layout_centerHorizontal="true"
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/camera_root"
+        android:layout_width="500dp"
+        android:layout_height="500dp"
+        android:background="@color/RED"
+        android:layout_below="@id/camera_title">
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="60dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="20dp"
+        >
+        <ImageButton
+            android:id="@+id/take_photo"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_centerInParent="true"
+            android:background="@mipmap/camera_bg"
+            />
+        <Button
+            android:id="@+id/camera_light_1"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginBottom="60dp"
+            android:layout_centerHorizontal="true"
+            android:layout_above="@+id/take_photo"
+            android:background="@mipmap/light_bg"
+            ></Button>
+
+        <Button
+            android:id="@+id/camera_light_2"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/take_photo"
+            android:layout_marginTop="60dp"
+            android:background="@mipmap/light_bg"
+            ></Button>
+    </RelativeLayout>
+</RelativeLayout>

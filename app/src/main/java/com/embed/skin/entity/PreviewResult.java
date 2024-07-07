@@ -31,4 +31,14 @@ public class PreviewResult implements Serializable {
     public void setFeatures(List<ResultFeature> features) {
         this.features = features;
     }
+
+    private Meta meta;
+
+    public Meta getMeta() {
+        return meta;
+    }
+
+    public void setMeta(Meta meta) {
+        this.meta = meta;
+    }
 }

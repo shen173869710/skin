@@ -61,6 +61,16 @@
                 android:layout_weight="1"
                 android:descendantFocusability="blocksDescendants" />
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/scan_result"
+            android:text="检测结果"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:textColor="@color/RED"
+            android:textSize="@dimen/sp_16"
+            />
         <View
             android:layout_width="match_parent"
             android:layout_height="1px"

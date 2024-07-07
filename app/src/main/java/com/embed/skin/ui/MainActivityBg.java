@@ -1,5 +1,6 @@
 package com.embed.skin.ui;
 
+import android.Manifest;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -16,18 +17,26 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.core.app.ActivityCompat;
 
 import com.embed.skin.R;
 import com.embed.skin.ui.viewManager.MainViewManager;
+import com.embed.skin.util.ByteUtil;
 import com.embed.skin.util.ClientManager;
 import com.embed.skin.util.ConnectResponse;
 import com.embed.skin.util.LogUtils;
 import com.embed.skin.util.ToastUtil;
 import com.inuker.bluetooth.library.connect.response.BleNotifyResponse;
+import com.inuker.bluetooth.library.search.SearchRequest;
+import com.inuker.bluetooth.library.search.SearchResult;
+import com.inuker.bluetooth.library.search.response.SearchResponse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,6 +66,8 @@ public class MainActivityBg extends Activity {
     private Button main_start;
     private Button main_end;
 
+    private TextView scan_result;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,6 +79,7 @@ public class MainActivityBg extends Activity {
         main_status = findViewById(R.id.main_status);
         main_start = findViewById(R.id.main_start);
         main_end = findViewById(R.id.main_end);
+        scan_result = findViewById(R.id.scan_result);
         mainViewManager = new MainViewManager(this);
 //                /**清零操作**/
 //                noWorking();
@@ -75,10 +87,11 @@ public class MainActivityBg extends Activity {
         main_start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mainViewManager.onItemSelect >= 0) {
-                    noWorking();
-                }
+//                if (mainViewManager.onItemSelect >= 0) {
+//                    noWorking();
+//                }
                 mainViewManager.startAnim();
+                startScan();
             }
         });
 
@@ -86,7 +99,7 @@ public class MainActivityBg extends Activity {
             @Override
             public void onClick(View v) {
                 if (BaseApp.canShow()) {
-                    ToastUtil.showToast(MainActivityBg.this, "您还没有开始检测",Toast.LENGTH_SHORT);
+                    ToastUtil.showToast(MainActivityBg.this, "您还没有开始检测", Toast.LENGTH_SHORT);
                     return;
                 }
                 finish();
@@ -96,7 +109,8 @@ public class MainActivityBg extends Activity {
         main_status.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                scanLeDevice(true);
+//                scanLeDevice(true);
+                startScan();
             }
         });
     }
@@ -135,7 +149,7 @@ public class MainActivityBg extends Activity {
     @Override
     public void onStop() {
         super.onStop();
-        scanLeDevice(false);
+//        scanLeDevice(false);
     }
 
     //Bluetooth connection
@@ -159,12 +173,12 @@ public class MainActivityBg extends Activity {
             Toast.makeText(getApplication(), "当前手机不支持BLE蓝牙", Toast.LENGTH_SHORT).show();
         } else {
             // 检查设备上是否支持蓝牙
-            if (mBluetoothAdapter == null || !mBluetoothAdapter.isEnabled()) {
-                Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-                startActivityForResult(enableBtIntent, 1);
-            } else {
-                scanLeDevice(true);
-            }
+//            if (mBluetoothAdapter == null || !mBluetoothAdapter.isEnabled()) {
+//                Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+//                startActivityForResult(enableBtIntent, 1);
+//            } else {
+//                scanLeDevice(true);
+//            }
 
 
         }
@@ -174,9 +188,10 @@ public class MainActivityBg extends Activity {
     private BluetoothAdapter.LeScanCallback mLeScanCallback = new BluetoothAdapter.LeScanCallback() {
         @Override
         public void onLeScan(final BluetoothDevice device, int rssi, byte[] scanRecord) {
-            LogUtils.e("TAG", "name = "+device.getName());
+            LogUtils.e(TAG, "name = " + device.getName());
             mLeDevices.add(device);
             mHandler.post(runnable);
+
         }
     };
 
@@ -189,8 +204,8 @@ public class MainActivityBg extends Activity {
                 device = mBluetoothAdapter.getRemoteDevice(mLeDevices.get(0).getAddress());
                 deviceTitle = mBluetoothAdapter.getRemoteDevice(mLeDevices.get(0).getAddress()).getName() + "";
 
-                LogUtils.e(TAG, "deviceTitle ="+deviceTitle);
-                if (deviceTitle.equals("XYL-BT") || deviceTitle.equals("het-31-8")) {
+                LogUtils.e(TAG, "deviceTitle =" + deviceTitle);
+                if (deviceTitle.equals("XYLT") || deviceTitle.equals("het-31-8")) {
                     if (device != null) {
                         mBluetoothGatt = device.connectGatt(getApplication(), false, mGattCallback);
                     }
@@ -252,7 +267,7 @@ public class MainActivityBg extends Activity {
         public void onDescriptorWrite(BluetoothGatt gatt,
                                       BluetoothGattDescriptor descriptor, int status) {
 
-            System.out.println("onDescriptorWriteonDescriptorWrite = " + status
+            LogUtils.e(TAG, "onDescriptorWriteonDescriptorWrite = " + status
                     + ", descriptor =" + descriptor.getUuid().toString());
         }
 
@@ -458,4 +473,148 @@ public class MainActivityBg extends Activity {
         super.onDestroy();
         closeGatt();
     }
+
+
+    private void startScan() {
+//        showDialog();
+        LogUtils.e(TAG, "startScan");
+        SearchRequest request = new SearchRequest.Builder()
+                .searchBluetoothLeDevice(3000, 3)   // 先扫BLE设备3次，每次3s
+                .searchBluetoothClassicDevice(5000) // 再扫经典蓝牙5s
+                .searchBluetoothLeDevice(2000)      // 再扫BLE设备2s
+                .build();
+        ClientManager.getInstance().getClient().search(request, new SearchResponse() {
+            @Override
+            public void onSearchStarted() {
+
+            }
+
+            @Override
+            public void onDeviceFounded(SearchResult result) {
+                LogUtils.e(TAG, "result2 = " + result.scanRecord);
+                if (result.device != null) {
+//                    if (ActivityCompat.checkSelfPermission(MainActivityBg.this, Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
+//                        // TODO: Consider calling
+//                        //    ActivityCompat#requestPermissions
+//                        // here to request the missing permissions, and then overriding
+//                        //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+//                        //                                          int[] grantResults)
+//                        // to handle the case where the user grants the permission. See the documentation
+//                        // for ActivityCompat#requestPermissions for more details.
+//                        return;
+//                    }
+                    String name = result.device.getName();
+                    String bluetoothMac = result.device.getAddress();
+                    LogUtils.e(TAG, "name = " + name);
+                    LogUtils.e(TAG, "bluetoothMac = " + bluetoothMac);
+                    LogUtils.e(TAG, "scanRecord = " + result.scanRecord);
+
+                    if (!TextUtils.isEmpty(name) && name.contains("XYLT")) {
+                        LogUtils.e(TAG, "开始监听广播"+bluetoothMac);
+
+                       // 40.1%   18.9%  7.4
+
+                       // 0201 0605 0958 594C 5414 FFFF FFFE 0109 010F 7F1B 5300 68ED 9101 BD00 4A00
+
+                        LogUtils.e(TAG, "scanRecord = " + result.scanRecord);
+
+                        String msg = ByteUtil.bytes2HexStr(result.scanRecord);
+
+
+                        ClientManager.getInstance().getClient().stopSearch();
+                        LogUtils.e(TAG, "scanRecord = " + msg);
+
+
+                        final byte[] data = result.scanRecord;
+
+                        // 4A00  flex
+                        double index56, index57, index58 = 0, index59 = 0;
+                        index56 =  ByteUtil.hexStr2decimal(msg.substring(56,57));
+                        index57 =  ByteUtil.hexStr2decimal(msg.substring(57,58));
+                        index58 =  ByteUtil.hexStr2decimal(msg.substring(58,59));
+                        index59 =  ByteUtil.hexStr2decimal(msg.substring(59,60));
+                        LogUtils.e(TAG, "index56 = "+index56);
+                        LogUtils.e(TAG, "index57 = "+index57);
+                        LogUtils.e(TAG, "index58 = "+index58);
+                        LogUtils.e(TAG, "index59 = "+index59);
+                        //
+                        double h = index58 *16 + index59;
+                        double l = index56* 16 + index57;
+                        double flex = l + h * 256;
+                        flex = flex / 10l;
+                        LogUtils.e(TAG, "flex = "+flex);
+
+                        double index52, index53, index54 = 0, index55 = 0;
+                        index52 =  ByteUtil.hexStr2decimal(msg.substring(52,53));
+                        index53 =  ByteUtil.hexStr2decimal(msg.substring(53,54));
+                        index54 =  ByteUtil.hexStr2decimal(msg.substring(54,55));
+                        index55 =  ByteUtil.hexStr2decimal(msg.substring(55,56));
+                        LogUtils.e(TAG, "index52 = "+index52);
+                        LogUtils.e(TAG, "index53 = "+index53);
+                        LogUtils.e(TAG, "index54 = "+index54);
+                        LogUtils.e(TAG, "index55 = "+index55);
+                        double l1 = index52 *16 + index53;
+                        double h1 = index54* 16 + index55;
+                        double oil = (l1 + h1 * 256)/10l;
+
+
+
+                        double index48, index49, index50 = 0, index51 = 0;
+                        index48 =  ByteUtil.hexStr2decimal(msg.substring(48,49));
+                        index49 =  ByteUtil.hexStr2decimal(msg.substring(49,50));
+                        index50 =  ByteUtil.hexStr2decimal(msg.substring(50,51));
+                        index51 =  ByteUtil.hexStr2decimal(msg.substring(51,52));
+                        LogUtils.e(TAG, "index48 = "+index48);
+                        LogUtils.e(TAG, "index49 = "+index49);
+                        LogUtils.e(TAG, "index50 = "+index50);
+                        LogUtils.e(TAG, "index51 = "+index51);
+                        double l2 = index48 *16 + index49;
+                        double h2 = index50* 16 + index51;
+                        double water = (l2 +h2 * 256)/10l;
+//                        oil = oil / 10l;
+                        LogUtils.e(TAG, "oil = "+oil);
+                        String str = "water " + water + "%" + " oil " + oil + "%" + " flex " + flex;
+                        LogUtils.e(TAG, " str ="+str);
+                        scan_result.setText(""+str);
+
+                        mainViewManager.showEnd(water+"%",oil+"%",flex+"");
+
+//                        ClientManager.getInstance().notifyData(bluetoothMac, new BleNotifyResponse() {
+//                            @Override
+//                            public void onNotify(UUID service, UUID character, byte[] value) {
+//                                LogUtils.e(TAG, "value ="+value);
+//                            }
+//
+//                            @Override
+//                            public void onResponse(int code) {
+//                                LogUtils.e(TAG, "code ="+code);
+//                            }
+//                        });
+                    }
+
+                    //ED:68:00:53:1B:7F
+
+                }
+            }
+
+            @Override
+            public void onSearchStopped() {
+            }
+
+            @Override
+            public void onSearchCanceled() {
+            }
+        });
+    }
+
+//    public void add(int index1, int index2, int index3, int index4, String msg) {
+//        double index52, index53, index54 = 0, index55 = 0;
+//        index52 =  ByteUtil.hexStr2decimal(msg.substring(index1,index2));
+//        index53 =  ByteUtil.hexStr2decimal(msg.substring(53,54));
+//        index54 =  ByteUtil.hexStr2decimal(msg.substring(54,55));
+//        index55 =  ByteUtil.hexStr2decimal(msg.substring(55,56));
+//
+//    }
+
+
 }

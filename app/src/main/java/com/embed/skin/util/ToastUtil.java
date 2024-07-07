@@ -6,7 +6,7 @@ import android.widget.Toast;
 
 public class ToastUtil {
 	private static Toast mToast = null;
-	private static Handler mHandler=new Handler();
+	private static Handler mHandler= new Handler();
 	private static Runnable runnable=new Runnable() {
 		
 		@Override

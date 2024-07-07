@@ -90,7 +90,7 @@ public class ClientManager {
             response.onResponse(false);
             return;
         }
-        if ((code == Constants.STATUS_DEVICE_CONNECTED) && mServerId != null && mWriteUuid != null && mReadUuid != null) {
+        if ((code == Constants.STATUS_DEVICE_CONNECTED) && mServerId != null && mWriteUuid != null) {
             response.onResponse(true);
             LogUtils.e(TAG, "设备已经链接");
         }else {
@@ -209,13 +209,13 @@ public class ClientManager {
                         if (character != null && character.getUuid() != null) {
 //                            LogUtils.e(TAG, "uuid = " + character.getUuid());
                             String uuid = character.getUuid().toString();
-                            if (!TextUtils.isEmpty(uuid) && uuid.contains("b003")) {
-                                mReadUuid = character.getUuid();
-                                LogUtils.e(TAG, "readUUid = " + mReadUuid);
-                                mServerId = bchar.getUUID();
-                                LogUtils.e(TAG, "serverId = " + mServerId);
-                            }
-                            if (!TextUtils.isEmpty(uuid) && uuid.contains("b002")) {
+//                            if (!TextUtils.isEmpty(uuid) && uuid.contains("fff0")) {
+//                                mReadUuid = character.getUuid();
+//                                LogUtils.e(TAG, "readUUid = " + mReadUuid);
+//                                mServerId = bchar.getUUID();
+//                                LogUtils.e(TAG, "serverId = " + mServerId);
+//                            }
+                            if (!TextUtils.isEmpty(uuid) && uuid.contains("fff1")) {
                                 mWriteUuid = character.getUuid();
                                 LogUtils.e(TAG, "writeUuid = " + mWriteUuid);
                                 mServerId = bchar.getUUID();

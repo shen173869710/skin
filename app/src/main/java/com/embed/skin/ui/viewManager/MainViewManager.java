@@ -8,6 +8,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.embed.skin.R;
 import com.embed.skin.ui.BaseApp;
+import com.embed.skin.util.LogUtils;
 
 import java.util.ArrayList;
 
@@ -49,6 +50,7 @@ public class MainViewManager  implements View.OnClickListener{
 
 
     public void showEnd(String water, String oil, String elastic) {
+        LogUtils.e("---", "showend");
         endAnim();
         if (onItemSelect >= 0) {
             View view = views.get(onItemSelect);

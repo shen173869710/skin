@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 apply from: 'url.gradle'
 
 android {
-    compileSdkVersion rootProject.ext.versionCompiler
+    compileSdkVersion 34
 
     defaultConfig {
         applicationId "com.embed.skin"
@@ -104,9 +104,9 @@ android {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'com.android.support.constraint:constraint-layout:1.0.2'
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
 
@@ -149,5 +149,8 @@ dependencies {
 
     implementation 'com.github.jiangdongguo:AndroidUSBCamera:2.3.4'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
+    implementation 'net.colindodd:toggleimagebutton:1.2'
+
+//    implementation 'com.herohan:UVCAndroid:1.0.6'
 
 }

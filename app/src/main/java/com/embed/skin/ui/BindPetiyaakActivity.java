@@ -103,9 +103,9 @@ public class BindPetiyaakActivity extends BaseActivity {
 //                mPresenter.bindDeviced(info.getDeviceName(), bluetoothName, bluetoothMac, BaseApp.userInfo.getId());
                 String cmd = "";
                 if (click) {
-                    cmd = "C101";
+                    cmd = "{#1:N0000N}";
                 } else {
-                    cmd = "C100";
+                    cmd = "{#1:Y0000Y}";
                 }
                 WriteBytes = hex2byte(cmd.getBytes());
                 ClientManager.getInstance().writeData(bluetoothMac, WriteBytes, new BleWriteResponse() {
@@ -114,6 +114,7 @@ public class BindPetiyaakActivity extends BaseActivity {
                         LogUtils.e("bind", "code = " + code);
                     }
                 });
+
             }
         });
 

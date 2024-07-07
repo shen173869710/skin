@@ -1,20 +1,28 @@
 package com.embed.skin.ui;
 
+import android.Manifest;
+import android.app.Dialog;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.hardware.usb.UsbDevice;
+import android.os.Handler;
 import android.os.Looper;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Surface;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import androidx.core.app.ActivityCompat;
 
 import com.embed.skin.R;
 import com.embed.skin.presenter.BasePresenter;
@@ -23,6 +31,7 @@ import com.embed.skin.util.ConnectResponse;
 import com.embed.skin.util.LogUtils;
 import com.embed.skin.util.ShareUtil;
 import com.embed.skin.util.ToastUtils;
+import com.inuker.bluetooth.library.Constants;
 import com.inuker.bluetooth.library.connect.response.BleNotifyResponse;
 import com.inuker.bluetooth.library.connect.response.BleWriteResponse;
 import com.inuker.bluetooth.library.search.SearchRequest;
@@ -35,6 +44,9 @@ import com.serenegiant.usb.Size;
 import com.serenegiant.usb.USBMonitor;
 import com.serenegiant.usb.common.AbstractUVCCameraHandler;
 import com.serenegiant.usb.widget.CameraViewInterface;
+import com.serenegiant.usb.widget.UVCCameraTextureView;
+
+import net.colindodd.toggleimagebutton.ToggleImageButton;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -57,7 +69,7 @@ public class USBCameraActivity extends BaseActivity implements CameraDialog.Came
     private static final String TAG = "USBCameraActivity";
     @BindView(R.id.camera_view)
     public View mTextureView;
-//    @BindView(R.id.seekbar_brightness)
+    //    @BindView(R.id.seekbar_brightness)
 //    public SeekBar mSeekBrightness;
 //    @BindView(R.id.seekbar_contrast)
 //    public SeekBar mSeekContrast;
@@ -68,9 +80,9 @@ public class USBCameraActivity extends BaseActivity implements CameraDialog.Came
     @BindView(R.id.camera_right)
     ImageView cameraRight;
     @BindView(R.id.camera_light_1)
-    Button cameraLight1;
+    ToggleImageButton cameraLight1;
     @BindView(R.id.camera_light_2)
-    Button cameraLight2;
+    ToggleImageButton cameraLight2;
 
 
     private UVCCameraHelper mCameraHelper;
@@ -85,7 +97,12 @@ public class USBCameraActivity extends BaseActivity implements CameraDialog.Came
     /**
      * 蓝牙的mac
      */
-    private String bluetoothMac;
+    //LA_MODAC5B5C4AF
+    private String bluetoothMac1 = "EC:B1:C3:00:0E:F0";
+    //LA_MODAC418D7E7
+    private String bluetoothMac2 = "EC:B1:C2:00:19:BB";
+
+    static String mes = "";
 
     private UVCCameraHelper.OnMyDevConnectListener listener = new UVCCameraHelper.OnMyDevConnectListener() {
 
@@ -95,7 +112,24 @@ public class USBCameraActivity extends BaseActivity implements CameraDialog.Came
             if (!isRequest) {
                 isRequest = true;
                 if (mCameraHelper != null) {
-                    mCameraHelper.requestPermission(0);
+                    int index = 0;
+                    List<UsbDevice> devices = mCameraHelper.getUsbDeviceList();
+
+
+                    for (int i =0; i < devices.size(); i++) {
+
+                        String name = devices.get(i).getManufacturerName();
+                        if (!TextUtils.isEmpty(name) && name.contains("CAMERA")) {
+                            index = i;
+                             showShortMsg(i+"");
+
+                        }
+                        LogUtils.e(TAG, "devices"+devices.get(i).getManufacturerName());
+
+                    }
+
+                    LogUtils.e(TAG, "index = "+index);
+                    mCameraHelper.requestPermission(index);
                 }
             }
         }
@@ -106,12 +140,15 @@ public class USBCameraActivity extends BaseActivity implements CameraDialog.Came
             if (isRequest) {
                 isRequest = false;
                 mCameraHelper.closeCamera();
+
                 showShortMsg(device.getDeviceName() + " is out");
             }
         }
 
         @Override
         public void onConnectDev(UsbDevice device, boolean isConnected) {
+
+            LogUtils.e(TAG, "onConnectDev" + isConnected);
             if (!isConnected) {
                 showShortMsg("fail to connect,please check resolution params");
                 isPreview = false;
@@ -153,26 +190,67 @@ public class USBCameraActivity extends BaseActivity implements CameraDialog.Came
     @Override
     protected void init() {
         initView();
+
+
+        mTextureView = findViewById(R.id.camera_view);
         // step.1 initialize UVCCameraHelper
+//        FrameLayout camera_root = findViewById(R.id.camera_root);
+//        camera_root.removeAllViews();
+//        camera_root.addView(mTextureView);
         mUVCCameraView = (CameraViewInterface) mTextureView;
         mUVCCameraView.setCallback(this);
+
+
+        LogUtils.e(TAG, "  mUVCCameraView.getSurface() = " + mUVCCameraView.getSurface());
+
         mCameraHelper = UVCCameraHelper.getInstance();
         mCameraHelper.setDefaultFrameFormat(UVCCameraHelper.FRAME_FORMAT_MJPEG);
+
         mCameraHelper.setDefaultPreviewSize(1920, 1080);
+
+
+        List<Size>  sizes = mCameraHelper.getSupportedPreviewSizes();
+
+
         mCameraHelper.initUSBMonitor(this, mUVCCameraView, listener);
 
+//mCameraHelper
 //        mUVCCameraView.setAspectRatio(1920/1080);
         mCameraHelper.setOnPreviewFrameListener(new AbstractUVCCameraHandler.OnPreViewResultListener() {
             @Override
             public void onPreviewResult(byte[] nv21Yuv) {
-                Log.d(TAG, "onPreviewResult: " + nv21Yuv.length);
+//                Log.e(TAG, "onPreviewResult: " + nv21Yuv.length);
             }
         });
     }
 
     @Override
     protected void setListener() {
+        cameraLight1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                String cmd1 = "";
+                if (isChecked) {
+                    cmd1 = "{#1:Y0000Y}";
+                }else {
+                    cmd1 = "{#1:N0000N}";
+                }
+                onLightClick(cmd1,1);
+            }
+        });
 
+        cameraLight2.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                String cmd2 = "";
+                if (isChecked) {
+                    cmd2 = "{#1:Y0000Y}";
+                } else {
+                    cmd2 = "{#1:N0000N}";;
+                }
+                onLightClick(cmd2,2);
+            }
+        });
     }
 
     @Override
@@ -263,9 +341,9 @@ public class USBCameraActivity extends BaseActivity implements CameraDialog.Came
         if (mCameraHelper != null) {
             mCameraHelper.release();
         }
-        if (!TextUtils.isEmpty(bluetoothMac)) {
-            ClientManager.getInstance().getClient().disconnect(bluetoothMac);
-        }
+//        if (!TextUtils.isEmpty(bluetoothMac)) {
+//            ClientManager.getInstance().getClient().disconnect(bluetoothMac);
+//        }
     }
 
     private void showShortMsg(String msg) {
@@ -287,6 +365,9 @@ public class USBCameraActivity extends BaseActivity implements CameraDialog.Came
 
     @Override
     public void onSurfaceCreated(CameraViewInterface view, Surface surface) {
+
+        LogUtils.e(TAG, "onSurfaceCreated");
+
         if (!isPreview && mCameraHelper.isCameraOpened()) {
             mCameraHelper.startPreview(mUVCCameraView);
             isPreview = true;
@@ -312,20 +393,21 @@ public class USBCameraActivity extends BaseActivity implements CameraDialog.Came
             ToastUtils.showToast("请打开蓝牙 ");
             return;
         }
-
-        bluetoothMac = ShareUtil.getLightMac(USBCameraActivity.this);
-        if (!TextUtils.isEmpty(bluetoothMac)) {
-            showDialog();
-            connect(bluetoothMac);
-        }else {
-            ToastUtils.showToast("请设置灯光的蓝牙名称和mac地址");
-        }
+//
+//        bluetoothMac1 = ShareUtil.getLightMac(USBCameraActivity.this);
+//
+//        if (!TextUtils.isEmpty(bluetoothMac1)) {
+////            showDialog();
+//            connect(bluetoothMac1);
+//        } else {
+//            ToastUtils.showToast("请设置灯光的蓝牙名称和mac地址");
+//        }
 //        startScan();
     }
 
-    private void startScan() {
+    private void startScan(int index) {
 
-        showDialog();
+//        showDialog();
         LogUtils.e(TAG, "startScan");
         SearchRequest request = new SearchRequest.Builder()
                 .searchBluetoothLeDevice(3000, 3)   // 先扫BLE设备3次，每次3s
@@ -340,13 +422,21 @@ public class USBCameraActivity extends BaseActivity implements CameraDialog.Came
 
             @Override
             public void onDeviceFounded(SearchResult result) {
+                LogUtils.e(TAG, "result = " + result);
                 if (result.device != null) {
                     String name = result.device.getName();
-                    bluetoothMac = result.device.getAddress();
+//                    bluetoothMac = result.device.getAddress();
                     LogUtils.e(TAG, "name = " + name);
-                    if (!TextUtils.isEmpty(name) && name.contains("SerialApp")) {
+                    if (!TextUtils.isEmpty(name) && name.contains("LA_MODAC5B5C4AF") && index == 1) {
+                        LogUtils.e(TAG, "链接index 1");
                         ClientManager.getInstance().getClient().stopSearch();
-                        connect(bluetoothMac);
+                        bluetoothMac1 = result.device.getAddress();
+//                        connect(bluetoothMac1);
+                    }else if (!TextUtils.isEmpty(name) && name.contains("LA_MODAC418D7E7") && index == 2) {
+                        LogUtils.e(TAG, "链接index 2");
+                        ClientManager.getInstance().getClient().stopSearch();
+                        bluetoothMac2 = result.device.getAddress();
+//                        connect(bluetoothMac2);
                     }
                 }
             }
@@ -363,61 +453,37 @@ public class USBCameraActivity extends BaseActivity implements CameraDialog.Came
         });
     }
 
-    private void connect(final String mac) {
+    private void connect(final String mac, String cmd) {
+        showDialog();
+        LogUtils.e(TAG, "开始链接+" + mac);
         ClientManager.getInstance().connectDevice(mac, new ConnectResponse() {
             @Override
             public void onResponse(boolean isConnect) {
                 LogUtils.e("bind", "isConnect = " + isConnect);
                 dismissDialog();
                 if (isConnect) {
-                    cameraRight.setBackground(getResources().getDrawable(R.mipmap.bluetooth_show));
-
+//                    cameraRight.setBackground(getResources().getDrawable(R.mipmap.bluetooth_show));
                     Toast.makeText(USBCameraActivity.this, "连接灯光成功", Toast.LENGTH_LONG).show();
-                    ClientManager.getInstance().notifyData(mac, new BleNotifyResponse() {
-                        @Override
-                        public void onNotify(UUID service, UUID character, byte[] value) {
-                            LogUtils.e(TAG, "" + new String(value));
-                        }
-
+                    LogUtils.e(TAG, "onLightClick =" + cmd);
+//                        byte[] writeBytes = new byte[20];
+//                        writeBytes = hex2byte(cmd.getBytes());
+                    ClientManager.getInstance().writeData(mac, cmd.getBytes(), new BleWriteResponse() {
                         @Override
                         public void onResponse(int code) {
-                            LogUtils.e(TAG, "notifyData = " + code);
+                            LogUtils.e("bind", "code = " + code);
                         }
                     });
-
                 } else {
                     Toast.makeText(USBCameraActivity.this, "连接灯光失败", Toast.LENGTH_LONG).show();
-                    cameraRight.setBackground(getResources().getDrawable(R.mipmap.bluetooth_blank));
+//                    cameraRight.setBackground(getResources().getDrawable(R.mipmap.bluetooth_blank));
                 }
             }
         });
     }
 
-    @OnClick({R.id.camera_left, R.id.camera_right, R.id.camera_light_1, R.id.take_photo, R.id.camera_light_2})
+    @OnClick({R.id.camera_left, R.id.camera_right, R.id.take_photo})
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.camera_light_1:
-                lightClick2 = false;
-                lightClick1 = !lightClick1;
-                String cmd1 = "";
-                if (lightClick1) {
-                    cmd1 = "C110";
-                } else {
-                    cmd1 = "C100";
-                }
-                onLightClick(cmd1);
-                break;
-            case R.id.camera_light_2:
-                lightClick1 = false;
-                lightClick2 = !lightClick2;
-                String cmd2 = "";
-                if (lightClick2) {
-                    cmd2 = "C101";
-                } else {
-                    cmd2 = "C100";
-                }
-                onLightClick(cmd2);
-                break;
             case R.id.take_photo:
                 takePhoto();
                 break;
@@ -427,31 +493,45 @@ public class USBCameraActivity extends BaseActivity implements CameraDialog.Came
             case R.id.camera_right:
 //                Intent intent = new Intent(USBCameraActivity.this, BindPetiyaakActivity.class);
 //                startActivity(intent);
-                bluetoothMac = ShareUtil.getLightMac(USBCameraActivity.this);
-                if (!TextUtils.isEmpty(bluetoothMac)) {
-                    showDialog();
-                    connect(bluetoothMac);
-                }else {
-                    ToastUtils.showToast("请设置灯光的蓝牙名称和mac地址");
-                }
+//                bluetoothMac = ShareUtil.getLightMac(USBCameraActivity.this);
+//                if (!TextUtils.isEmpty(bluetoothMac)) {
+//                    showDialog();
+//                    connect(bluetoothMac);
+//                }else {
+//                    ToastUtils.showToast("请设置灯光的蓝牙名称和mac地址");
+//                }
                 break;
         }
     }
 
-    public void onLightClick(String cmd) {
-        if (TextUtils.isEmpty(bluetoothMac) || !ClientManager.getInstance().getConnectStatus(bluetoothMac)) {
-            ToastUtils.showToast("蓝牙未连接");
-            startScan();
-            return;
-        }
-        byte[] writeBytes = new byte[20];
-        writeBytes = hex2byte(cmd.getBytes());
-        ClientManager.getInstance().writeData(bluetoothMac, writeBytes, new BleWriteResponse() {
-            @Override
-            public void onResponse(int code) {
-                LogUtils.e("bind", "code = " + code);
+    public void onLightClick(String cmd, int index) {
+
+        String bluetoothMac = "";
+        if (index == 1) {
+            bluetoothMac = bluetoothMac1;
+            boolean connect = ClientManager.getInstance().getConnectStatus(bluetoothMac1);
+            if (connect) {
+                writeDate(bluetoothMac1,cmd);
+            }else {
+                connect = ClientManager.getInstance().getConnectStatus(bluetoothMac2);
+                if (connect) {
+                    ClientManager.getInstance().disconnect(bluetoothMac2);
+                }
+                connect(bluetoothMac1, cmd);
             }
-        });
+        }else {
+            bluetoothMac = bluetoothMac2;
+            boolean connect = ClientManager.getInstance().getConnectStatus(bluetoothMac2);
+            if (connect) {
+                writeDate(bluetoothMac2,cmd);
+            }else {
+                connect = ClientManager.getInstance().getConnectStatus(bluetoothMac1);
+                if (connect) {
+                    ClientManager.getInstance().disconnect(bluetoothMac1);
+                }
+                connect(bluetoothMac2, cmd);
+            }
+        }
     }
 
 
@@ -470,6 +550,13 @@ public class USBCameraActivity extends BaseActivity implements CameraDialog.Came
     }
 
     public void takePhoto() {
+
+//        String path = "/sdcard/DCIM/WeiXin/111.jpg";
+//        Intent intent = new Intent(USBCameraActivity.this, PreviewActivity.class);
+//        intent.putExtra("path", path);
+//        startActivity(intent);
+        LogUtils.e(TAG, "takePhoto");
+
         if (mCameraHelper == null || !mCameraHelper.isCameraOpened()) {
             showShortMsg("sorry,camera open failed");
             return;
@@ -527,4 +614,17 @@ public class USBCameraActivity extends BaseActivity implements CameraDialog.Came
         return result;
     }
 
+    /**
+     *        链接蓝牙写入指定数据
+     * @param bluetoothMac
+     * @param cmd
+     */
+    private void writeDate(String bluetoothMac, String cmd) {
+        ClientManager.getInstance().writeData(bluetoothMac, cmd.getBytes(), new BleWriteResponse() {
+            @Override
+            public void onResponse(int code) {
+                LogUtils.e("bind", "code = " + code);
+            }
+        });
+    }
 }

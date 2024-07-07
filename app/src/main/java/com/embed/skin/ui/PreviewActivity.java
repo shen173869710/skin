@@ -1,10 +1,10 @@
 package com.embed.skin.ui;
 
 import android.content.Intent;
+import android.graphics.Matrix;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.embed.skin.R;
 import com.embed.skin.entity.PreviewResult;
@@ -37,7 +37,17 @@ public class PreviewActivity extends BaseActivity<PreviewPresenter> implements I
     protected void init() {
         path = getIntent().getStringExtra("path");
         LogUtils.e(TAG, "path= "+path);
+
+
         GlideUtils.loadFile(this, path, image);
+
+        Matrix matrix = image.getImageMatrix();
+
+// 旋转90度
+        matrix.postRotate(90.0f);
+
+// 应用新的Matrix到ImageView
+        image.setImageMatrix(matrix);
     }
 
     @Override
@@ -45,7 +55,7 @@ public class PreviewActivity extends BaseActivity<PreviewPresenter> implements I
         comit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showDialog();
+//                showDialog();
                 mPresenter.uploadImgByOkHttp(PreviewActivity.this, path);
             }
         });
@@ -63,23 +73,49 @@ public class PreviewActivity extends BaseActivity<PreviewPresenter> implements I
 
     @Override
     public void updateSuccess(BaseRespone respone) {
-        dismissDialog();
+//        dismissDialog();
+
+
 //        showToastMsg("上报成功");
         PreviewResult result = (PreviewResult) respone.getResult();
+        LogUtils.e(TAG, "result"+result);
         if (result != null) {
-            Intent intent = new Intent(PreviewActivity.this, ResultActivity.class);
-            intent.putExtra("result",result);
-            intent.putExtra("path",path);
-            startActivity(intent);
+            LogUtils.e(TAG, "result.getMeta()"+result.getMeta());
+            if (result.getMeta() != null) {
+
+            }else {
+                Intent intent = new Intent(PreviewActivity.this, ResultActivity.class);
+                intent.putExtra("result",result);
+                intent.putExtra("path",path);
+                startActivity(intent);
+            }
+        }else {
+//            Toast.makeText(PreviewActivity.this, "皮肤检测失败，请重试",Toast.LENGTH_SHORT).show();
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    showToastMsg("皮肤检测失败，请重试");
+                }
+            });
+//            showToastMsg(""+"皮肤检测失败，请重试");
         }
     }
 
     @Override
     public void updateFail(Throwable error, String msg) {
         dismissDialog();
-        showToastMsg(msg);
 
-        Toast.makeText(this, ""+msg, Toast.LENGTH_SHORT).show();
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                showToastMsg(msg);
+            }
+        });
+
+
+        LogUtils.e(TAG, "msg ="+msg);
+
+//        Toast.makeText(this, ""+msg, Toast.LENGTH_SHORT).show();
     }
 
 
