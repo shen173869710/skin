@@ -6,6 +6,7 @@ import android.app.Dialog;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.embed.skin.R;
@@ -36,6 +37,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends RxAppCompatA
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(setLayout());
+		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);// 设置全屏
 		EventBus.getDefault().register(this);
 		ButterKnife.bind(this);
 		mPresenter = createPresenter();

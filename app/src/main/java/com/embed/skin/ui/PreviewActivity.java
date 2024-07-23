@@ -41,13 +41,12 @@ public class PreviewActivity extends BaseActivity<PreviewPresenter> implements I
 
         GlideUtils.loadFile(this, path, image);
 
-        Matrix matrix = image.getImageMatrix();
-
-// 旋转90度
-        matrix.postRotate(90.0f);
+//        Matrix matrix = image.getImageMatrix();
+//// 旋转90度
+//        matrix.postRotate(90);
 
 // 应用新的Matrix到ImageView
-        image.setImageMatrix(matrix);
+//        image.setImageMatrix(matrix);
     }
 
     @Override

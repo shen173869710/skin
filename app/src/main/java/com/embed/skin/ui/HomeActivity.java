@@ -62,7 +62,7 @@ public class HomeActivity extends Activity implements View.OnClickListener{
 						@Override
 						public void onResponse(int code) {
 							LogUtils.e("bind", "code = " + code);
-
+							ClientManager.getInstance().getClient().disconnect(mac);
 							connect2( "EC:B1:C2:00:19:BB","{#1:N0000N}");
 						}
 					});

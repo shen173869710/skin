@@ -24,7 +24,7 @@ public class GlideUtils {
         LogUtils.e(TAG, "loadFile= "+path);
 
 
-        Glide.with(context).load(new File(path)).transform(new RotateTransformation(270)).into(imageView);
+        Glide.with(context).load(new File(path)).into(imageView);
     }
     /**
      *        本身res 图片

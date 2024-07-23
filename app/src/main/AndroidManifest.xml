@@ -64,7 +64,7 @@
         <activity android:name="com.embed.skin.ui.RecomActivity" android:screenOrientation="portrait"></activity>
         <activity android:name="com.embed.skin.ui.BindPetiyaakActivity" android:screenOrientation="portrait"></activity>
         <activity android:name="com.embed.skin.ui.UCameraActivity" android:screenOrientation="landscape" ></activity>
-        <activity android:name="com.embed.skin.ui.USBCameraActivity" android:screenOrientation="portrait" ></activity>
+        <activity android:name="com.embed.skin.ui.USBCameraActivity" android:screenOrientation="landscape"   android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
 
     </application>
 

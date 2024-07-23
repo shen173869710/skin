@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tib="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tib="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
     android:orientation="vertical"
     tools:ignore="MergeRootFrame">
@@ -12,38 +12,34 @@
         android:id="@+id/camera_title"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:background="@color/white"
-        >
+        android:background="@color/white">
 
         <ImageView
             android:id="@+id/camera_left"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:background="@mipmap/icon_title_back"
-           android:layout_centerVertical="true"
+            android:layout_centerVertical="true"
             android:layout_marginLeft="20dp"
-            />
+            android:background="@mipmap/icon_title_back" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/black"
             android:layout_centerInParent="true"
-            android:textSize="@dimen/sp_12"
-            />
+            android:textColor="@color/black"
+            android:textSize="@dimen/sp_12" />
 
         <ImageView
             android:id="@+id/camera_right"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_alignParentRight="true"
-            android:background="@mipmap/bluetooth_blank"
             android:layout_centerVertical="true"
             android:layout_marginRight="20dp"
-            />
+            android:background="@mipmap/bluetooth_blank" />
     </RelativeLayout>
 
-    <com.serenegiant.usb.widget.UVCCameraTextureView
+    <com.serenegiant.widget.AspectRatioSurfaceView
         android:id="@+id/camera_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -51,39 +47,39 @@
         android:layout_weight="1" />
 
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_marginBottom="30dp"
-        android:layout_alignParentBottom="true"
-        >
-        <ImageButton
-            android:id="@+id/take_photo"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:background="@mipmap/camera_bg"
-            android:layout_centerInParent="true"
-            />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="30dp"
+        android:orientation="vertical">
+
         <net.colindodd.toggleimagebutton.ToggleImageButton
             android:id="@+id/camera_light_1"
             android:layout_width="60dp"
             android:layout_height="60dp"
+            android:layout_gravity="center_horizontal"
             android:layout_toLeftOf="@+id/take_photo"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="50dp"
-            tib:tib_drawable_on="@drawable/icon_left_open"
             tib:tib_drawable_off="@drawable/icon_light_close"
-            ></net.colindodd.toggleimagebutton.ToggleImageButton>
+            tib:tib_drawable_on="@drawable/icon_left_open" />
+
+        <ImageButton
+            android:id="@+id/take_photo"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="30dp"
+            android:background="@mipmap/camera_bg" />
+
 
         <net.colindodd.toggleimagebutton.ToggleImageButton
             android:id="@+id/camera_light_2"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:layout_centerVertical="true"
-            android:layout_toRightOf="@+id/take_photo"
-            android:layout_marginLeft="50dp"
-            tib:tib_drawable_on="@drawable/icon_left_open"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="30dp"
             tib:tib_drawable_off="@drawable/icon_light_close"
-            ></net.colindodd.toggleimagebutton.ToggleImageButton>
-    </RelativeLayout>
+            tib:tib_drawable_on="@drawable/icon_left_open" />
+    </LinearLayout>
 </RelativeLayout>

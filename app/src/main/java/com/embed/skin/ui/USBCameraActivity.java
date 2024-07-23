@@ -1,50 +1,47 @@
 package com.embed.skin.ui;
 
-import android.Manifest;
-import android.app.Dialog;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.hardware.usb.UsbDevice;
-import android.os.Handler;
+import android.os.Environment;
 import android.os.Looper;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Surface;
+import android.view.SurfaceHolder;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CompoundButton;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import androidx.core.app.ActivityCompat;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.embed.skin.R;
 import com.embed.skin.presenter.BasePresenter;
 import com.embed.skin.util.ClientManager;
 import com.embed.skin.util.ConnectResponse;
 import com.embed.skin.util.LogUtils;
-import com.embed.skin.util.ShareUtil;
 import com.embed.skin.util.ToastUtils;
-import com.inuker.bluetooth.library.Constants;
-import com.inuker.bluetooth.library.connect.response.BleNotifyResponse;
+import com.herohan.uvcapp.CameraHelper;
+import com.herohan.uvcapp.ICameraHelper;
+import com.herohan.uvcapp.IImageCapture;
+import com.herohan.uvcapp.ImageCapture;
 import com.inuker.bluetooth.library.connect.response.BleWriteResponse;
 import com.inuker.bluetooth.library.search.SearchRequest;
 import com.inuker.bluetooth.library.search.SearchResult;
 import com.inuker.bluetooth.library.search.response.SearchResponse;
-import com.jiangdg.usbcamera.UVCCameraHelper;
-import com.jiangdg.usbcamera.utils.FileUtils;
-import com.serenegiant.usb.CameraDialog;
 import com.serenegiant.usb.Size;
-import com.serenegiant.usb.USBMonitor;
-import com.serenegiant.usb.common.AbstractUVCCameraHandler;
-import com.serenegiant.usb.widget.CameraViewInterface;
-import com.serenegiant.usb.widget.UVCCameraTextureView;
+import com.serenegiant.utils.FileUtils;
+import com.serenegiant.utils.UriHelper;
+import com.serenegiant.widget.AspectRatioSurfaceView;
 
 import net.colindodd.toggleimagebutton.ToggleImageButton;
 
@@ -54,7 +51,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -65,10 +61,10 @@ import butterknife.OnClick;
  * Created by jiangdongguo on 2017/9/30.
  */
 
-public class USBCameraActivity extends BaseActivity implements CameraDialog.CameraDialogParent, CameraViewInterface.Callback {
+public class USBCameraActivity extends BaseActivity{
     private static final String TAG = "USBCameraActivity";
     @BindView(R.id.camera_view)
-    public View mTextureView;
+    public AspectRatioSurfaceView mCameraViewMain;
     //    @BindView(R.id.seekbar_brightness)
 //    public SeekBar mSeekBrightness;
 //    @BindView(R.id.seekbar_contrast)
@@ -84,15 +80,8 @@ public class USBCameraActivity extends BaseActivity implements CameraDialog.Came
     @BindView(R.id.camera_light_2)
     ToggleImageButton cameraLight2;
 
-
-    private UVCCameraHelper mCameraHelper;
-    private CameraViewInterface mUVCCameraView;
-
     private boolean isRequest;
     private boolean isPreview;
-
-    private boolean lightClick1 = false;
-    private boolean lightClick2 = false;
 
     /**
      * 蓝牙的mac
@@ -101,87 +90,16 @@ public class USBCameraActivity extends BaseActivity implements CameraDialog.Came
     private String bluetoothMac1 = "EC:B1:C3:00:0E:F0";
     //LA_MODAC418D7E7
     private String bluetoothMac2 = "EC:B1:C2:00:19:BB";
+    private static final int DEFAULT_WIDTH = 2069;
+    private static final int DEFAULT_HEIGHT = 1080;
+    private int mPreviewWidth = DEFAULT_WIDTH;
+    /**
+     * Camera preview height
+     */
+    private int mPreviewHeight = DEFAULT_HEIGHT;
 
-    static String mes = "";
-
-    private UVCCameraHelper.OnMyDevConnectListener listener = new UVCCameraHelper.OnMyDevConnectListener() {
-
-        @Override
-        public void onAttachDev(UsbDevice device) {
-            // request open permission
-            if (!isRequest) {
-                isRequest = true;
-                if (mCameraHelper != null) {
-                    int index = 0;
-                    List<UsbDevice> devices = mCameraHelper.getUsbDeviceList();
-
-
-                    for (int i =0; i < devices.size(); i++) {
-
-                        String name = devices.get(i).getManufacturerName();
-                        if (!TextUtils.isEmpty(name) && name.contains("CAMERA")) {
-                            index = i;
-                             showShortMsg(i+"");
-
-                        }
-                        LogUtils.e(TAG, "devices"+devices.get(i).getManufacturerName());
-
-                    }
-
-                    LogUtils.e(TAG, "index = "+index);
-                    mCameraHelper.requestPermission(index);
-                }
-            }
-        }
-
-        @Override
-        public void onDettachDev(UsbDevice device) {
-            // close camera
-            if (isRequest) {
-                isRequest = false;
-                mCameraHelper.closeCamera();
-
-                showShortMsg(device.getDeviceName() + " is out");
-            }
-        }
-
-        @Override
-        public void onConnectDev(UsbDevice device, boolean isConnected) {
-
-            LogUtils.e(TAG, "onConnectDev" + isConnected);
-            if (!isConnected) {
-                showShortMsg("fail to connect,please check resolution params");
-                isPreview = false;
-            } else {
-                isPreview = true;
-                showShortMsg("connecting");
-                // initialize seekbar
-                // need to wait UVCCamera initialize over
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            Thread.sleep(2500);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                        Looper.prepare();
-//                        if (mCameraHelper != null && mCameraHelper.isCameraOpened()) {
-//                            mSeekBrightness.setProgress(mCameraHelper.getModelValue(UVCCameraHelper.MODE_BRIGHTNESS));
-//                            mSeekContrast.setProgress(mCameraHelper.getModelValue(UVCCameraHelper.MODE_CONTRAST));
-//                        }
-                        Looper.loop();
-                    }
-                }).start();
-            }
-        }
-
-        @Override
-        public void onDisConnectDev(UsbDevice device) {
-            showShortMsg("disconnecting");
-        }
-    };
-
+    private int mPreviewRotation = 0;
+    private ICameraHelper mCameraHelper;
     @Override
     protected int setLayout() {
         return R.layout.activity_usbcamera;
@@ -189,39 +107,42 @@ public class USBCameraActivity extends BaseActivity implements CameraDialog.Came
 
     @Override
     protected void init() {
-        initView();
+        WindowManager windowManager = (WindowManager) USBCameraActivity.this.getSystemService(USBCameraActivity.WINDOW_SERVICE);
+        DisplayMetrics metrics = new DisplayMetrics();
+        windowManager.getDefaultDisplay().getMetrics(metrics);
+        Log.e(TAG, "metrics.widthPixels = "+metrics.widthPixels);
+        Log.e(TAG, "metrics.heightPixels = "+metrics.heightPixels);
+        mPreviewWidth = metrics.widthPixels;
+        mPreviewHeight = metrics.heightPixels;
+        mCameraViewMain.setAspectRatio(mPreviewWidth, mPreviewHeight);
 
-
-        mTextureView = findViewById(R.id.camera_view);
-        // step.1 initialize UVCCameraHelper
-//        FrameLayout camera_root = findViewById(R.id.camera_root);
-//        camera_root.removeAllViews();
-//        camera_root.addView(mTextureView);
-        mUVCCameraView = (CameraViewInterface) mTextureView;
-        mUVCCameraView.setCallback(this);
-
-
-        LogUtils.e(TAG, "  mUVCCameraView.getSurface() = " + mUVCCameraView.getSurface());
-
-        mCameraHelper = UVCCameraHelper.getInstance();
-        mCameraHelper.setDefaultFrameFormat(UVCCameraHelper.FRAME_FORMAT_MJPEG);
-
-        mCameraHelper.setDefaultPreviewSize(1920, 1080);
-
-
-        List<Size>  sizes = mCameraHelper.getSupportedPreviewSizes();
-
-
-        mCameraHelper.initUSBMonitor(this, mUVCCameraView, listener);
-
-//mCameraHelper
-//        mUVCCameraView.setAspectRatio(1920/1080);
-        mCameraHelper.setOnPreviewFrameListener(new AbstractUVCCameraHandler.OnPreViewResultListener() {
+        mCameraViewMain.getHolder().addCallback(new SurfaceHolder.Callback() {
             @Override
-            public void onPreviewResult(byte[] nv21Yuv) {
-//                Log.e(TAG, "onPreviewResult: " + nv21Yuv.length);
+            public void surfaceCreated(@NonNull SurfaceHolder holder) {
+
+                Log.e(TAG, "surfaceCreated    mCameraHelper =" +mCameraHelper);
+                if (mCameraHelper != null) {
+                    mCameraHelper.addSurface(holder.getSurface(), false);
+                }
+            }
+
+            @Override
+            public void surfaceChanged(@NonNull SurfaceHolder holder, int format, int width, int height) {
+                Log.e(TAG, "surfaceChanged");
+//                showVideoFormatDialog();
+            }
+
+            @Override
+            public void surfaceDestroyed(@NonNull SurfaceHolder holder) {
+                Log.e(TAG, "surfaceDestroyed");
+                if (mCameraHelper != null) {
+                    mCameraHelper.removeSurface(holder.getSurface());
+                }
             }
         });
+
+
+
     }
 
     @Override
@@ -259,133 +180,100 @@ public class USBCameraActivity extends BaseActivity implements CameraDialog.Came
     }
 
     private void initView() {
-//        mSeekBrightness.setMax(100);
-//        mSeekBrightness.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-//            @Override
-//            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-//                if (mCameraHelper != null && mCameraHelper.isCameraOpened()) {
-//                    mCameraHelper.setModelValue(UVCCameraHelper.MODE_BRIGHTNESS, progress);
-//                }
-//            }
-//
-//            @Override
-//            public void onStartTrackingTouch(SeekBar seekBar) {
-//
-//            }
-//
-//            @Override
-//            public void onStopTrackingTouch(SeekBar seekBar) {
-//
-//            }
-//        });
-//        mSeekContrast.setMax(100);
-//        mSeekContrast.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-//            @Override
-//            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-//                if (mCameraHelper != null && mCameraHelper.isCameraOpened()) {
-//                    mCameraHelper.setModelValue(UVCCameraHelper.MODE_CONTRAST, progress);
-//                }
-//            }
-//
-//            @Override
-//            public void onStartTrackingTouch(SeekBar seekBar) {
-//
-//            }
-//
-//            @Override
-//            public void onStopTrackingTouch(SeekBar seekBar) {
-//
-//            }
-//        });
+
         checkPermissions();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        // step.2 register USB event broadcast
-        if (mCameraHelper != null) {
-            mCameraHelper.registerUSB();
-        }
+        initCameraHelper();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
         // step.3 unregister USB event broadcast
-        if (mCameraHelper != null) {
-            mCameraHelper.unregisterUSB();
+        clearCameraHelper();
+    }
+
+    public void initCameraHelper() {
+        if (mCameraHelper == null) {
+            mCameraHelper = new CameraHelper();
+            mCameraHelper.setStateCallback(mStateListener);
         }
     }
 
-    // example: {640x480,320x240,etc}
-    private List<String> getResolutionList() {
-        List<Size> list = mCameraHelper.getSupportedPreviewSizes();
-        List<String> resolutions = null;
-        if (list != null && list.size() != 0) {
-            resolutions = new ArrayList<>();
-            for (Size size : list) {
-                if (size != null) {
-                    resolutions.add(size.width + "x" + size.height);
-                }
-            }
+    private void clearCameraHelper() {
+        if (mCameraHelper != null) {
+            mCameraHelper.release();
+            mCameraHelper = null;
         }
-        return resolutions;
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        FileUtils.releaseFile();
-        // step.4 release uvc camera resources
-        if (mCameraHelper != null) {
-            mCameraHelper.release();
-        }
-//        if (!TextUtils.isEmpty(bluetoothMac)) {
-//            ClientManager.getInstance().getClient().disconnect(bluetoothMac);
-//        }
     }
+    private void selectDevice(final UsbDevice device) {
+        Log.v(TAG, "selectDevice:device=" + device.getDeviceName());
+        mCameraHelper.selectDevice(device);
+    }
+
+    private final ICameraHelper.StateCallback mStateListener = new ICameraHelper.StateCallback() {
+        @Override
+        public void onAttach(UsbDevice device) {
+            selectDevice(device);
+        }
+
+        @Override
+        public void onDeviceOpen(UsbDevice device, boolean isFirstOpen) {
+            mCameraHelper.openCamera();
+        }
+
+        @Override
+        public void onCameraOpen(UsbDevice device) {
+            mCameraHelper.startPreview();
+            Size size = mCameraHelper.getPreviewSize();
+//            if (size != null) {
+//                resizePreviewView(size);
+//            }
+            mCameraHelper.addSurface(mCameraViewMain.getHolder().getSurface(), false);
+            invalidateOptionsMenu();
+        }
+
+        @Override
+        public void onCameraClose(UsbDevice device) {
+
+            if (mCameraHelper != null) {
+                mCameraHelper.removeSurface(mCameraViewMain.getHolder().getSurface());
+            }
+
+            invalidateOptionsMenu();
+        }
+
+        @Override
+        public void onDeviceClose(UsbDevice device) {
+             Log.v(TAG, "onDeviceClose:");
+        }
+
+        @Override
+        public void onDetach(UsbDevice device) {
+            Log.v(TAG, "onDetach:");
+        }
+
+        @Override
+        public void onCancel(UsbDevice device) {
+            Log.v(TAG, "onCancel:");
+        }
+
+    };
 
     private void showShortMsg(String msg) {
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
 
-    @Override
-    public USBMonitor getUSBMonitor() {
-        return mCameraHelper.getUSBMonitor();
-    }
 
-    @Override
-    public void onDialogResult(boolean canceled) {
-        if (canceled) {
-            showShortMsg("取消操作");
-        }
-    }
-
-
-    @Override
-    public void onSurfaceCreated(CameraViewInterface view, Surface surface) {
-
-        LogUtils.e(TAG, "onSurfaceCreated");
-
-        if (!isPreview && mCameraHelper.isCameraOpened()) {
-            mCameraHelper.startPreview(mUVCCameraView);
-            isPreview = true;
-        }
-    }
-
-    @Override
-    public void onSurfaceChanged(CameraViewInterface view, Surface surface, int width, int height) {
-
-    }
-
-    @Override
-    public void onSurfaceDestroy(CameraViewInterface view, Surface surface) {
-        if (isPreview && mCameraHelper.isCameraOpened()) {
-            mCameraHelper.stopPreview();
-            isPreview = false;
-        }
-    }
 
     private void checkPermissions() {
         BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -393,20 +281,10 @@ public class USBCameraActivity extends BaseActivity implements CameraDialog.Came
             ToastUtils.showToast("请打开蓝牙 ");
             return;
         }
-//
-//        bluetoothMac1 = ShareUtil.getLightMac(USBCameraActivity.this);
-//
-//        if (!TextUtils.isEmpty(bluetoothMac1)) {
-////            showDialog();
-//            connect(bluetoothMac1);
-//        } else {
-//            ToastUtils.showToast("请设置灯光的蓝牙名称和mac地址");
-//        }
-//        startScan();
+
     }
 
     private void startScan(int index) {
-
 //        showDialog();
         LogUtils.e(TAG, "startScan");
         SearchRequest request = new SearchRequest.Builder()
@@ -550,6 +428,30 @@ public class USBCameraActivity extends BaseActivity implements CameraDialog.Came
     }
 
     public void takePhoto() {
+        File file = FileUtils.getCaptureFile(this, Environment.DIRECTORY_DCIM, ".jpg");
+        ImageCapture.OutputFileOptions options =
+                new ImageCapture.OutputFileOptions.Builder(file).build();
+
+
+
+        mCameraHelper.takePicture(options, new ImageCapture.OnImageCaptureCallback() {
+            @Override
+            public void onImageSaved(@NonNull ImageCapture.OutputFileResults outputFileResults) {
+
+
+                String path = UriHelper.getPath(USBCameraActivity.this, outputFileResults.getSavedUri());
+                saveBmpToPath(rotatePicture(path,90),path);
+                LogUtils.e(TAG, "path = "+path);
+                Intent intent = new Intent(USBCameraActivity.this, PreviewActivity.class);
+                intent.putExtra("path", path);
+                startActivity(intent);
+            }
+
+            @Override
+            public void onError(int imageCaptureError, @NonNull String message, @Nullable Throwable cause) {
+                Toast.makeText(USBCameraActivity.this, message, Toast.LENGTH_SHORT).show();
+            }
+        });
 
 //        String path = "/sdcard/DCIM/WeiXin/111.jpg";
 //        Intent intent = new Intent(USBCameraActivity.this, PreviewActivity.class);
@@ -557,34 +459,20 @@ public class USBCameraActivity extends BaseActivity implements CameraDialog.Came
 //        startActivity(intent);
         LogUtils.e(TAG, "takePhoto");
 
-        if (mCameraHelper == null || !mCameraHelper.isCameraOpened()) {
-            showShortMsg("sorry,camera open failed");
-            return;
-        }
-        String picPath = UVCCameraHelper.ROOT_PATH + "USBCamera" + "/" + System.currentTimeMillis() + UVCCameraHelper.SUFFIX_JPEG;
 
-        mCameraHelper.capturePicture(picPath, new AbstractUVCCameraHandler.OnCaptureListener() {
-            @Override
-            public void onCaptureResult(String path) {
-                if (TextUtils.isEmpty(path)) {
-                    return;
-                }
-//                new Handler(getMainLooper()).post(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        Toast.makeText(USBCameraActivity.this, "save path:" + path, Toast.LENGTH_SHORT).show();
-//                    }
-//                });
-                boolean save = saveBmpToPath(rotatePicture(BitmapFactory.decodeFile(path), 90), path);
-                Intent intent = new Intent(USBCameraActivity.this, PreviewActivity.class);
-                intent.putExtra("path", path);
-                startActivity(intent);
-            }
-        });
+//        String picPath = UVCCameraHelper.ROOT_PATH + "USBCamera" + "/" + System.currentTimeMillis() + UVCCameraHelper.SUFFIX_JPEG;
+
+
+//                boolean save = saveBmpToPath(rotatePicture(BitmapFactory.decodeFile(path), 90), path);
+//                Intent intent = new Intent(USBCameraActivity.this, PreviewActivity.class);
+//                intent.putExtra("path", path);
+//                startActivity(intent);
+
     }
 
 
-    public Bitmap rotatePicture(final Bitmap bitmap, final int degree) {
+    public Bitmap rotatePicture(String  path, final int degree) {
+        Bitmap bitmap = BitmapFactory.decodeFile(path);
         Matrix matrix = new Matrix();
         matrix.postRotate(degree);
         return  Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
